@@ -12,6 +12,14 @@
   /* Bike Share Toronto rides on a saturated red; reserved for live/alert state. */
   --color-accent: oklch(56% 0.19 25);
   --color-measured: oklch(52% 0.11 165);
+  --color-computed: oklch(50% 0.13 275);
+
+  /* Fullness ramp — sequential, one hue, light to dark. Kept byte-identical to
+     FULLNESS_RAMP in src/layers.ts so the legend can never drift from the map. */
+  --fullness-empty: #3987e5;
+  --fullness-half: #1c5cab;
+  --fullness-full: #0d366b;
+  --no-data-stroke: #6b6b66;
 
   --font-display: ui-serif, Georgia, 'Times New Roman', serif;
   --font-ui:
@@ -21,11 +29,15 @@
   --text-eyebrow: 0.6875rem;
   --text-meta: 0.75rem;
   --text-title: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  --text-panel-title: 1.375rem;
+  --text-stat: 1.5rem;
 
   --space-xs: 0.375rem;
   --space-sm: 0.625rem;
   --space-md: 1rem;
   --space-lg: 1.5rem;
+
+  --rail-width: 19.5rem;
 
   --radius: 3px;
   --shadow-card:
@@ -70,18 +82,12 @@ main {
    centered banner. Deliberately narrow so it never fights the city for space.
    --------------------------------------------------------------------------- */
 .masthead {
-  position: absolute;
-  top: var(--space-lg);
-  left: var(--space-lg);
-  z-index: 1;
-  max-width: 17rem;
   padding: var(--space-md) var(--space-md) var(--space-sm);
   background: color-mix(in oklch, var(--color-paper) 92%, transparent);
   backdrop-filter: blur(8px);
   border-radius: var(--radius);
   border-top: 2px solid var(--color-accent);
   box-shadow: var(--shadow-card);
-  pointer-events: none;
 }
 
 .masthead__eyebrow {
@@ -163,20 +169,308 @@ main {
 /* ---------------------------------------------------------------------------
    Small screens: the masthead shrinks rather than covering the map.
    --------------------------------------------------------------------------- */
-@media (max-width: 30rem) {
-  .masthead {
-    top: var(--space-sm);
-    left: var(--space-sm);
-    right: var(--space-sm);
-    max-width: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   The rail — one column of chrome down the left, so the map is interrupted in
+   a single place rather than by cards scattered over the city.
+   --------------------------------------------------------------------------- */
+.rail {
+  position: absolute;
+  top: var(--space-lg);
+  left: var(--space-lg);
+  bottom: var(--space-lg);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: var(--space-sm);
+  width: var(--rail-width);
+  /* The rail is a layout box, not a surface — clicks fall through to the map
+     everywhere except on an actual card. */
+  pointer-events: none;
+}
+
+.rail > * {
+  pointer-events: auto;
+}
+
+.masthead,
+.panel,
+.legend {
+  width: 100%;
+  background: color-mix(in oklch, var(--color-paper) 93%, transparent);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+/* The legend sits at the foot of the rail; the panel takes the space between. */
+.legend {
+  margin-top: auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Station detail panel
+   --------------------------------------------------------------------------- */
+.panel {
+  position: relative;
+  padding: var(--space-md);
+  border-left: 2px solid var(--color-ink);
+  overflow-y: auto;
+  animation: panel-in var(--duration) var(--ease-out-expo);
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    translate: -0.75rem 0;
+  }
+}
+
+.panel__close {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-xs);
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--color-ink-soft);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--duration) var(--ease-out-expo), color var(--duration);
+}
+
+.panel__close:hover {
+  background: color-mix(in oklch, var(--color-ink) 8%, transparent);
+  color: var(--color-ink);
+}
+
+.panel__close:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.panel__eyebrow {
+  margin: 0;
+  padding-right: 2rem;
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.panel__title {
+  margin: var(--space-xs) 0 var(--space-md);
+  font-family: var(--font-display);
+  font-size: var(--text-panel-title);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.panel__source {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: var(--space-md) 0 0;
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-rule);
+  font-size: var(--text-meta);
+  color: var(--color-ink-soft);
+}
+
+/* ---------------------------------------------------------------------------
+   Fullness meter — one proportion of a known whole, so one bar against its own
+   track. Same ramp as the map dots, with the exact number beside it.
+   --------------------------------------------------------------------------- */
+.meter {
+  margin: 0 0 var(--space-md);
+}
+
+.meter__track {
+  height: 8px;
+  border-radius: 4px;
+  background: color-mix(in oklch, var(--color-ink) 9%, transparent);
+  overflow: hidden;
+}
+
+.meter__fill {
+  width: var(--fill);
+  height: 100%;
+  /* Rounded at the data end, square against the baseline it grows from. */
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(
+    90deg,
+    var(--fullness-empty),
+    var(--fullness-half) 55%,
+    var(--fullness-full)
+  );
+  transform-origin: left;
+  animation: meter-in 420ms var(--ease-out-expo);
+}
+
+@keyframes meter-in {
+  from {
+    scale: 0 1;
+  }
+}
+
+.meter__caption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: var(--space-xs) 0 0;
+  font-size: var(--text-meta);
+  color: var(--color-ink-soft);
+}
+
+.meter--empty {
+  display: flex;
+  margin: 0 0 var(--space-md);
+  padding: var(--space-xs) 0;
+  border-top: 1px dashed var(--color-rule);
+  border-bottom: 1px dashed var(--color-rule);
+}
+
+/* ---------------------------------------------------------------------------
+   KPI row — value large, label small. Hierarchy does the work; no boxes.
+   --------------------------------------------------------------------------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  margin: 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column-reverse; /* value reads first, label is the caption */
+  gap: 0.1rem;
+}
+
+.stat__value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-stat);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.stat__label {
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+/* ---------------------------------------------------------------------------
+   Legend
+   --------------------------------------------------------------------------- */
+.legend {
+  margin-block: 0;
+  margin-inline: 0;
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+}
+
+.legend__title {
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.legend__ramp {
+  display: flex;
+  gap: 2px; /* the surface gap that keeps adjacent fills legible */
+  margin-top: var(--space-xs);
+}
+
+.legend__ramp span {
+  flex: 1;
+  height: 8px;
+  border-radius: 1px;
+  background: var(--swatch);
+}
+
+.legend__ramp span:first-child {
+  border-radius: 4px 1px 1px 4px;
+}
+
+.legend__ramp span:last-child {
+  border-radius: 1px 4px 4px 1px;
+}
+
+.legend__ends {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.2rem 0 0;
+  font-size: var(--text-eyebrow);
+  color: var(--color-ink-soft);
+}
+
+.legend__note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: var(--space-sm) 0 0;
+  font-size: var(--text-meta);
+  color: var(--color-ink-soft);
+}
+
+.legend__note--muted {
+  align-items: start;
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-rule);
+  line-height: 1.45;
+}
+
+/* Matches the hollow no-data dot on the map. */
+.legend__hollow {
+  flex: none;
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid var(--no-data-stroke);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.stamp--computed {
+  color: var(--color-computed);
+}
+
+/* ---------------------------------------------------------------------------
+   Small screens: the rail becomes a bottom sheet so the map keeps the viewport.
+   --------------------------------------------------------------------------- */
+@media (max-width: 48rem) {
+  .rail {
+    inset: var(--space-sm) var(--space-sm) auto;
+    width: auto;
+    max-height: calc(100% - 2 * var(--space-sm));
+  }
+
+  .legend {
+    display: none; /* the panel carries the numbers; the ramp needs the room */
+  }
+
+  .panel {
+    max-height: 55vh;
   }
 }

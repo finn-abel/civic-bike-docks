@@ -1,24 +1,17 @@
 /**
- * stations.ts — Phase 2. Load the station census and draw it.
+ * stations.ts — load and validate the station census.
  *
  * The map reads the contract in types.ts and nothing else. Whether the file behind
  * DATA.stations holds 50 generated placeholders (Phase 2) or 1063 real Toronto
  * docks (Phase 4) is not this module's concern — that is the whole point.
+ *
+ * Drawing lives in layers.ts. This file is only about getting trustworthy data.
  */
 
 import type { FeatureCollection } from 'geojson';
-import type { Map as MapLibreMap } from 'maplibre-gl';
 
-import { CITY, DATA, IDS } from './constants';
+import { CITY, DATA } from './constants';
 import type { StationCollection, StationFeature } from './types';
-
-/** Phase 2 draws plain uniform dots. Sizing and coloring by the data is Phase 3. */
-const DOT = {
-  radius: 5,
-  color: '#c8352a',
-  strokeWidth: 1.5,
-  strokeColor: '#ffffff',
-} as const;
 
 /**
  * Validate at the boundary.
@@ -97,7 +90,7 @@ function assertStationCollection(value: unknown): asserts value is StationCollec
 
 /** Fetch and validate the committed census. Throws with a specific message on any
  *  contract violation — the caller surfaces it rather than swallowing it. */
-export async function loadStations(): Promise<StationCollection> {
+export async function loadStations(): Promise<FeatureCollection> {
   const response = await fetch(DATA.stations);
   if (!response.ok) {
     throw new Error(
@@ -107,27 +100,9 @@ export async function loadStations(): Promise<StationCollection> {
 
   const parsed: unknown = await response.json();
   assertStationCollection(parsed);
-  return parsed;
+
+  // StationCollection is the narrower contract; MapLibre wants the general GeoJSON
+  // type. Widening is safe — every StationFeature is a valid Feature.
+  return parsed as unknown as FeatureCollection;
 }
 
-/** Add the station source and its dot layer to an already-loaded map. */
-export function addStationLayers(map: MapLibreMap, stations: StationCollection): void {
-  map.addSource(IDS.source, {
-    type: 'geojson',
-    // StationCollection is the narrower contract; MapLibre wants the general
-    // GeoJSON type. Widening is safe — every StationFeature is a valid Feature.
-    data: stations as unknown as FeatureCollection,
-  });
-
-  map.addLayer({
-    id: IDS.unclusteredPoints,
-    type: 'circle',
-    source: IDS.source,
-    paint: {
-      'circle-radius': DOT.radius,
-      'circle-color': DOT.color,
-      'circle-stroke-width': DOT.strokeWidth,
-      'circle-stroke-color': DOT.strokeColor,
-    },
-  });
-}

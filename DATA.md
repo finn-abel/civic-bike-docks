@@ -139,6 +139,29 @@ exists.
 
 ---
 
+## Encoding
+
+| Channel | Encodes | Notes |
+|---|---|---|
+| Dot **colour** | `fullness` | Sequential, one hue, light → dark. More ink = more bikes. |
+| Dot **size** | `capacity` | Independent of colour, so the two readings never conflict. |
+| **Hollow** dot | `fullness` is `null` | A different *kind* of value, so a different shape — not a fourth colour. |
+| Cluster **size** | `point_count` | Neutral ink, never a step on the fullness ramp. |
+
+**The ramp is blue, not green→red.** The build plan suggests green = bikes
+available → red = empty. That is the single worst pairing for red-green colour
+blindness (~8% of men), and it is a *diverging* structure used where the data is
+*sequential* — fullness is a magnitude, not a polarity. A one-hue ramp reads just
+as fast and works for everyone.
+
+Steps are `#3987e5 → #1c5cab → #0d366b`, monotonic in OKLCH lightness
+(0.62 → 0.48 → 0.34) and each clearing 3:1 against the basemap, so no dot ever
+fades into the map. Colour is never the only channel: the panel prints the exact
+numbers and the legend labels both ends.
+
+Kept in two places — `FULLNESS_RAMP` in `src/layers.ts` and the `--fullness-*`
+tokens in `src/styles.css` — so the legend swatches cannot drift from the dots.
+
 ## Renders with the wifi off (discipline #3)
 
 | Asset | Committed? | Notes |

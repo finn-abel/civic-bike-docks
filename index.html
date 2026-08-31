@@ -14,14 +14,45 @@
     <main>
       <div id="map" role="application" aria-label="Map of Bike Share Toronto docks"></div>
 
-      <header class="masthead">
-        <p class="masthead__eyebrow">Bike Share Toronto</p>
-        <h1 class="masthead__title">Every dock in the city</h1>
-        <p class="masthead__source">
-          <span class="stamp">Measured</span>
-          City of Toronto GBFS feed
-        </p>
-      </header>
+      <!-- One left rail, so page chrome occupies a single column and covers as
+           little of the city as possible. -->
+      <div class="rail">
+        <header class="masthead">
+          <p class="masthead__eyebrow">Bike Share Toronto</p>
+          <h1 class="masthead__title">Every dock in the city</h1>
+          <p class="masthead__source">
+            <span class="stamp">Measured</span>
+            City of Toronto GBFS feed
+          </p>
+        </header>
+
+        <!-- Written by renderPanel() in src/panel.ts. -->
+        <section
+          id="station-panel"
+          class="panel"
+          aria-label="Station details"
+          aria-live="polite"
+          hidden
+        ></section>
+
+        <figure class="legend">
+          <figcaption class="legend__title">Bikes available</figcaption>
+          <div class="legend__ramp" aria-hidden="true">
+            <span style="--swatch: #3987e5"></span>
+            <span style="--swatch: #1c5cab"></span>
+            <span style="--swatch: #0d366b"></span>
+          </div>
+          <p class="legend__ends"><span>Empty</span><span>Full</span></p>
+          <p class="legend__note">
+            <span class="legend__hollow" aria-hidden="true"></span>
+            No availability data
+          </p>
+          <p class="legend__note legend__note--muted">
+            Dot size is dock capacity. Grey circles group nearby stations — click to
+            zoom in.
+          </p>
+        </figure>
+      </div>
 
       <!-- Message is written by showFailure() in src/map.ts. -->
       <p id="map-error" class="notice" role="status" hidden></p>

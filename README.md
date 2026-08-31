@@ -2,8 +2,9 @@
 
 Every Bike Share Toronto dock on a map. Rung 1 of the Civic Ladder.
 
-**Status:** Phases 0–2 complete. 50 generated placeholder stations render on the
-map. Clustering, color, and the click panel are Phase 3.
+**Status:** Phases 0–3 complete. The map is functionally done — dots, clustering,
+data-driven colour and size, click-to-panel, hover. It runs on 50 generated
+placeholders; Phase 4 swaps in the real 1063 without touching the UI.
 
 ## Run it
 
@@ -36,7 +37,10 @@ format.
 index.html               # Vite entry
 src/
 ├─ map.ts                # camera, error surface, wiring
-├─ stations.ts           # load + validate the census, draw it
+├─ stations.ts           # load + validate the census
+├─ layers.ts             # the source and its three layers, styling expressions
+├─ interactions.ts       # cluster/station click, hover, Escape
+├─ panel.ts              # station detail panel
 ├─ types.ts              # the data contract, as enforced types
 ├─ constants.ts          # city center, zooms, feed URLs, cluster settings — with sources
 └─ styles.css            # design tokens + map chrome
@@ -51,7 +55,6 @@ as `data/stations.geojson` — the path in `constants.ts → DATA.stations`.
 
 ## What's next
 
-- **Phase 3** — dots, clustering, data-driven color, click-to-panel, hover.
 - **Phase 4** — swap in the real 1063 stations. The UI shouldn't change at all.
 - **Phase 5** *(stretch)* — live fullness coloring, globe intro.
 

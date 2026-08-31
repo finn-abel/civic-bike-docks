@@ -1,9 +1,9 @@
 /**
- * map.ts — the map. Phase 0 (camera) + Phase 2 (the station census on it).
+ * map.ts — the map: camera, error surface, and wiring.
  *
- * Acceptance criterion: 50 dots from public/data/stations.geojson render over a
- * pannable Toronto basemap. Clustering, data-driven color, click-to-panel and
- * hover are Phase 3.
+ * Acceptance criterion (Phase 3): clicking any dot shows its details, zooming out
+ * clusters the dots, zooming in expands them. Swapping the data file is Phase 4,
+ * and nothing in this file should have to change for it.
  */
 
 import {
@@ -29,7 +29,9 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import './styles.css';
 
 import { BASEMAP, CITY } from './constants';
-import { addStationLayers, loadStations } from './stations';
+import { wireInteractions } from './interactions';
+import { addStationLayers } from './layers';
+import { loadStations } from './stations';
 
 setWorkerUrl(maplibreWorkerUrl);
 
@@ -75,6 +77,7 @@ map.on('load', () => {
   void stationsReady
     .then((stations) => {
       addStationLayers(map, stations);
+      wireInteractions(map);
     })
     .catch((error: unknown) => {
       showFailure(
