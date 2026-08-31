@@ -75,12 +75,25 @@ expression colors by one clean number.
 
 ### During development (Phases 2–3)
 
-`public/data/stations.geojson` holds **50 generated stations**, contract-shaped, with
-random coordinates inside the real dock bbox and random capacities.
+`public/data/stations.geojson` holds **50 generated stations**, contract-shaped,
+written by `scripts/generate_fake_stations.ts` (`npm run generate:fake`).
 
 > Every property in the dev file is **GENERATED** — placeholder, feeds nothing,
 > and is overwritten wholesale in Phase 4. The header comment in the generator
 > says so, and this note is the checked-in record of it.
+
+Two deliberate choices in the generator:
+
+- **Coordinates are gaussian around downtown, not uniform over the bbox.** Real
+  dock networks are dense in the core, and clustering (Phase 3) needs something
+  interesting to cluster. A side effect is that a handful of placeholders land in
+  Lake Ontario — cosmetic, and gone in Phase 4.
+- **Station `fake-000` is given `capacity: 0`,** mirroring the real feed, so the
+  `fullness` divide-by-zero guard is exercised from Phase 2 rather than
+  discovered in Phase 4.
+
+The seed is fixed (`SEED = 20260831`), so regenerating produces a byte-identical
+file and an empty git diff.
 
 ---
 
@@ -100,6 +113,20 @@ older names:
 Other v3 fields present but unused at rung 1: `external_id`, `short_name`,
 `address`, `is_charging_station`, `is_virtual_station`, `rental_methods`,
 `rental_uris`, `vehicle_types_capacity`, `vehicle_docks_capacity`.
+
+### Validation at the boundary
+
+`src/types.ts` is compile-time only; `stations.geojson` arrives over the network at
+runtime, so `loadStations()` in `src/stations.ts` re-checks it and fails loudly,
+naming the offending feature, rather than rendering something wrong.
+
+**The lon/lat swap needs a bounds check, not a range check.** This is worth stating
+plainly because the obvious validation does not work: swap Toronto's
+`[-79.38, 43.65]` and you get `[43.65, -79.38]` — a legal longitude and a legal
+latitude, both inside `[-180, 180]` and `[-90, 90]`. Nothing is out of range; the
+point is simply 5000 km into the South Atlantic. The only check that catches it is
+one against where the city actually is, which is why `CITY.bboxMarginDegrees`
+exists.
 
 ### Known data hazards
 

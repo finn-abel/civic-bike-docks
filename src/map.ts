@@ -1,8 +1,9 @@
 /**
- * map.ts — Phase 0: the blank map.
+ * map.ts — the map. Phase 0 (camera) + Phase 2 (the station census on it).
  *
- * Acceptance criterion: pan and zoom an empty basemap of Toronto.
- * No data source, no layers, no click handling — those are Phases 2-3.
+ * Acceptance criterion: 50 dots from public/data/stations.geojson render over a
+ * pannable Toronto basemap. Clustering, data-driven color, click-to-panel and
+ * hover are Phase 3.
  */
 
 import {
@@ -28,6 +29,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import './styles.css';
 
 import { BASEMAP, CITY } from './constants';
+import { addStationLayers, loadStations } from './stations';
 
 setWorkerUrl(maplibreWorkerUrl);
 
@@ -49,9 +51,37 @@ map.addControl(new NavigationControl({ showCompass: false }), 'bottom-right');
 // here as well prints it twice. Compact so it stays out of the map's way.
 map.addControl(new AttributionControl({ compact: true }), 'bottom-left');
 
-// Basemap tiles are this phase's only network dependency. If they fail, say so on
-// screen — a silent grey rectangle is the worst possible failure mode in a demo.
+/** Surface a failure on screen. A silent grey rectangle is the worst possible
+ *  failure mode in a demo — better to say what broke. */
+function showFailure(message: string, cause: unknown): void {
+  console.error(`[map] ${message}`, cause);
+  const banner = document.getElementById('map-error');
+  if (!banner) return;
+  banner.textContent = message;
+  banner.removeAttribute('hidden');
+}
+
+// Basemap tiles are the only network dependency at runtime; MapLibre itself is
+// bundled, and the station census is a committed static file.
 map.on('error', (event) => {
-  console.error('[map]', event.error);
-  document.getElementById('map-error')?.removeAttribute('hidden');
+  showFailure('Basemap tiles didn’t load. Check the network connection.', event.error);
+});
+
+// Fetch the census in parallel with the style load rather than after it — the two
+// are independent, and waiting for the style first would add a needless round trip.
+const stationsReady = loadStations();
+
+map.on('load', () => {
+  void stationsReady
+    .then((stations) => {
+      addStationLayers(map, stations);
+    })
+    .catch((error: unknown) => {
+      showFailure(
+        error instanceof Error
+          ? `Station data failed to load: ${error.message}`
+          : 'Station data failed to load.',
+        error,
+      );
+    });
 });

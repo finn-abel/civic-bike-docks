@@ -23,10 +23,8 @@
         </p>
       </header>
 
-      <p id="map-error" class="notice" role="status" hidden>
-        <strong>Basemap tiles didn’t load.</strong> Check the network, or swap in
-        <code>BASEMAP.fallbackStyle</code> from <code>src/constants.ts</code>.
-      </p>
+      <!-- Message is written by showFailure() in src/map.ts. -->
+      <p id="map-error" class="notice" role="status" hidden></p>
     </main>
 
     <script type="module" src="/src/map.ts"></script>

@@ -55,6 +55,18 @@ export const CITY = {
     maxLon: -79.1232,
     maxLat: 43.8126,
   },
+
+  /**
+   * Slack allowed around `bbox` when validating loaded stations, in degrees.
+   * ~111 km — wide enough that the system adding docks in a new suburb does not
+   * trip it, narrow enough that a lon/lat swap always does.
+   *
+   * This is what actually catches the swap. A plain lon/lat range check cannot:
+   * swap Toronto's [-79.38, 43.65] and you get [43.65, -79.38], where 43.65 is a
+   * legal longitude and -79.38 a legal latitude. The values stay in range; only
+   * the *location* is wrong — 5000 km into the South Atlantic.
+   */
+  bboxMarginDegrees: 1,
 } as const;
 
 // ---------------------------------------------------------------------------

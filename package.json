@@ -10,7 +10,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "build:stations": "tsx scripts/build_stations.ts"
+    "build:stations": "tsx scripts/build_stations.ts",
+    "generate:fake": "tsx scripts/generate_fake_stations.ts"
   },
   "dependencies": {
     "maplibre-gl": "6.6.0"

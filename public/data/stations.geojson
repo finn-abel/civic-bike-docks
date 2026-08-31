@@ -1,0 +1,905 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.337197,
+          43.5881
+        ]
+      },
+      "properties": {
+        "station_id": "fake-000",
+        "name": "Placeholder Station 1",
+        "capacity": 0,
+        "bikes_available": 0,
+        "docks_available": 0,
+        "fullness": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.374022,
+          43.63052
+        ]
+      },
+      "properties": {
+        "station_id": "fake-001",
+        "name": "Placeholder Station 2",
+        "capacity": 42,
+        "bikes_available": 0,
+        "docks_available": 42,
+        "fullness": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.432191,
+          43.622007
+        ]
+      },
+      "properties": {
+        "station_id": "fake-002",
+        "name": "Placeholder Station 3",
+        "capacity": 22,
+        "bikes_available": 8,
+        "docks_available": 14,
+        "fullness": 0.3636
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.398268,
+          43.690818
+        ]
+      },
+      "properties": {
+        "station_id": "fake-003",
+        "name": "Placeholder Station 4",
+        "capacity": 25,
+        "bikes_available": 25,
+        "docks_available": 0,
+        "fullness": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.348273,
+          43.662017
+        ]
+      },
+      "properties": {
+        "station_id": "fake-004",
+        "name": "Placeholder Station 5",
+        "capacity": 13,
+        "bikes_available": 4,
+        "docks_available": 9,
+        "fullness": 0.3077
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.408693,
+          43.657681
+        ]
+      },
+      "properties": {
+        "station_id": "fake-005",
+        "name": "Placeholder Station 6",
+        "capacity": 28,
+        "bikes_available": 6,
+        "docks_available": 22,
+        "fullness": 0.2143
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.33682,
+          43.689284
+        ]
+      },
+      "properties": {
+        "station_id": "fake-006",
+        "name": "Placeholder Station 7",
+        "capacity": 33,
+        "bikes_available": 9,
+        "docks_available": 24,
+        "fullness": 0.2727
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3833,
+          43.635341
+        ]
+      },
+      "properties": {
+        "station_id": "fake-007",
+        "name": "Placeholder Station 8",
+        "capacity": 38,
+        "bikes_available": 18,
+        "docks_available": 20,
+        "fullness": 0.4737
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.418276,
+          43.64346
+        ]
+      },
+      "properties": {
+        "station_id": "fake-008",
+        "name": "Placeholder Station 9",
+        "capacity": 18,
+        "bikes_available": 14,
+        "docks_available": 4,
+        "fullness": 0.7778
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.360862,
+          43.645252
+        ]
+      },
+      "properties": {
+        "station_id": "fake-009",
+        "name": "Placeholder Station 10",
+        "capacity": 22,
+        "bikes_available": 15,
+        "docks_available": 7,
+        "fullness": 0.6818
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.428087,
+          43.657384
+        ]
+      },
+      "properties": {
+        "station_id": "fake-010",
+        "name": "Placeholder Station 11",
+        "capacity": 29,
+        "bikes_available": 21,
+        "docks_available": 8,
+        "fullness": 0.7241
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.360191,
+          43.671696
+        ]
+      },
+      "properties": {
+        "station_id": "fake-011",
+        "name": "Placeholder Station 12",
+        "capacity": 28,
+        "bikes_available": 7,
+        "docks_available": 21,
+        "fullness": 0.25
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.333542,
+          43.643075
+        ]
+      },
+      "properties": {
+        "station_id": "fake-012",
+        "name": "Placeholder Station 13",
+        "capacity": 12,
+        "bikes_available": 1,
+        "docks_available": 11,
+        "fullness": 0.0833
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.341455,
+          43.674242
+        ]
+      },
+      "properties": {
+        "station_id": "fake-013",
+        "name": "Placeholder Station 14",
+        "capacity": 34,
+        "bikes_available": 19,
+        "docks_available": 15,
+        "fullness": 0.5588
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.403745,
+          43.651496
+        ]
+      },
+      "properties": {
+        "station_id": "fake-014",
+        "name": "Placeholder Station 15",
+        "capacity": 43,
+        "bikes_available": 10,
+        "docks_available": 33,
+        "fullness": 0.2326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.388246,
+          43.607035
+        ]
+      },
+      "properties": {
+        "station_id": "fake-015",
+        "name": "Placeholder Station 16",
+        "capacity": 20,
+        "bikes_available": 9,
+        "docks_available": 11,
+        "fullness": 0.45
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.404723,
+          43.632555
+        ]
+      },
+      "properties": {
+        "station_id": "fake-016",
+        "name": "Placeholder Station 17",
+        "capacity": 33,
+        "bikes_available": 10,
+        "docks_available": 23,
+        "fullness": 0.303
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.316435,
+          43.635413
+        ]
+      },
+      "properties": {
+        "station_id": "fake-017",
+        "name": "Placeholder Station 18",
+        "capacity": 36,
+        "bikes_available": 8,
+        "docks_available": 28,
+        "fullness": 0.2222
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.384408,
+          43.64638
+        ]
+      },
+      "properties": {
+        "station_id": "fake-018",
+        "name": "Placeholder Station 19",
+        "capacity": 20,
+        "bikes_available": 3,
+        "docks_available": 17,
+        "fullness": 0.15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.348718,
+          43.717084
+        ]
+      },
+      "properties": {
+        "station_id": "fake-019",
+        "name": "Placeholder Station 20",
+        "capacity": 30,
+        "bikes_available": 14,
+        "docks_available": 16,
+        "fullness": 0.4667
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.378201,
+          43.633734
+        ]
+      },
+      "properties": {
+        "station_id": "fake-020",
+        "name": "Placeholder Station 21",
+        "capacity": 42,
+        "bikes_available": 19,
+        "docks_available": 23,
+        "fullness": 0.4524
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.380563,
+          43.662312
+        ]
+      },
+      "properties": {
+        "station_id": "fake-021",
+        "name": "Placeholder Station 22",
+        "capacity": 30,
+        "bikes_available": 2,
+        "docks_available": 28,
+        "fullness": 0.0667
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.385029,
+          43.623693
+        ]
+      },
+      "properties": {
+        "station_id": "fake-022",
+        "name": "Placeholder Station 23",
+        "capacity": 29,
+        "bikes_available": 8,
+        "docks_available": 21,
+        "fullness": 0.2759
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.40619,
+          43.636363
+        ]
+      },
+      "properties": {
+        "station_id": "fake-023",
+        "name": "Placeholder Station 24",
+        "capacity": 16,
+        "bikes_available": 16,
+        "docks_available": 0,
+        "fullness": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.365983,
+          43.638579
+        ]
+      },
+      "properties": {
+        "station_id": "fake-024",
+        "name": "Placeholder Station 25",
+        "capacity": 38,
+        "bikes_available": 10,
+        "docks_available": 28,
+        "fullness": 0.2632
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.372568,
+          43.698273
+        ]
+      },
+      "properties": {
+        "station_id": "fake-025",
+        "name": "Placeholder Station 26",
+        "capacity": 42,
+        "bikes_available": 29,
+        "docks_available": 13,
+        "fullness": 0.6905
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.358544,
+          43.690064
+        ]
+      },
+      "properties": {
+        "station_id": "fake-026",
+        "name": "Placeholder Station 27",
+        "capacity": 46,
+        "bikes_available": 34,
+        "docks_available": 12,
+        "fullness": 0.7391
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.341692,
+          43.664611
+        ]
+      },
+      "properties": {
+        "station_id": "fake-027",
+        "name": "Placeholder Station 28",
+        "capacity": 33,
+        "bikes_available": 2,
+        "docks_available": 31,
+        "fullness": 0.0606
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.376955,
+          43.666792
+        ]
+      },
+      "properties": {
+        "station_id": "fake-028",
+        "name": "Placeholder Station 29",
+        "capacity": 34,
+        "bikes_available": 28,
+        "docks_available": 6,
+        "fullness": 0.8235
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.366826,
+          43.640198
+        ]
+      },
+      "properties": {
+        "station_id": "fake-029",
+        "name": "Placeholder Station 30",
+        "capacity": 31,
+        "bikes_available": 27,
+        "docks_available": 4,
+        "fullness": 0.871
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.379242,
+          43.645463
+        ]
+      },
+      "properties": {
+        "station_id": "fake-030",
+        "name": "Placeholder Station 31",
+        "capacity": 44,
+        "bikes_available": 40,
+        "docks_available": 4,
+        "fullness": 0.9091
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.377564,
+          43.637152
+        ]
+      },
+      "properties": {
+        "station_id": "fake-031",
+        "name": "Placeholder Station 32",
+        "capacity": 21,
+        "bikes_available": 20,
+        "docks_available": 1,
+        "fullness": 0.9524
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.385498,
+          43.637216
+        ]
+      },
+      "properties": {
+        "station_id": "fake-032",
+        "name": "Placeholder Station 33",
+        "capacity": 12,
+        "bikes_available": 10,
+        "docks_available": 2,
+        "fullness": 0.8333
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.422243,
+          43.655135
+        ]
+      },
+      "properties": {
+        "station_id": "fake-033",
+        "name": "Placeholder Station 34",
+        "capacity": 41,
+        "bikes_available": 36,
+        "docks_available": 5,
+        "fullness": 0.878
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.322412,
+          43.652083
+        ]
+      },
+      "properties": {
+        "station_id": "fake-034",
+        "name": "Placeholder Station 35",
+        "capacity": 20,
+        "bikes_available": 12,
+        "docks_available": 8,
+        "fullness": 0.6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.399702,
+          43.649861
+        ]
+      },
+      "properties": {
+        "station_id": "fake-035",
+        "name": "Placeholder Station 36",
+        "capacity": 17,
+        "bikes_available": 9,
+        "docks_available": 8,
+        "fullness": 0.5294
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.395156,
+          43.632026
+        ]
+      },
+      "properties": {
+        "station_id": "fake-036",
+        "name": "Placeholder Station 37",
+        "capacity": 45,
+        "bikes_available": 41,
+        "docks_available": 4,
+        "fullness": 0.9111
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.39867,
+          43.644822
+        ]
+      },
+      "properties": {
+        "station_id": "fake-037",
+        "name": "Placeholder Station 38",
+        "capacity": 42,
+        "bikes_available": 15,
+        "docks_available": 27,
+        "fullness": 0.3571
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.376304,
+          43.690551
+        ]
+      },
+      "properties": {
+        "station_id": "fake-038",
+        "name": "Placeholder Station 39",
+        "capacity": 28,
+        "bikes_available": 17,
+        "docks_available": 11,
+        "fullness": 0.6071
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.402299,
+          43.643036
+        ]
+      },
+      "properties": {
+        "station_id": "fake-039",
+        "name": "Placeholder Station 40",
+        "capacity": 31,
+        "bikes_available": 1,
+        "docks_available": 30,
+        "fullness": 0.0323
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.374055,
+          43.641586
+        ]
+      },
+      "properties": {
+        "station_id": "fake-040",
+        "name": "Placeholder Station 41",
+        "capacity": 41,
+        "bikes_available": 26,
+        "docks_available": 15,
+        "fullness": 0.6341
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.396561,
+          43.654323
+        ]
+      },
+      "properties": {
+        "station_id": "fake-041",
+        "name": "Placeholder Station 42",
+        "capacity": 45,
+        "bikes_available": 18,
+        "docks_available": 27,
+        "fullness": 0.4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.440598,
+          43.628959
+        ]
+      },
+      "properties": {
+        "station_id": "fake-042",
+        "name": "Placeholder Station 43",
+        "capacity": 41,
+        "bikes_available": 1,
+        "docks_available": 40,
+        "fullness": 0.0244
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3748,
+          43.665283
+        ]
+      },
+      "properties": {
+        "station_id": "fake-043",
+        "name": "Placeholder Station 44",
+        "capacity": 23,
+        "bikes_available": 4,
+        "docks_available": 19,
+        "fullness": 0.1739
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.346828,
+          43.655284
+        ]
+      },
+      "properties": {
+        "station_id": "fake-044",
+        "name": "Placeholder Station 45",
+        "capacity": 29,
+        "bikes_available": 26,
+        "docks_available": 3,
+        "fullness": 0.8966
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.400776,
+          43.713001
+        ]
+      },
+      "properties": {
+        "station_id": "fake-045",
+        "name": "Placeholder Station 46",
+        "capacity": 39,
+        "bikes_available": 25,
+        "docks_available": 14,
+        "fullness": 0.641
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.455452,
+          43.686307
+        ]
+      },
+      "properties": {
+        "station_id": "fake-046",
+        "name": "Placeholder Station 47",
+        "capacity": 45,
+        "bikes_available": 31,
+        "docks_available": 14,
+        "fullness": 0.6889
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.389569,
+          43.672169
+        ]
+      },
+      "properties": {
+        "station_id": "fake-047",
+        "name": "Placeholder Station 48",
+        "capacity": 43,
+        "bikes_available": 8,
+        "docks_available": 35,
+        "fullness": 0.186
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.38868,
+          43.621535
+        ]
+      },
+      "properties": {
+        "station_id": "fake-048",
+        "name": "Placeholder Station 49",
+        "capacity": 21,
+        "bikes_available": 11,
+        "docks_available": 10,
+        "fullness": 0.5238
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.424722,
+          43.679167
+        ]
+      },
+      "properties": {
+        "station_id": "fake-049",
+        "name": "Placeholder Station 50",
+        "capacity": 16,
+        "bikes_available": 3,
+        "docks_available": 13,
+        "fullness": 0.1875
+      }
+    }
+  ]
+}
