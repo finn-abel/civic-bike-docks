@@ -17,11 +17,16 @@ import type { StationCollection, StationFeature } from './types';
  * Validate at the boundary.
  *
  * types.ts is compile-time only; this file arrives over the network at runtime and
- * TypeScript cannot vouch for it. Checking here means a bad Phase 4 transform fails
- * loudly on load, naming the offending station, instead of silently rendering docks
- * in the Gulf of Guinea or coloring by NaN.
+ * TypeScript cannot vouch for it. Checking here means a bad transform fails loudly,
+ * naming the offending station, instead of silently rendering docks in the Gulf of
+ * Guinea or colouring by NaN.
+ *
+ * Exported because scripts/build_stations.ts runs the same check on its output
+ * before writing. One definition of "valid", enforced at both ends of the pipe.
  */
-function assertStationCollection(value: unknown): asserts value is StationCollection {
+export function assertStationCollection(
+  value: unknown,
+): asserts value is StationCollection {
   if (typeof value !== 'object' || value === null) {
     throw new TypeError(`${DATA.stations}: expected an object, got ${typeof value}`);
   }

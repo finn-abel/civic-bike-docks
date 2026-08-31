@@ -73,6 +73,34 @@ separate fields; swapping them puts every dock in the Gulf of Guinea.
 `fullness` is precomputed in the transform, not in the map, so the styling
 expression colors by one clean number.
 
+### The committed census (Phase 4 onward)
+
+`public/data/stations.geojson` now holds the **real Toronto network**: 1063 stations,
+written by `scripts/build_stations.ts` (`npm run build:stations`) from a snapshot
+taken **2026-08-31**. 1062 carry availability; 1 does not (station `8258`, capacity 0).
+
+The script resolves its sub-feed URLs through the GBFS **discovery file** rather
+than hardcoding them, so pointing `FEEDS.discovery` at another city's system is the
+one-line change the rest of the pipeline follows.
+
+It runs the *same* `assertStationCollection` the browser runs, before writing — one
+definition of "valid", enforced at both ends of the pipe, so a bad transform can
+never overwrite a good file.
+
+**`station_status` is included in the snapshot.** The build plan sequences the
+status join as a Phase 5 stretch, but the contract already declares
+`bikes_available` / `docks_available` / `fullness` as MEASURED, and shipping the
+census alone would leave every dot in the no-data state with the whole colour
+channel dead. Snapshotting status once and committing it is what the plan
+prescribes for offline anyway. What remains genuinely Phase 5 is the *live*
+re-fetch in the browser, with this snapshot as the fallback.
+
+Run `npm run build:stations -- --no-status` for the strict census-only file.
+
+Availability is a **snapshot, not live**. It was true at the moment above and is
+not refreshed; the panel reports it as MEASURED because it was measured, but a
+demo should say when it was measured.
+
 ### During development (Phases 2–3)
 
 `public/data/stations.geojson` holds **50 generated stations**, contract-shaped,
@@ -166,12 +194,23 @@ tokens in `src/styles.css` — so the legend swatches cannot drift from the dots
 
 | Asset | Committed? | Notes |
 |---|---|---|
+| Offline basemap style + glyphs | **Yes** | `public/basemap/` — a flat ground plus one vendored glyph atlas. Used automatically when CARTO is unreachable. |
 | `public/data/stations.geojson` | Yes | Fetched once, offline, by `scripts/build_stations.ts`. The browser never calls the GBFS feed. |
 | Status snapshot (Phase 5) | Yes, when added | Live re-fetch is an *enhancement* with the snapshot as fallback — never the load-bearing path. |
 | MapLibre GL JS + CSS | **Yes** | Pinned to `6.6.0` in `package.json` and bundled into `dist/` by Vite. No CDN at runtime. |
-| Basemap tiles | **No** — CARTO CDN | Keyless, but network-fetched and browser-cached. Load once online before demoing, or self-host a minimal style. |
+| Basemap tiles | **No** — CARTO CDN | Keyless and network-fetched, but no longer load-bearing: if they fail, the local style takes over. |
 
-**Basemap tiles are the one remaining gap.** Moving to Vite closed the MapLibre
-half of this — the library is now bundled, not fetched. Tiles still are not, and
-self-hosting a minimal style is the only real fix. Not blocking Phase 1; it is the
-verification step at the end of Phase 4.
+**Closed in Phase 4.** Verified by loading the built site with every off-origin
+request aborted: all 1063 docks, clustering, cluster counts, colour, and the click
+panel work with the network down. The only thing lost is the street basemap, and
+the page says so rather than showing an empty rectangle.
+
+The fix has two parts. `resolveStyle()` in `src/map.ts` probes the CARTO style with
+a short timeout and falls back to `public/basemap/style.json`; without that probe
+MapLibre never fires `load`, no layers are ever added, and the map renders blank
+even though every byte of data is already local. And the cluster-count glyphs are
+vendored under `public/basemap/fonts/`, because a symbol layer with no reachable
+glyph endpoint silently drops its text.
+
+Glyph atlas is Montserrat (SIL OFL 1.1) and Open Sans (Apache 2.0), rendered by the
+CARTO glyph server.

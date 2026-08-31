@@ -40,38 +40,64 @@ if (!container) {
   throw new Error('map.ts: no #map element — index.html and map.ts disagree.');
 }
 
+/** Surface a message on the map. A silent grey rectangle is the worst possible
+ *  failure mode in a demo — better to say what happened. */
+function showNotice(message: string, tone: 'error' | 'info', cause?: unknown): void {
+  if (cause !== undefined) console.error(`[map] ${message}`, cause);
+  const banner = document.getElementById('map-error');
+  if (!banner) return;
+  banner.textContent = message;
+  banner.classList.toggle('notice--info', tone === 'info');
+  banner.removeAttribute('hidden');
+}
+
+/**
+ * Pick a basemap style before building the map.
+ *
+ * The basemap is the only thing here that still needs the network. If it is
+ * unreachable, MapLibre never fires `load`, no layers are ever added, and the page
+ * shows an empty rectangle — the data is all local, but you would never know it.
+ *
+ * So probe the style first and fall back to the vendored one. Offline you lose the
+ * streets; you keep all 1063 docks, the clustering, and the panel.
+ */
+async function resolveStyle(): Promise<{ style: string; online: boolean }> {
+  try {
+    const response = await fetch(BASEMAP.style, {
+      signal: AbortSignal.timeout(BASEMAP.styleTimeoutMs),
+    });
+    if (response.ok) return { style: BASEMAP.style, online: true };
+  } catch {
+    // Unreachable or too slow — fall through to the local style.
+  }
+  return { style: BASEMAP.offlineStyle, online: false };
+}
+
+// Start the census fetch immediately; it does not depend on the style. Both are
+// local files in the built site, so this costs nothing and saves a round trip.
+const stationsReady = loadStations();
+const { style, online } = await resolveStyle();
+
 export const map = new MapLibreMap({
   container,
-  style: BASEMAP.style,
+  style,
   center: CITY.center,
   zoom: CITY.zoom,
   attributionControl: false,
 });
 
 map.addControl(new NavigationControl({ showCompass: false }), 'bottom-right');
-// The style supplies its own OSM/CARTO attribution — passing customAttribution
-// here as well prints it twice. Compact so it stays out of the map's way.
+// The CARTO style supplies its own OSM/CARTO attribution — passing
+// customAttribution as well prints it twice. The offline style has none to give.
 map.addControl(new AttributionControl({ compact: true }), 'bottom-left');
 
-/** Surface a failure on screen. A silent grey rectangle is the worst possible
- *  failure mode in a demo — better to say what broke. */
-function showFailure(message: string, cause: unknown): void {
-  console.error(`[map] ${message}`, cause);
-  const banner = document.getElementById('map-error');
-  if (!banner) return;
-  banner.textContent = message;
-  banner.removeAttribute('hidden');
+if (!online) {
+  showNotice('Offline — showing docks without the street map.', 'info');
 }
 
-// Basemap tiles are the only network dependency at runtime; MapLibre itself is
-// bundled, and the station census is a committed static file.
 map.on('error', (event) => {
-  showFailure('Basemap tiles didn’t load. Check the network connection.', event.error);
+  showNotice('Something went wrong drawing the map.', 'error', event.error);
 });
-
-// Fetch the census in parallel with the style load rather than after it — the two
-// are independent, and waiting for the style first would add a needless round trip.
-const stationsReady = loadStations();
 
 map.on('load', () => {
   void stationsReady
@@ -80,10 +106,11 @@ map.on('load', () => {
       wireInteractions(map);
     })
     .catch((error: unknown) => {
-      showFailure(
+      showNotice(
         error instanceof Error
           ? `Station data failed to load: ${error.message}`
           : 'Station data failed to load.',
+        'error',
         error,
       );
     });

@@ -2,9 +2,9 @@
 
 Every Bike Share Toronto dock on a map. Rung 1 of the Civic Ladder.
 
-**Status:** Phases 0–3 complete. The map is functionally done — dots, clustering,
-data-driven colour and size, click-to-panel, hover. It runs on 50 generated
-placeholders; Phase 4 swaps in the real 1063 without touching the UI.
+**Status:** Phases 0–4 complete. Every real Bike Share Toronto dock (1063 of them)
+on the map, clustered, clickable, and loading with the network off. Phase 5's
+stretch goals — live fullness, globe intro — are the only things left.
 
 ## Run it
 
@@ -44,9 +44,12 @@ src/
 ├─ types.ts              # the data contract, as enforced types
 ├─ constants.ts          # city center, zooms, feed URLs, cluster settings — with sources
 └─ styles.css            # design tokens + map chrome
-public/data/             # stations.geojson (copied to dist/ verbatim)
+public/
+├─ data/stations.geojson       # the committed census — 1063 real docks
+└─ basemap/                    # offline fallback style + vendored glyphs
 scripts/
-└─ generate_fake_stations.ts   # Phase 2 placeholder generator
+├─ generate_fake_stations.ts   # Phase 2 placeholder generator
+└─ build_stations.ts           # Phase 4 GBFS -> GeoJSON transform
 DATA.md                  # provenance stamps + the contract in prose
 ```
 
@@ -55,7 +58,6 @@ as `data/stations.geojson` — the path in `constants.ts → DATA.stations`.
 
 ## What's next
 
-- **Phase 4** — swap in the real 1063 stations. The UI shouldn't change at all.
 - **Phase 5** *(stretch)* — live fullness coloring, globe intro.
 
 See [`DATA.md`](DATA.md) for the contract, the provenance stamps, and the GBFS v3

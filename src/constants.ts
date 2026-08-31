@@ -85,9 +85,19 @@ export const BASEMAP = {
    */
   style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
 
-  /** MapLibre's own keyless demo style — country outlines only, no city streets.
-   *  Useless for a dock map; kept as a last-resort fallback if CARTO is unreachable. */
-  fallbackStyle: 'https://demotiles.maplibre.org/style.json',
+  /**
+   * Local fallback, used when CARTO cannot be reached. A flat ground with no
+   * streets — but every dock still renders in its true position, so the shape of
+   * the network stays readable with the wifi off (discipline #3).
+   *
+   * Ships with its own glyph atlas under public/basemap/fonts/, so cluster counts
+   * survive offline too. Nothing in it touches the network.
+   */
+  offlineStyle: 'basemap/style.json',
+
+  /** How long to wait for the CARTO style before falling back. Short: a demo on
+   *  bad wifi should degrade in a beat, not hang on a blank screen. */
+  styleTimeoutMs: 2500,
 
   // Attribution is NOT set here: the CARTO style.json already declares its own
   // OSM + CARTO attribution, and MapLibre renders both if you also pass

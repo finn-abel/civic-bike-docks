@@ -474,3 +474,9 @@ main {
     max-height: 55vh;
   }
 }
+
+/* An expected, handled state — not a failure. Reads as information, not alarm. */
+.notice--info {
+  border-left-color: var(--color-ink-soft);
+  color: var(--color-ink-soft);
+}
