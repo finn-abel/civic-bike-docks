@@ -3,22 +3,40 @@
    chrome reads as one system rather than a stack of one-off values.
    --------------------------------------------------------------------------- */
 :root {
-  /* Ink and paper: a warm off-white over CARTO Positron's cool grey basemap. */
+  /* Ink and paper. The neutrals carry a warm hue (~70) rather than the cool one
+     they had, so the greys sit with the tangerine instead of fighting it. */
   --color-paper: oklch(98.5% 0.004 85);
-  --color-ink: oklch(22% 0.012 265);
-  --color-ink-soft: oklch(48% 0.014 265);
-  --color-rule: oklch(88% 0.008 265);
+  --color-ink: oklch(21% 0.012 70);
+  --color-ink-soft: oklch(48% 0.012 70);
+  --color-rule: oklch(88% 0.008 70);
 
-  /* Bike Share Toronto rides on a saturated red; reserved for live/alert state. */
-  --color-accent: oklch(56% 0.19 25);
+  /* ---- Bike Share Toronto tangerine ------------------------------------
+     One hue, split by job, because a single orange cannot do both: the bikes'
+     own tangerine is only 3.07:1 on paper, fine as a fill and far too weak as
+     text. So the fill keeps the real colour and the text takes a deeper step. */
+
+  /* Fills, rules, the CTA — never text. */
+  --color-brand: #eb6834;
+  --color-brand-lift: #f4793f; /* CTA hover; ink label holds 5.96:1 */
+
+  /* Orange *text*: 4.72:1 on paper, clears WCAG AA for body copy. */
+  --color-brand-ink: #c14a17;
+
+  /* Reserved status red — deliberately NOT the brand colour. An error has to be
+     distinguishable from branding, and orange is now the brand and the data. */
+  --color-critical: #d03b3b;
+
   --color-measured: oklch(52% 0.11 165);
   --color-computed: oklch(50% 0.13 275);
 
   /* Fullness ramp — sequential, one hue, light to dark. Kept byte-identical to
-     FULLNESS_RAMP in src/layers.ts so the legend can never drift from the map. */
-  --fullness-empty: #3987e5;
-  --fullness-half: #1c5cab;
-  --fullness-full: #0d366b;
+     FULLNESS_RAMP in src/layers.ts so the legend can never drift from the map.
+     Monotonic in OKLCH lightness (0.605 / 0.468 / 0.332, even steps) and every
+     step clears 3:1 on the basemap. The bikes' own tangerine is not in here —
+     at 2.98:1 it would fade into the map. */
+  --fullness-empty: #d2551f;
+  --fullness-half: #96380f;
+  --fullness-full: #5c200a;
   --no-data-stroke: #6b6b66;
 
   --font-display: ui-serif, Georgia, 'Times New Roman', serif;
@@ -86,7 +104,7 @@ main {
   background: color-mix(in oklch, var(--color-paper) 92%, transparent);
   backdrop-filter: blur(8px);
   border-radius: var(--radius);
-  border-top: 2px solid var(--color-accent);
+  border-top: 2px solid var(--color-brand);
   box-shadow: var(--shadow-card);
 }
 
@@ -96,7 +114,7 @@ main {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-brand-ink);
 }
 
 .masthead__title {
@@ -146,7 +164,7 @@ main {
   margin: 0;
   padding: var(--space-sm) var(--space-md);
   background: var(--color-paper);
-  border-left: 3px solid var(--color-accent);
+  border-left: 3px solid var(--color-critical);
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
   font-size: var(--text-meta);
@@ -260,7 +278,7 @@ main {
 }
 
 .panel__close:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-brand-ink);
   outline-offset: 1px;
 }
 
@@ -559,7 +577,7 @@ main {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-brand-ink);
 }
 
 .landing__title {
@@ -589,8 +607,8 @@ main {
   padding: clamp(0.8rem, 0.7rem + 0.3vw, 1.05rem) clamp(1.4rem, 1.2rem + 0.6vw, 2rem);
   border: 0;
   border-radius: 2px;
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--color-brand);
+  color: var(--color-ink);
   font: inherit;
   font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
   font-weight: 600;
@@ -603,9 +621,9 @@ main {
 }
 
 .landing__cta:hover {
-  background: var(--color-accent);
+  background: var(--color-brand-lift);
   translate: 0 -2px;
-  box-shadow: 0 6px 18px oklch(56% 0.19 25 / 0.28);
+  box-shadow: 0 8px 22px oklch(66% 0.17 45 / 0.32);
 }
 
 .landing__cta:active {
@@ -614,7 +632,7 @@ main {
 }
 
 .landing__cta:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-brand-ink);
   outline-offset: 3px;
 }
 

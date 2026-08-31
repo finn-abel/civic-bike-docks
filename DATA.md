@@ -196,21 +196,65 @@ exists.
 | Dot **colour** | `fullness` | Sequential, one hue, light → dark. More ink = more bikes. |
 | Dot **size** | `capacity` | Independent of colour, so the two readings never conflict. |
 | **Hollow** dot | `fullness` is `null` | A different *kind* of value, so a different shape — not a fourth colour. |
-| Cluster **size** | `point_count` | Neutral ink, never a step on the fullness ramp. |
+| Cluster **size** | `point_count` | Brand tangerine, never a step on the fullness ramp. |
+| Cluster **numeral** | `point_count` | The only mark on the map that contains a number. |
 
-**The ramp is blue, not green→red.** The build plan suggests green = bikes
+**The ramp is one hue, not green→red.** The build plan suggests green = bikes
 available → red = empty. That is the single worst pairing for red-green colour
 blindness (~8% of men), and it is a *diverging* structure used where the data is
 *sequential* — fullness is a magnitude, not a polarity. A one-hue ramp reads just
 as fast and works for everyone.
 
-Steps are `#3987e5 → #1c5cab → #0d366b`, monotonic in OKLCH lightness
-(0.62 → 0.48 → 0.34) and each clearing 3:1 against the basemap, so no dot ever
-fades into the map. Colour is never the only channel: the panel prints the exact
-numbers and the legend labels both ends.
+The hue is Bike Share Toronto's tangerine, so a dot reads as the thing it stands
+for. Steps `#d2551f → #96380f → #5c200a`, monotonic in OKLCH lightness
+(0.605 → 0.468 → 0.332) in even intervals, each clearing 3:1 against the basemap.
+
+**The bikes' actual colour is not one of those steps.** `#eb6834` measures 2.98:1
+on the basemap — it would fade into the map. It lives in `styles.css` as
+`--color-brand`, for fills and the CTA, where contrast is not the constraint.
 
 Kept in two places — `FULLNESS_RAMP` in `src/layers.ts` and the `--fullness-*`
 tokens in `src/styles.css` — so the legend swatches cannot drift from the dots.
+
+### The theme, by job
+
+One hue cannot do every job, so the tangerine is split by contrast requirement:
+
+| Token | Value | Job | Measured |
+|---|---|---|---|
+| `--color-brand` | `#eb6834` | Fills, rules, the CTA. Never text. | 3.07:1 on paper; ink label on it 5.11:1 |
+| `--color-brand-lift` | `#f4793f` | CTA hover | ink label 5.96:1 |
+| `--color-brand-ink` | `#c14a17` | Orange *text* (eyebrows) | 4.72:1 — clears WCAG AA body |
+| `--fullness-*` | `#d2551f`→`#5c200a` | The data | all ≥3:1 on basemap |
+| `--color-critical` | `#d03b3b` | Errors | 4.60:1 |
+
+`--color-critical` is deliberately **not** the brand colour. An error has to be
+distinguishable from branding, and orange is now both the brand and the data.
+
+Clusters wear the bikes' own tangerine (`#eb6834`) — the brand colour, and
+pointedly not a step on the fullness ramp, because a cluster has no single
+fullness and colouring it by one would be a lie.
+
+That leaves cluster and ramp close in hue (ΔE 6.6 against the lightest step), so
+**the separation is structural, not chromatic**:
+
+- a cluster is 15–26px radius against a station's 4.5–11px;
+- a cluster is the only mark on the map that ever contains a number;
+- a white ring holds it off the basemap.
+
+The numeral is **ink, not white**: white on this orange measures 3.20:1 and fails,
+ink measures 5.11:1. Hover lifts to `#f4793f` rather than deepening, matching the
+CTA, so the numeral stays legible through the state change.
+
+An earlier revision kept clusters a cool slate for hue distance. Colouring them
+with the brand was a deliberate call to make the theme consistent; the structural
+separations above are what make it safe.
+
+Adjacent ramp steps sit at ΔE 14.2, below the validator's categorical
+normal-vision floor of 15. That is inherent to a sequential ramp, where adjacent
+steps are *meant* to be close, and the relief is in place: clusters carry a
+number, no-data is a hollow ring rather than a fourth colour, and the panel
+prints exact values. No distinction on this map rests on colour alone.
 
 ## Camera bounds
 

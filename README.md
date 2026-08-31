@@ -42,6 +42,12 @@ lsof -nP -iTCP:5180 -sTCP:LISTEN    # find what has it
 `dist/` is a plain static directory: no server, no API key, no runtime dependency
 on npm. That is what keeps the wifi-off property.
 
+## Theme
+
+Bike Share Toronto's tangerine, split into tokens by contrast requirement — the
+bikes' own `#eb6834` is a fill colour, not a text or map-mark colour. The full
+table, with measurements, is in [`DATA.md`](DATA.md) § The theme, by job.
+
 ## Stack
 
 TypeScript (strict) + Vite + MapLibre GL JS 6. No UI framework — rung 1's one hard

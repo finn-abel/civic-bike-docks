@@ -15,20 +15,26 @@ import { CLUSTER, IDS } from './constants';
 
 /**
  * Fullness ramp — SEQUENTIAL (magnitude: how many bikes are here), so it is one
- * hue stepping light → dark. Monotonic in OKLCH lightness: 0.62 → 0.48 → 0.34.
+ * hue stepping light → dark. Monotonic in OKLCH lightness: 0.605 → 0.468 → 0.332,
+ * in even steps.
  *
- * Deliberately NOT the green→red the build plan suggests. Red/green is the single
- * worst pairing for red-green colour blindness (~8% of men), and a two-hue ramp
- * with no neutral midpoint is a diverging scale used where a sequential one
- * belongs. More ink = more bikes reads just as fast and works for everyone.
+ * The hue is Bike Share Toronto's own tangerine, so a dot reads as the thing it
+ * stands for. The bikes' exact colour (#eb6834) is deliberately NOT a step here:
+ * at 2.98:1 on the basemap it fades into the map. It lives in styles.css as
+ * --color-brand, for fills and the CTA, where contrast is not the constraint.
  *
- * Every step clears 3:1 against the Positron basemap, so no dot ever fades into
- * the map. Colour is never the only channel: the panel prints exact numbers.
+ * Also deliberately NOT the green→red the build plan suggests. Red/green is the
+ * single worst pairing for red-green colour blindness (~8% of men), and a
+ * two-hue ramp with no neutral midpoint is a diverging scale used where a
+ * sequential one belongs. More ink = more bikes reads just as fast, for everyone.
+ *
+ * Every step clears 3:1 against the basemap. Colour is never the only channel:
+ * the panel prints exact numbers and the legend labels both ends.
  */
 const FULLNESS_RAMP = {
-  empty: '#3987e5',
-  half: '#1c5cab',
-  full: '#0d366b',
+  empty: '#d2551f',
+  half: '#96380f',
+  full: '#5c200a',
 } as const;
 
 /** A station with no availability data — capacity 0, or no status feed joined.
@@ -52,11 +58,22 @@ const STATION = {
 } as const;
 
 const CLUSTER_STYLE = {
-  /** Clusters are deliberately neutral ink, not a step on the fullness ramp.
-   *  A cluster has no single fullness — colouring it by one would be a lie. */
-  color: '#2f3340',
-  colorHover: '#171a22',
-  textColor: '#ffffff',
+  /**
+   * Clusters wear the bikes' own tangerine — the brand colour, and pointedly NOT
+   * a step on the fullness ramp. A cluster has no single fullness; colouring it
+   * by one would be a lie.
+   *
+   * That leaves it close to the ramp's lightest step in hue (ΔE 6.6), so the
+   * separation is carried structurally instead: a cluster is 15–26px against a
+   * station's 4.5–11px, it is the *only* mark that ever contains a number, and
+   * the white ring holds it off the basemap. Nothing here rests on hue.
+   *
+   * The numeral is ink, not white: white on this orange is 3.20:1 and fails,
+   * ink is 5.11:1. Hover lifts rather than deepens, matching the CTA.
+   */
+  color: '#eb6834',
+  colorHover: '#f4793f',
+  textColor: '#231f1b',
   /** Radius steps by how many stations a cluster holds. */
   radiusSmall: 15,
   radiusMedium: 20,
