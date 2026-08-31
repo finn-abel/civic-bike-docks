@@ -14,16 +14,39 @@
     <main>
       <div id="map" role="application" aria-label="Map of Bike Share Toronto docks"></div>
 
+      <!-- The opening screen. Removed from the DOM once the camera lands, so it
+           cannot sit invisibly over the map catching clicks. -->
+      <section id="landing" class="landing" aria-label="Introduction">
+        <div class="landing__copy">
+          <p class="landing__eyebrow">Bike Share Toronto</p>
+          <h1 class="landing__title">Every dock in the city</h1>
+          <p class="landing__lede">
+            All 1,063 public bike docks, at their real coordinates, with how many
+            bikes are waiting at each one right now.
+          </p>
+          <button id="start" class="landing__cta" type="button">
+            Get started
+            <span class="landing__cta-arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="landing__meta">
+            <span class="stamp">Measured</span>
+            City of Toronto GBFS feed
+          </p>
+        </div>
+      </section>
+
       <!-- One left rail, so page chrome occupies a single column and covers as
            little of the city as possible. -->
       <div class="rail">
         <header class="masthead">
           <p class="masthead__eyebrow">Bike Share Toronto</p>
-          <h1 class="masthead__title">Every dock in the city</h1>
+          <p class="masthead__title">Every dock in the city</p>
           <p class="masthead__source">
             <span class="stamp">Measured</span>
             City of Toronto GBFS feed
           </p>
+          <!-- Written by showFreshness() in src/map.ts. -->
+          <p class="freshness"><span id="freshness">Loading…</span></p>
         </header>
 
         <!-- Written by renderPanel() in src/panel.ts. -->

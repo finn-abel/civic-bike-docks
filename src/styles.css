@@ -480,3 +480,221 @@ main {
   border-left-color: var(--color-ink-soft);
   color: var(--color-ink-soft);
 }
+
+/* ---------------------------------------------------------------------------
+   Freshness caption — how old the availability figures are. Discipline #1: a
+   number on screen should say whether it is current.
+   --------------------------------------------------------------------------- */
+.freshness {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: 0.35rem 0 0;
+  font-size: var(--text-eyebrow);
+  letter-spacing: 0.04em;
+  color: var(--color-ink-soft);
+}
+
+.freshness--live::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-measured);
+  animation: pulse 2.4s var(--ease-out-expo) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ---------------------------------------------------------------------------
+   Landing — an editorial cover over the globe. Copy left, planet right on wide
+   screens (the map's own camera padding keeps the globe clear of the text);
+   stacked on narrow ones.
+   --------------------------------------------------------------------------- */
+.landing {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  align-content: center;
+  padding: var(--space-lg) clamp(1.5rem, 6vw, 5rem);
+  /* A wash that fades out to the right so the globe reads through it rather than
+     sitting behind a flat panel. */
+  background: linear-gradient(
+    100deg,
+    var(--color-paper) 0%,
+    color-mix(in oklch, var(--color-paper) 92%, transparent) 38%,
+    transparent 68%
+  );
+  animation: landing-in 700ms var(--ease-out-expo);
+}
+
+.landing--leaving {
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 900ms var(--ease-out-expo),
+    translate 900ms var(--ease-out-expo);
+  translate: -1.5rem 0;
+}
+
+@keyframes landing-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.landing__copy {
+  /* Tracks the camera gutter in src/constants.ts, so the column and the space
+     reserved for it stay in step. */
+  max-width: clamp(26rem, 28vw, 38rem);
+}
+
+.landing__eyebrow {
+  margin: 0;
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.landing__title {
+  /* The one place in the project that gets to be big. */
+  margin: var(--space-sm) 0 var(--space-md);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 1.4rem + 4.6vw, 7rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.landing__lede {
+  margin: 0 0 var(--space-lg);
+  max-width: 34rem;
+  font-size: clamp(1rem, 0.92rem + 0.25vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--color-ink-soft);
+  text-wrap: pretty;
+}
+
+.landing__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: clamp(0.8rem, 0.7rem + 0.3vw, 1.05rem) clamp(1.4rem, 1.2rem + 0.6vw, 2rem);
+  border: 0;
+  border-radius: 2px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font: inherit;
+  font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    background var(--duration) var(--ease-out-expo),
+    translate var(--duration) var(--ease-out-expo),
+    box-shadow var(--duration) var(--ease-out-expo);
+}
+
+.landing__cta:hover {
+  background: var(--color-accent);
+  translate: 0 -2px;
+  box-shadow: 0 6px 18px oklch(56% 0.19 25 / 0.28);
+}
+
+.landing__cta:active {
+  translate: 0 0;
+  box-shadow: none;
+}
+
+.landing__cta:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.landing__cta-arrow {
+  transition: translate var(--duration) var(--ease-out-expo);
+}
+
+.landing__cta:hover .landing__cta-arrow {
+  translate: 0.2rem 0;
+}
+
+.landing__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: var(--space-lg) 0 0;
+  font-size: var(--text-meta);
+  color: var(--color-ink-soft);
+}
+
+/* Narrow screens: copy on top, globe below it. The camera reserves the upper
+   band (INTRO.copyStackHeightPx), so the wash only needs to cover that band and
+   can clear out entirely underneath. */
+@media (max-width: 56.25rem) {
+  .landing {
+    background: linear-gradient(
+      180deg,
+      var(--color-paper) 0%,
+      var(--color-paper) 42%,
+      color-mix(in oklch, var(--color-paper) 55%, transparent) 62%,
+      transparent 78%
+    );
+    align-content: start;
+    padding-top: clamp(2rem, 7vh, 4rem);
+  }
+
+  .landing__lede {
+    margin-bottom: var(--space-md);
+  }
+
+  .landing__meta {
+    margin-top: var(--space-md);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   The rail waits for the map to arrive before it appears.
+   --------------------------------------------------------------------------- */
+.rail {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 600ms var(--ease-out-expo),
+    visibility 0s linear 600ms;
+}
+
+.rail--visible {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 600ms var(--ease-out-expo) 150ms,
+    visibility 0s;
+}
+
+/* The masthead title is no longer the page's h1 — the landing owns that — so it
+   drops to the size it always visually was. */
+.masthead__title {
+  font-size: var(--text-panel-title);
+}
+
+/* MapLibre's own controls are map chrome too — they have no business on the
+   cover. Hidden until the camera arrives, alongside the rail. */
+.maplibregl-ctrl-group,
+.maplibregl-ctrl-attrib {
+  opacity: 0;
+  transition: opacity 600ms var(--ease-out-expo);
+}
+
+.chrome-visible .maplibregl-ctrl-group,
+.chrome-visible .maplibregl-ctrl-attrib {
+  opacity: 1;
+  transition-delay: 150ms;
+}

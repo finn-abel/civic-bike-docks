@@ -93,9 +93,16 @@ export function assertStationCollection(
   });
 }
 
+/** The census plus the provenance the UI needs to caption it honestly. */
+export interface LoadedStations {
+  readonly data: FeatureCollection;
+  /** When the snapshot was taken, or null for an older file without the stamp. */
+  readonly generatedAt: string | null;
+}
+
 /** Fetch and validate the committed census. Throws with a specific message on any
  *  contract violation — the caller surfaces it rather than swallowing it. */
-export async function loadStations(): Promise<FeatureCollection> {
+export async function loadStations(): Promise<LoadedStations> {
   const response = await fetch(DATA.stations);
   if (!response.ok) {
     throw new Error(
@@ -106,8 +113,11 @@ export async function loadStations(): Promise<FeatureCollection> {
   const parsed: unknown = await response.json();
   assertStationCollection(parsed);
 
-  // StationCollection is the narrower contract; MapLibre wants the general GeoJSON
-  // type. Widening is safe — every StationFeature is a valid Feature.
-  return parsed as unknown as FeatureCollection;
+  return {
+    // StationCollection is the narrower contract; MapLibre wants the general
+    // GeoJSON type. Widening is safe — every StationFeature is a valid Feature.
+    data: parsed as unknown as FeatureCollection,
+    generatedAt: typeof parsed.generated_at === 'string' ? parsed.generated_at : null,
+  };
 }
 

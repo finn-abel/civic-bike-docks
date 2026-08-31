@@ -232,7 +232,11 @@ async function main(): Promise<void> {
 
   const { features, skipped } = transform(information, statusById);
 
-  const collection: StationCollection = { type: 'FeatureCollection', features };
+  const collection: StationCollection = {
+    type: 'FeatureCollection',
+    generated_at: new Date().toISOString(),
+    features,
+  };
 
   // Same contract check the browser runs on load. If the transform produced
   // something the map would reject, fail here — before overwriting a good file.

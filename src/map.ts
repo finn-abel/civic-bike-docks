@@ -7,6 +7,7 @@
  */
 
 import {
+  AJAXError,
   AttributionControl,
   Map as MapLibreMap,
   NavigationControl,
@@ -30,7 +31,10 @@ import './styles.css';
 
 import { BASEMAP, CITY } from './constants';
 import { wireInteractions } from './interactions';
+import { skipLanding, startLanding } from './landing';
 import { addStationLayers } from './layers';
+import type { Freshness } from './live';
+import { startLiveUpdates } from './live';
 import { loadStations } from './stations';
 
 setWorkerUrl(maplibreWorkerUrl);
@@ -78,6 +82,17 @@ async function resolveStyle(): Promise<{ style: string; online: boolean }> {
 const stationsReady = loadStations();
 const { style, online } = await resolveStyle();
 
+/**
+ * `?nointro` drops straight into the city — a landing screen is right once and
+ * tiresome on every reload during development, and the test suite needs a way in
+ * that does not depend on clicking through it.
+ *
+ * Reduced motion still gets the landing: it is a page with a control on it, not
+ * an animation. What it loses is the idle spin and the flight, not the choice.
+ */
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const wantsLanding = !new URLSearchParams(window.location.search).has('nointro');
+
 export const map = new MapLibreMap({
   container,
   style,
@@ -96,14 +111,73 @@ if (!online) {
 }
 
 map.on('error', (event) => {
+  // Individual tiles fail all the time — a flaky connection, a CDN edge having a
+  // moment. MapLibre retries and the map heals itself, so a banner here would be
+  // pure noise that outlives the problem it describes. Log it and move on.
+  //
+  // A failed resource fetch arrives as an AJAXError; anything else is a style or
+  // runtime fault worth telling someone about. (A basemap that fails outright
+  // never reaches here at all — resolveStyle catches that first.)
+  if (event.error instanceof AJAXError) {
+    console.warn(`[map] resource request failed: ${event.error.url}`, event.error.status);
+    return;
+  }
   showNotice('Something went wrong drawing the map.', 'error', event.error);
 });
 
+/** Caption the availability figures with how old they are. A number on screen
+ *  should say whether it is current — that is discipline #1 doing its job. */
+function showFreshness(freshness: Freshness): void {
+  const element = document.getElementById('freshness');
+  if (!element) return;
+
+  if (freshness.kind === 'live') {
+    element.textContent = `Live · ${formatClock(freshness.at)}`;
+    element.classList.add('freshness--live');
+    return;
+  }
+
+  element.textContent = freshness.at
+    ? `Snapshot · ${formatDay(freshness.at)}`
+    : 'Snapshot';
+  element.classList.remove('freshness--live');
+}
+
+function formatClock(iso: string): string {
+  return new Date(iso).toLocaleTimeString(undefined, {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+function formatDay(iso: string): string {
+  return new Date(iso).toLocaleDateString(undefined, {
+    day: 'numeric',
+    month: 'short',
+  });
+}
+
+/** The rail is the map's chrome, so it stays out of the way until there is a map
+ *  to put chrome on. */
+function revealChrome(): void {
+  document.querySelector('.rail')?.classList.add('rail--visible');
+}
+
 map.on('load', () => {
+  if (wantsLanding) {
+    startLanding(map, { reducedMotion: prefersReducedMotion, onArrive: revealChrome });
+  } else {
+    skipLanding(map, revealChrome);
+  }
+
   void stationsReady
-    .then((stations) => {
-      addStationLayers(map, stations);
+    .then(({ data, generatedAt }) => {
+      addStationLayers(map, data);
       wireInteractions(map);
+      showFreshness({ kind: 'snapshot', at: generatedAt });
+
+      // Live availability layered over the snapshot, never in place of it.
+      if (online) startLiveUpdates(map, data, showFreshness);
     })
     .catch((error: unknown) => {
       showNotice(
@@ -115,3 +189,9 @@ map.on('load', () => {
       );
     });
 });
+
+// Dev-only handle for poking at the camera from the console or a test harness.
+// Stripped from production builds by the `import.meta.env.DEV` guard.
+if (import.meta.env.DEV) {
+  (window as unknown as { __map?: MapLibreMap }).__map = map;
+}

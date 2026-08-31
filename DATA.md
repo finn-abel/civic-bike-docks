@@ -97,9 +97,31 @@ re-fetch in the browser, with this snapshot as the fallback.
 
 Run `npm run build:stations -- --no-status` for the strict census-only file.
 
-Availability is a **snapshot, not live**. It was true at the moment above and is
-not refreshed; the panel reports it as MEASURED because it was measured, but a
-demo should say when it was measured.
+### Live availability (Phase 5)
+
+`src/live.ts` polls `station_status` in the browser every 60s and folds the result
+over the loaded census, rebuilding features rather than mutating them so the
+snapshot survives intact as a fallback.
+
+**The snapshot is the load-bearing path; live is an enhancement laid over it.** A
+failed, slow, or blocked fetch is a silent no-op — the map keeps showing the
+snapshot and never throws. That ordering is the point: a live fetch must never be
+the reason a demo has no data.
+
+The masthead caption says which you are looking at, because a number on screen
+should say whether it is current:
+
+| Caption | Meaning |
+|---|---|
+| `Live · 13:35` | The status feed answered; figures are current as of that clock time. |
+| `Snapshot · Aug 31` | Feed unreachable. Figures are from `generated_at` in the committed file. |
+
+The census carries `generated_at` (ISO 8601) as a GeoJSON foreign member for
+exactly this — without it the panel would report a months-stale count as though it
+were current.
+
+Live updates start only if the basemap probe found the network at load. Coming back
+online mid-session does not start them; reload for that.
 
 ### During development (Phases 2–3)
 
@@ -189,6 +211,26 @@ numbers and the legend labels both ends.
 
 Kept in two places — `FULLNESS_RAMP` in `src/layers.ts` and the `--fullness-*`
 tokens in `src/styles.css` — so the legend swatches cannot drift from the dots.
+
+## Camera bounds
+
+After the landing, the camera is fenced to the dock bbox plus
+`CITY.panMarginDegrees` (0.02°, ~2 km). Two limits, both derived from that one
+box so they cannot disagree:
+
+- **`maxBounds`** keeps the *viewport* inside the fence — not just the centre, so
+  you can never drag the map off the data.
+- **A zoom floor** from `cameraForBounds`, recomputed on resize. `maxBounds` alone
+  does not stop you zooming out until Lake Erie fills the frame, and the zoom that
+  fits the service area on a desktop leaves half of it off-screen on a phone.
+
+The margin is deliberately tight. The bbox's south edge is a single island dock
+with open lake below it, so every extra degree of slack buys another screenful of
+empty water — at 0.05° the southern limit was a view with no docks in it at all.
+Measured at 0.02°: every extreme of the fence keeps 47–95 docks in view.
+
+This fences the Bike Share **service area**, which is smaller than the GTA proper.
+The bounds are the docks themselves, so the map goes exactly where there is data.
 
 ## Renders with the wifi off (discipline #3)
 

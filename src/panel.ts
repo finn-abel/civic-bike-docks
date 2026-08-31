@@ -11,6 +11,13 @@ import type { RawFeatureProperties } from './types';
 
 const PANEL_ID = 'station-panel';
 
+/** Which station the panel is showing, so a live refresh can update it in place. */
+let selectedStationId: string | null = null;
+
+export function getSelectedStationId(): string | null {
+  return selectedStationId;
+}
+
 /** MapLibre flattens feature properties through vector-tile encoding, so what
  *  comes back from a click is loosely typed. Narrow it here rather than casting. */
 function readString(properties: RawFeatureProperties, key: string): string | null {
@@ -93,9 +100,24 @@ function escapeHtml(value: string): string {
   );
 }
 
-export function renderPanel(properties: RawFeatureProperties): void {
+interface RenderOptions {
+  /** True when a live refresh is redrawing an open panel rather than a click
+   *  opening it. A refresh must not yank focus to the panel from wherever the
+   *  reader actually is — but it must not drop focus either, and replacing
+   *  innerHTML destroys the focused element outright. */
+  readonly keepFocus?: boolean;
+}
+
+export function renderPanel(
+  properties: RawFeatureProperties,
+  options: RenderOptions = {},
+): void {
   const panel = document.getElementById(PANEL_ID);
   if (!panel) return;
+
+  // Read before the rebuild — afterwards the focused node is gone.
+  const hadFocusInside =
+    document.activeElement !== null && panel.contains(document.activeElement);
 
   const name = readString(properties, 'name') ?? 'Unnamed station';
   const stationId = readString(properties, 'station_id') ?? '—';
@@ -125,11 +147,24 @@ export function renderPanel(properties: RawFeatureProperties): void {
       City of Toronto GBFS feed
     </p>`;
 
+  selectedStationId = readString(properties, 'station_id');
   panel.hidden = false;
-  panel.querySelector<HTMLButtonElement>('.panel__close')?.focus();
+
+  const closeButton = panel.querySelector<HTMLButtonElement>('.panel__close');
+  if (!options.keepFocus) {
+    closeButton?.focus();
+    return;
+  }
+
+  // A refresh rebuilt the panel's contents. If the reader was focused inside it,
+  // that element no longer exists — put focus back on the close button, which is
+  // the panel's only stop. Without this, a live update every minute would silently
+  // drop a keyboard user back to the top of the document.
+  if (hadFocusInside) closeButton?.focus();
 }
 
 export function closePanel(): void {
+  selectedStationId = null;
   const panel = document.getElementById(PANEL_ID);
   if (!panel) return;
   panel.hidden = true;

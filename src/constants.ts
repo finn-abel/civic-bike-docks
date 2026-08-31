@@ -67,6 +67,21 @@ export const CITY = {
    * the *location* is wrong — 5000 km into the South Atlantic.
    */
   bboxMarginDegrees: 1,
+
+  /**
+   * How far past `bbox` the *viewport* may extend once the map is in the city,
+   * in degrees. ~2 km — enough that an edge dock is not jammed against the frame,
+   * small enough that the worst-case view still has docks in it.
+   *
+   * Kept deliberately tight because the bbox's south edge is a single island
+   * dock with open lake below it: every degree of slack here buys another
+   * screenful of empty water.
+   *
+   * Note this fences the Bike Share *service area*, which is smaller than the
+   * GTA proper — the bounds are the docks themselves, so the map goes exactly
+   * where there is data and no further.
+   */
+  panMarginDegrees: 0.02,
 } as const;
 
 // ---------------------------------------------------------------------------
@@ -113,6 +128,73 @@ export const CLUSTER = {
   radius: 50,
   /** above this zoom, every station draws individually */
   maxZoom: 14,
+} as const;
+
+// ---------------------------------------------------------------------------
+// Live status — Phase 5 stretch. An enhancement over the committed snapshot,
+// never the load-bearing path.
+// ---------------------------------------------------------------------------
+export const LIVE = {
+  /** The status feed declares ttl 10s; refreshing every 60s is current enough for
+   *  a map on screen without hammering a free public endpoint. */
+  refreshMs: 60_000,
+
+  /** Short: a failed live fetch should fall back to the snapshot in a beat, not
+   *  leave the map on stale data while a request hangs. */
+  timeoutMs: 5_000,
+} as const;
+
+// ---------------------------------------------------------------------------
+// Globe intro — Phase 5 stretch.
+// ---------------------------------------------------------------------------
+export const INTRO = {
+  /**
+   * How much of the space left over by the copy the globe should fill.
+   *
+   * The landing zoom is *computed* from this and the viewport, not fixed. A fixed
+   * zoom pins the globe to a constant pixel size, which looks right on a laptop
+   * and marooned in the middle of a 27" display.
+   */
+  globeFillFraction: 0.95,
+
+  /**
+   * The globe's on-screen diameter in CSS px at zoom 0, and how that diameter
+   * grows per zoom level: `diameter ≈ base * 2 ** (exponent * zoom)`.
+   *
+   * The exponent is 0.9, not 1: MapLibre's globe is a perspective projection, so
+   * the disc grows more slowly than the flat scale factor would suggest.
+   * Both values are measured — 205 px at zoom 0, and the exponent fitted across
+   * zooms 0/0.5/1/1.5 — and the base holds across viewport sizes.
+   */
+  globeBaseDiameterPx: 205,
+  globeZoomExponent: 0.9,
+
+  /** Clamp the computed zoom: below the floor the globe is a marble, above the
+   *  ceiling it stops reading as a planet and becomes a curved map. The ceiling
+   *  has to clear what a large display asks for — at 2560×1440 the fit wants
+   *  ~2.9, and a lower cap was leaving the globe stranded in white space. */
+  globeMinZoom: 0.4,
+  globeMaxZoom: 3.4,
+
+  /** Long enough to read as flight, short enough not to make anyone wait. */
+  flyMs: 3600,
+
+  /** Degrees of longitude per second while the landing globe idles. Slow enough
+   *  to read as drift rather than spin. */
+  spinDegreesPerSecond: 3,
+
+  /**
+   * Room reserved for the landing copy so the globe sits clear of the text
+   * instead of ghosting behind it. Wide viewports put the two side by side and
+   * reserve space on the left; narrow ones stack, and reserve it above.
+   */
+  copyGutterMinPx: 460,
+  copyGutterMaxPx: 760,
+  /** The gutter tracks viewport width so the copy column and the globe stay in
+   *  proportion instead of the text shrinking away on a large display. */
+  copyGutterWidthFraction: 0.32,
+  copyStackHeightPx: 320,
+  sideBySideMinWidthPx: 900,
 } as const;
 
 // ---------------------------------------------------------------------------

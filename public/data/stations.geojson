@@ -1,5 +1,6 @@
 {
   "type": "FeatureCollection",
+  "generated_at": "2026-08-31T15:17:31.462Z",
   "features": [
     {
       "type": "Feature",
@@ -14,9 +15,9 @@
         "station_id": "7000",
         "name": "Fort York  Blvd / Capreol Ct",
         "capacity": 47,
-        "bikes_available": 0,
-        "docks_available": 45,
-        "fullness": 0
+        "bikes_available": 1,
+        "docks_available": 44,
+        "fullness": 0.0213
       }
     },
     {
@@ -86,9 +87,9 @@
         "station_id": "7005",
         "name": "King St W / York St",
         "capacity": 23,
-        "bikes_available": 11,
-        "docks_available": 12,
-        "fullness": 0.4783
+        "bikes_available": 12,
+        "docks_available": 11,
+        "fullness": 0.5217
       }
     },
     {
@@ -122,9 +123,9 @@
         "station_id": "7007",
         "name": "College St / Huron St",
         "capacity": 19,
-        "bikes_available": 1,
-        "docks_available": 18,
-        "fullness": 0.0526
+        "bikes_available": 2,
+        "docks_available": 17,
+        "fullness": 0.1053
       }
     },
     {
@@ -194,9 +195,9 @@
         "station_id": "7014",
         "name": "Sherbourne St / Carlton St (Allan Gardens)",
         "capacity": 17,
-        "bikes_available": 0,
-        "docks_available": 15,
-        "fullness": 0
+        "bikes_available": 2,
+        "docks_available": 13,
+        "fullness": 0.1176
       }
     },
     {
@@ -230,9 +231,9 @@
         "station_id": "7016",
         "name": "Bay St / Queens Quay W (Ferry Terminal)",
         "capacity": 35,
-        "bikes_available": 28,
-        "docks_available": 7,
-        "fullness": 0.8
+        "bikes_available": 27,
+        "docks_available": 8,
+        "fullness": 0.7714
       }
     },
     {
@@ -248,9 +249,9 @@
         "station_id": "7017",
         "name": "Widmer St / Adelaide St W",
         "capacity": 11,
-        "bikes_available": 5,
-        "docks_available": 6,
-        "fullness": 0.4545
+        "bikes_available": 7,
+        "docks_available": 4,
+        "fullness": 0.6364
       }
     },
     {
@@ -266,9 +267,9 @@
         "station_id": "7018",
         "name": "Bremner Blvd / Rees St",
         "capacity": 49,
-        "bikes_available": 17,
-        "docks_available": 32,
-        "fullness": 0.3469
+        "bikes_available": 18,
+        "docks_available": 31,
+        "fullness": 0.3673
       }
     },
     {
@@ -302,9 +303,9 @@
         "station_id": "7020",
         "name": "Phoebe St / Spadina Ave",
         "capacity": 33,
-        "bikes_available": 17,
-        "docks_available": 16,
-        "fullness": 0.5152
+        "bikes_available": 18,
+        "docks_available": 15,
+        "fullness": 0.5455
       }
     },
     {
@@ -338,9 +339,9 @@
         "station_id": "7023",
         "name": "College St / Borden St",
         "capacity": 11,
-        "bikes_available": 2,
-        "docks_available": 8,
-        "fullness": 0.1818
+        "bikes_available": 3,
+        "docks_available": 7,
+        "fullness": 0.2727
       }
     },
     {
@@ -356,9 +357,9 @@
         "station_id": "7024",
         "name": "Dundonald St / Church St",
         "capacity": 39,
-        "bikes_available": 16,
-        "docks_available": 23,
-        "fullness": 0.4103
+        "bikes_available": 15,
+        "docks_available": 24,
+        "fullness": 0.3846
       }
     },
     {
@@ -428,9 +429,9 @@
         "station_id": "7028",
         "name": "Gould St / Mutual St",
         "capacity": 31,
-        "bikes_available": 22,
-        "docks_available": 9,
-        "fullness": 0.7097
+        "bikes_available": 23,
+        "docks_available": 8,
+        "fullness": 0.7419
       }
     },
     {
@@ -446,9 +447,9 @@
         "station_id": "7029",
         "name": "Bay St / Bloor St W (East Side)",
         "capacity": 15,
-        "bikes_available": 6,
-        "docks_available": 7,
-        "fullness": 0.4
+        "bikes_available": 5,
+        "docks_available": 8,
+        "fullness": 0.3333
       }
     },
     {
@@ -464,9 +465,9 @@
         "station_id": "7030",
         "name": "Bay St / Wellesley St W",
         "capacity": 35,
-        "bikes_available": 5,
-        "docks_available": 27,
-        "fullness": 0.1429
+        "bikes_available": 6,
+        "docks_available": 26,
+        "fullness": 0.1714
       }
     },
     {
@@ -518,9 +519,9 @@
         "station_id": "7033",
         "name": "Union Station",
         "capacity": 43,
-        "bikes_available": 17,
-        "docks_available": 26,
-        "fullness": 0.3953
+        "bikes_available": 18,
+        "docks_available": 25,
+        "fullness": 0.4186
       }
     },
     {
@@ -680,9 +681,9 @@
         "station_id": "7042",
         "name": "Sherbourne St / Wellesley St E",
         "capacity": 31,
-        "bikes_available": 13,
-        "docks_available": 16,
-        "fullness": 0.4194
+        "bikes_available": 12,
+        "docks_available": 17,
+        "fullness": 0.3871
       }
     },
     {
@@ -698,9 +699,9 @@
         "station_id": "7043",
         "name": "Queens Quay W / Lower Simcoe St",
         "capacity": 19,
-        "bikes_available": 12,
-        "docks_available": 6,
-        "fullness": 0.6316
+        "bikes_available": 13,
+        "docks_available": 5,
+        "fullness": 0.6842
       }
     },
     {
@@ -770,9 +771,9 @@
         "station_id": "7047",
         "name": "University Ave / Gerrard St W (East Side)",
         "capacity": 25,
-        "bikes_available": 7,
-        "docks_available": 17,
-        "fullness": 0.28
+        "bikes_available": 4,
+        "docks_available": 20,
+        "fullness": 0.16
       }
     },
     {
@@ -788,9 +789,9 @@
         "station_id": "7048",
         "name": "Front St W / Yonge St (Hockey Hall of Fame)",
         "capacity": 47,
-        "bikes_available": 36,
-        "docks_available": 10,
-        "fullness": 0.766
+        "bikes_available": 34,
+        "docks_available": 12,
+        "fullness": 0.7234
       }
     },
     {
@@ -860,9 +861,9 @@
         "station_id": "7053",
         "name": "Metro Hall Plaza",
         "capacity": 27,
-        "bikes_available": 27,
-        "docks_available": 0,
-        "fullness": 1
+        "bikes_available": 26,
+        "docks_available": 1,
+        "fullness": 0.963
       }
     },
     {
@@ -932,9 +933,9 @@
         "station_id": "7058",
         "name": "Huron St / Harbord St",
         "capacity": 39,
-        "bikes_available": 23,
-        "docks_available": 16,
-        "fullness": 0.5897
+        "bikes_available": 24,
+        "docks_available": 15,
+        "fullness": 0.6154
       }
     },
     {
@@ -1094,9 +1095,9 @@
         "station_id": "7070",
         "name": "25 York St – Union Station South",
         "capacity": 11,
-        "bikes_available": 11,
-        "docks_available": 0,
-        "fullness": 1
+        "bikes_available": 10,
+        "docks_available": 1,
+        "fullness": 0.9091
       }
     },
     {
@@ -1202,9 +1203,9 @@
         "station_id": "7077",
         "name": "College Park South",
         "capacity": 19,
-        "bikes_available": 18,
-        "docks_available": 0,
-        "fullness": 0.9474
+        "bikes_available": 16,
+        "docks_available": 2,
+        "fullness": 0.8421
       }
     },
     {
@@ -1292,9 +1293,9 @@
         "station_id": "7086",
         "name": "High Park - West Rd",
         "capacity": 23,
-        "bikes_available": 8,
-        "docks_available": 14,
-        "fullness": 0.3478
+        "bikes_available": 7,
+        "docks_available": 15,
+        "fullness": 0.3043
       }
     },
     {
@@ -1346,9 +1347,9 @@
         "station_id": "7089",
         "name": "Church St  / Wood St",
         "capacity": 27,
-        "bikes_available": 15,
-        "docks_available": 12,
-        "fullness": 0.5556
+        "bikes_available": 14,
+        "docks_available": 13,
+        "fullness": 0.5185
       }
     },
     {
@@ -1508,9 +1509,9 @@
         "station_id": "7099",
         "name": "Mill St / Cherry St",
         "capacity": 39,
-        "bikes_available": 24,
-        "docks_available": 15,
-        "fullness": 0.6154
+        "bikes_available": 23,
+        "docks_available": 16,
+        "fullness": 0.5897
       }
     },
     {
@@ -1562,9 +1563,9 @@
         "station_id": "7102",
         "name": "Nelson St / Duncan St",
         "capacity": 31,
-        "bikes_available": 23,
-        "docks_available": 8,
-        "fullness": 0.7419
+        "bikes_available": 25,
+        "docks_available": 6,
+        "fullness": 0.8065
       }
     },
     {
@@ -1598,9 +1599,9 @@
         "station_id": "7104",
         "name": "King St E / River St",
         "capacity": 15,
-        "bikes_available": 10,
-        "docks_available": 5,
-        "fullness": 0.6667
+        "bikes_available": 9,
+        "docks_available": 6,
+        "fullness": 0.6
       }
     },
     {
@@ -1688,9 +1689,9 @@
         "station_id": "7110",
         "name": "Queen St E / Berkeley St",
         "capacity": 15,
-        "bikes_available": 7,
-        "docks_available": 7,
-        "fullness": 0.4667
+        "bikes_available": 6,
+        "docks_available": 8,
+        "fullness": 0.4
       }
     },
     {
@@ -1832,9 +1833,9 @@
         "station_id": "7118",
         "name": "King St W / Bay St (East Side)",
         "capacity": 19,
-        "bikes_available": 9,
-        "docks_available": 10,
-        "fullness": 0.4737
+        "bikes_available": 8,
+        "docks_available": 11,
+        "fullness": 0.4211
       }
     },
     {
@@ -1940,9 +1941,9 @@
         "station_id": "7124",
         "name": "Dundas St E / Broadview Ave",
         "capacity": 19,
-        "bikes_available": 17,
-        "docks_available": 2,
-        "fullness": 0.8947
+        "bikes_available": 16,
+        "docks_available": 3,
+        "fullness": 0.8421
       }
     },
     {
@@ -1958,9 +1959,9 @@
         "station_id": "7126",
         "name": "Yonge St / Yorkville Ave",
         "capacity": 17,
-        "bikes_available": 0,
-        "docks_available": 16,
-        "fullness": 0
+        "bikes_available": 1,
+        "docks_available": 15,
+        "fullness": 0.0588
       }
     },
     {
@@ -1976,9 +1977,9 @@
         "station_id": "7127",
         "name": "Bay St / Scollard St",
         "capacity": 15,
-        "bikes_available": 4,
-        "docks_available": 11,
-        "fullness": 0.2667
+        "bikes_available": 5,
+        "docks_available": 10,
+        "fullness": 0.3333
       }
     },
     {
@@ -2030,9 +2031,9 @@
         "station_id": "7130",
         "name": "Davenport Rd / Bedford Rd",
         "capacity": 15,
-        "bikes_available": 7,
-        "docks_available": 6,
-        "fullness": 0.4667
+        "bikes_available": 6,
+        "docks_available": 7,
+        "fullness": 0.4
       }
     },
     {
@@ -2048,9 +2049,9 @@
         "station_id": "7131",
         "name": "Taddle Creek Park",
         "capacity": 15,
-        "bikes_available": 1,
-        "docks_available": 14,
-        "fullness": 0.0667
+        "bikes_available": 2,
+        "docks_available": 13,
+        "fullness": 0.1333
       }
     },
     {
@@ -2282,9 +2283,9 @@
         "station_id": "7148",
         "name": "King St W / Joe Shuster Way",
         "capacity": 23,
-        "bikes_available": 7,
+        "bikes_available": 6,
         "docks_available": 13,
-        "fullness": 0.3043
+        "fullness": 0.2609
       }
     },
     {
@@ -2318,9 +2319,9 @@
         "station_id": "7150",
         "name": "Dufferin St / Sylvan Av (Dufferin Grove Park)",
         "capacity": 19,
-        "bikes_available": 3,
-        "docks_available": 14,
-        "fullness": 0.1579
+        "bikes_available": 2,
+        "docks_available": 15,
+        "fullness": 0.1053
       }
     },
     {
@@ -2372,9 +2373,9 @@
         "station_id": "7153",
         "name": "Bloor St W / Christie St",
         "capacity": 19,
-        "bikes_available": 3,
-        "docks_available": 16,
-        "fullness": 0.1579
+        "bikes_available": 4,
+        "docks_available": 15,
+        "fullness": 0.2105
       }
     },
     {
@@ -2390,9 +2391,9 @@
         "station_id": "7154",
         "name": "Bathurst Subway Station",
         "capacity": 23,
-        "bikes_available": 8,
-        "docks_available": 14,
-        "fullness": 0.3478
+        "bikes_available": 7,
+        "docks_available": 15,
+        "fullness": 0.3043
       }
     },
     {
@@ -2480,9 +2481,9 @@
         "station_id": "7160",
         "name": "King St W / Tecumseth St",
         "capacity": 19,
-        "bikes_available": 12,
-        "docks_available": 6,
-        "fullness": 0.6316
+        "bikes_available": 13,
+        "docks_available": 5,
+        "fullness": 0.6842
       }
     },
     {
@@ -2498,9 +2499,9 @@
         "station_id": "7161",
         "name": "Beverley St / College St",
         "capacity": 23,
-        "bikes_available": 1,
-        "docks_available": 21,
-        "fullness": 0.0435
+        "bikes_available": 0,
+        "docks_available": 22,
+        "fullness": 0
       }
     },
     {
@@ -2516,9 +2517,9 @@
         "station_id": "7162",
         "name": "Hayter St / La Plante Ave",
         "capacity": 23,
-        "bikes_available": 6,
-        "docks_available": 15,
-        "fullness": 0.2609
+        "bikes_available": 7,
+        "docks_available": 14,
+        "fullness": 0.3043
       }
     },
     {
@@ -2642,9 +2643,9 @@
         "station_id": "7174",
         "name": "Bloor St W / Dundas St W",
         "capacity": 15,
-        "bikes_available": 5,
-        "docks_available": 10,
-        "fullness": 0.3333
+        "bikes_available": 4,
+        "docks_available": 11,
+        "fullness": 0.2667
       }
     },
     {
@@ -2678,9 +2679,9 @@
         "station_id": "7176",
         "name": "Bathurst St / Fort York Blvd",
         "capacity": 19,
-        "bikes_available": 11,
-        "docks_available": 7,
-        "fullness": 0.5789
+        "bikes_available": 10,
+        "docks_available": 8,
+        "fullness": 0.5263
       }
     },
     {
@@ -2840,9 +2841,9 @@
         "station_id": "7190",
         "name": "St. George St / Hoskin Ave",
         "capacity": 15,
-        "bikes_available": 7,
-        "docks_available": 8,
-        "fullness": 0.4667
+        "bikes_available": 9,
+        "docks_available": 6,
+        "fullness": 0.6
       }
     },
     {
@@ -2876,9 +2877,9 @@
         "station_id": "7192",
         "name": "Harbord St / Clinton St",
         "capacity": 15,
-        "bikes_available": 7,
-        "docks_available": 8,
-        "fullness": 0.4667
+        "bikes_available": 6,
+        "docks_available": 9,
+        "fullness": 0.4
       }
     },
     {
@@ -2912,9 +2913,9 @@
         "station_id": "7195",
         "name": "Ulster St / Bathurst St",
         "capacity": 11,
-        "bikes_available": 0,
-        "docks_available": 10,
-        "fullness": 0
+        "bikes_available": 1,
+        "docks_available": 9,
+        "fullness": 0.0909
       }
     },
     {
@@ -3074,9 +3075,9 @@
         "station_id": "7206",
         "name": "Claremont St / Dundas St W",
         "capacity": 13,
-        "bikes_available": 3,
-        "docks_available": 8,
-        "fullness": 0.2308
+        "bikes_available": 2,
+        "docks_available": 11,
+        "fullness": 0.1538
       }
     },
     {
@@ -3200,9 +3201,9 @@
         "station_id": "7217",
         "name": "Soho St / Queen St W",
         "capacity": 15,
-        "bikes_available": 13,
-        "docks_available": 2,
-        "fullness": 0.8667
+        "bikes_available": 12,
+        "docks_available": 3,
+        "fullness": 0.8
       }
     },
     {
@@ -3470,9 +3471,9 @@
         "station_id": "7234",
         "name": "Roncesvalles Ave / Marmaduke St",
         "capacity": 19,
-        "bikes_available": 5,
-        "docks_available": 13,
-        "fullness": 0.2632
+        "bikes_available": 6,
+        "docks_available": 12,
+        "fullness": 0.3158
       }
     },
     {
@@ -3560,9 +3561,9 @@
         "station_id": "7239",
         "name": "Bloor St W / Manning Ave - SMART",
         "capacity": 42,
-        "bikes_available": 11,
-        "docks_available": 30,
-        "fullness": 0.2619
+        "bikes_available": 10,
+        "docks_available": 31,
+        "fullness": 0.2381
       }
     },
     {
@@ -3650,9 +3651,9 @@
         "station_id": "7246",
         "name": "Yonge St / Bloor St",
         "capacity": 19,
-        "bikes_available": 2,
-        "docks_available": 16,
-        "fullness": 0.1053
+        "bikes_available": 1,
+        "docks_available": 17,
+        "fullness": 0.0526
       }
     },
     {
@@ -3740,9 +3741,9 @@
         "station_id": "7252",
         "name": "Robert St / Bloor St W - SMART",
         "capacity": 18,
-        "bikes_available": 7,
-        "docks_available": 11,
-        "fullness": 0.3889
+        "bikes_available": 8,
+        "docks_available": 10,
+        "fullness": 0.4444
       }
     },
     {
@@ -3758,9 +3759,9 @@
         "station_id": "7253",
         "name": "John St  / Mercer St - SMART",
         "capacity": 12,
-        "bikes_available": 10,
-        "docks_available": 2,
-        "fullness": 0.8333
+        "bikes_available": 12,
+        "docks_available": 0,
+        "fullness": 1
       }
     },
     {
@@ -3794,9 +3795,9 @@
         "station_id": "7257",
         "name": "Dundas St W / St. Patrick St",
         "capacity": 19,
-        "bikes_available": 7,
-        "docks_available": 12,
-        "fullness": 0.3684
+        "bikes_available": 8,
+        "docks_available": 11,
+        "fullness": 0.4211
       }
     },
     {
@@ -3830,9 +3831,9 @@
         "station_id": "7259",
         "name": "Lower Spadina Ave / Lake Shore Blvd W",
         "capacity": 19,
-        "bikes_available": 13,
-        "docks_available": 6,
-        "fullness": 0.6842
+        "bikes_available": 12,
+        "docks_available": 7,
+        "fullness": 0.6316
       }
     },
     {
@@ -3974,9 +3975,9 @@
         "station_id": "7268",
         "name": "111 Bond St (North of Dundas St E)  - SMART",
         "capacity": 16,
-        "bikes_available": 16,
-        "docks_available": 0,
-        "fullness": 1
+        "bikes_available": 15,
+        "docks_available": 1,
+        "fullness": 0.9375
       }
     },
     {
@@ -4028,9 +4029,9 @@
         "station_id": "7271",
         "name": "Yonge St / Alexander St - SMART",
         "capacity": 18,
-        "bikes_available": 2,
-        "docks_available": 16,
-        "fullness": 0.1111
+        "bikes_available": 1,
+        "docks_available": 17,
+        "fullness": 0.0556
       }
     },
     {
@@ -4046,9 +4047,9 @@
         "station_id": "7272",
         "name": "Yonge St / Dundonald St ",
         "capacity": 27,
-        "bikes_available": 17,
-        "docks_available": 10,
-        "fullness": 0.6296
+        "bikes_available": 18,
+        "docks_available": 9,
+        "fullness": 0.6667
       }
     },
     {
@@ -4100,9 +4101,9 @@
         "station_id": "7277",
         "name": "Chorley Park - SMART",
         "capacity": 20,
-        "bikes_available": 5,
-        "docks_available": 15,
-        "fullness": 0.25
+        "bikes_available": 4,
+        "docks_available": 16,
+        "fullness": 0.2
       }
     },
     {
@@ -4208,9 +4209,9 @@
         "station_id": "7284",
         "name": "University Ave / King St W - SMART",
         "capacity": 24,
-        "bikes_available": 7,
-        "docks_available": 16,
-        "fullness": 0.2917
+        "bikes_available": 8,
+        "docks_available": 15,
+        "fullness": 0.3333
       }
     },
     {
@@ -4226,9 +4227,9 @@
         "station_id": "7285",
         "name": "Spadina Ave / Harbord St - SMART",
         "capacity": 36,
-        "bikes_available": 22,
-        "docks_available": 14,
-        "fullness": 0.6111
+        "bikes_available": 21,
+        "docks_available": 15,
+        "fullness": 0.5833
       }
     },
     {
@@ -4316,9 +4317,9 @@
         "station_id": "7291",
         "name": "190 Queens Quay E",
         "capacity": 15,
-        "bikes_available": 8,
-        "docks_available": 7,
-        "fullness": 0.5333
+        "bikes_available": 7,
+        "docks_available": 8,
+        "fullness": 0.4667
       }
     },
     {
@@ -4352,9 +4353,9 @@
         "station_id": "7296",
         "name": "Westmoreland Ave / Fernbank Ave",
         "capacity": 19,
-        "bikes_available": 6,
-        "docks_available": 13,
-        "fullness": 0.3158
+        "bikes_available": 5,
+        "docks_available": 14,
+        "fullness": 0.2632
       }
     },
     {
@@ -4406,9 +4407,9 @@
         "station_id": "7299",
         "name": "Mill St / Parliament St",
         "capacity": 15,
-        "bikes_available": 11,
-        "docks_available": 4,
-        "fullness": 0.7333
+        "bikes_available": 10,
+        "docks_available": 5,
+        "fullness": 0.6667
       }
     },
     {
@@ -4496,9 +4497,9 @@
         "station_id": "7311",
         "name": "Sherbourne St / Isabella St",
         "capacity": 19,
-        "bikes_available": 3,
-        "docks_available": 16,
-        "fullness": 0.1579
+        "bikes_available": 4,
+        "docks_available": 15,
+        "fullness": 0.2105
       }
     },
     {
@@ -4676,9 +4677,9 @@
         "station_id": "7321",
         "name": "Front St W / University Ave (2)",
         "capacity": 19,
-        "bikes_available": 19,
-        "docks_available": 0,
-        "fullness": 1
+        "bikes_available": 18,
+        "docks_available": 1,
+        "fullness": 0.9474
       }
     },
     {
@@ -4694,9 +4695,9 @@
         "station_id": "7322",
         "name": "East Liberty St / Western Battery Rd",
         "capacity": 19,
-        "bikes_available": 8,
-        "docks_available": 10,
-        "fullness": 0.4211
+        "bikes_available": 9,
+        "docks_available": 9,
+        "fullness": 0.4737
       }
     },
     {
@@ -4712,9 +4713,9 @@
         "station_id": "7323",
         "name": "457 King St W",
         "capacity": 19,
-        "bikes_available": 6,
-        "docks_available": 13,
-        "fullness": 0.3158
+        "bikes_available": 5,
+        "docks_available": 14,
+        "fullness": 0.2632
       }
     },
     {
@@ -4766,9 +4767,9 @@
         "station_id": "7329",
         "name": "Crawford St / Queen St W",
         "capacity": 19,
-        "bikes_available": 15,
-        "docks_available": 3,
-        "fullness": 0.7895
+        "bikes_available": 16,
+        "docks_available": 2,
+        "fullness": 0.8421
       }
     },
     {
@@ -4802,9 +4803,9 @@
         "station_id": "7332",
         "name": "200 Bloor St E",
         "capacity": 23,
-        "bikes_available": 1,
-        "docks_available": 21,
-        "fullness": 0.0435
+        "bikes_available": 2,
+        "docks_available": 20,
+        "fullness": 0.087
       }
     },
     {
@@ -4892,9 +4893,9 @@
         "station_id": "7337",
         "name": "Gerrard Square Mall (1010 Gerrard St E)",
         "capacity": 23,
-        "bikes_available": 22,
-        "docks_available": 1,
-        "fullness": 0.9565
+        "bikes_available": 23,
+        "docks_available": 0,
+        "fullness": 1
       }
     },
     {
@@ -4946,9 +4947,9 @@
         "station_id": "7340",
         "name": "Blake St / Boultbee Ave",
         "capacity": 15,
-        "bikes_available": 4,
-        "docks_available": 11,
-        "fullness": 0.2667
+        "bikes_available": 3,
+        "docks_available": 12,
+        "fullness": 0.2
       }
     },
     {
@@ -5126,9 +5127,9 @@
         "station_id": "7350",
         "name": "Broadview Ave / Westwood Ave",
         "capacity": 23,
-        "bikes_available": 9,
-        "docks_available": 14,
-        "fullness": 0.3913
+        "bikes_available": 8,
+        "docks_available": 15,
+        "fullness": 0.3478
       }
     },
     {
@@ -5414,9 +5415,9 @@
         "station_id": "7366",
         "name": "Fort York Blvd / Bathurst St - SMART",
         "capacity": 20,
-        "bikes_available": 13,
-        "docks_available": 7,
-        "fullness": 0.65
+        "bikes_available": 12,
+        "docks_available": 8,
+        "fullness": 0.6
       }
     },
     {
@@ -5504,9 +5505,9 @@
         "station_id": "7374",
         "name": "Frederick St / The Esplanade",
         "capacity": 19,
-        "bikes_available": 17,
-        "docks_available": 2,
-        "fullness": 0.8947
+        "bikes_available": 16,
+        "docks_available": 3,
+        "fullness": 0.8421
       }
     },
     {
@@ -5522,9 +5523,9 @@
         "station_id": "7375",
         "name": "Front St E / Scott St",
         "capacity": 11,
-        "bikes_available": 10,
-        "docks_available": 1,
-        "fullness": 0.9091
+        "bikes_available": 9,
+        "docks_available": 2,
+        "fullness": 0.8182
       }
     },
     {
@@ -5576,9 +5577,9 @@
         "station_id": "7378",
         "name": "Yonge St / Davisville Ave",
         "capacity": 15,
-        "bikes_available": 2,
-        "docks_available": 12,
-        "fullness": 0.1333
+        "bikes_available": 3,
+        "docks_available": 11,
+        "fullness": 0.2
       }
     },
     {
@@ -5630,9 +5631,9 @@
         "station_id": "7381",
         "name": "Yonge St / Orchard View Blvd",
         "capacity": 35,
-        "bikes_available": 13,
-        "docks_available": 21,
-        "fullness": 0.3714
+        "bikes_available": 12,
+        "docks_available": 22,
+        "fullness": 0.3429
       }
     },
     {
@@ -5648,9 +5649,9 @@
         "station_id": "7382",
         "name": "Simcoe St / Adelaide St W",
         "capacity": 27,
-        "bikes_available": 2,
-        "docks_available": 25,
-        "fullness": 0.0741
+        "bikes_available": 3,
+        "docks_available": 24,
+        "fullness": 0.1111
       }
     },
     {
@@ -5666,9 +5667,9 @@
         "station_id": "7383",
         "name": "12 Harbour St",
         "capacity": 15,
-        "bikes_available": 5,
-        "docks_available": 8,
-        "fullness": 0.3333
+        "bikes_available": 4,
+        "docks_available": 9,
+        "fullness": 0.2667
       }
     },
     {
@@ -5685,7 +5686,7 @@
         "name": "Cumberland St / Bay St -  SMART",
         "capacity": 9,
         "bikes_available": 7,
-        "docks_available": 1,
+        "docks_available": 2,
         "fullness": 0.7778
       }
     },
@@ -5702,9 +5703,9 @@
         "station_id": "7385",
         "name": "20 Charles St E",
         "capacity": 33,
-        "bikes_available": 20,
-        "docks_available": 1,
-        "fullness": 0.6061
+        "bikes_available": 19,
+        "docks_available": 2,
+        "fullness": 0.5758
       }
     },
     {
@@ -5774,9 +5775,9 @@
         "station_id": "7389",
         "name": "College Park - Gerrard Entrance",
         "capacity": 25,
-        "bikes_available": 14,
-        "docks_available": 10,
-        "fullness": 0.56
+        "bikes_available": 13,
+        "docks_available": 11,
+        "fullness": 0.52
       }
     },
     {
@@ -5954,9 +5955,9 @@
         "station_id": "7410",
         "name": "Howard St / Rose Ave",
         "capacity": 19,
-        "bikes_available": 5,
-        "docks_available": 13,
-        "fullness": 0.2632
+        "bikes_available": 6,
+        "docks_available": 12,
+        "fullness": 0.3158
       }
     },
     {
@@ -5990,9 +5991,9 @@
         "station_id": "7412",
         "name": "King St W / Crawford St",
         "capacity": 23,
-        "bikes_available": 19,
-        "docks_available": 4,
-        "fullness": 0.8261
+        "bikes_available": 18,
+        "docks_available": 5,
+        "fullness": 0.7826
       }
     },
     {
@@ -6026,9 +6027,9 @@
         "station_id": "7415",
         "name": "Keele St / Vine Ave",
         "capacity": 23,
-        "bikes_available": 3,
-        "docks_available": 20,
-        "fullness": 0.1304
+        "bikes_available": 4,
+        "docks_available": 19,
+        "fullness": 0.1739
       }
     },
     {
@@ -6260,9 +6261,9 @@
         "station_id": "7432",
         "name": "Frederick St / King St E",
         "capacity": 47,
-        "bikes_available": 24,
-        "docks_available": 21,
-        "fullness": 0.5106
+        "bikes_available": 21,
+        "docks_available": 24,
+        "fullness": 0.4468
       }
     },
     {
@@ -6764,9 +6765,9 @@
         "station_id": "7467",
         "name": "Lower Simcoe St / Bremner Blvd",
         "capacity": 15,
-        "bikes_available": 12,
-        "docks_available": 2,
-        "fullness": 0.8
+        "bikes_available": 8,
+        "docks_available": 6,
+        "fullness": 0.5333
       }
     },
     {
@@ -6854,9 +6855,9 @@
         "station_id": "7474",
         "name": "Clarence Square",
         "capacity": 23,
-        "bikes_available": 21,
-        "docks_available": 2,
-        "fullness": 0.913
+        "bikes_available": 22,
+        "docks_available": 1,
+        "fullness": 0.9565
       }
     },
     {
@@ -6890,9 +6891,9 @@
         "station_id": "7476",
         "name": "Symington Ave / Dupont St",
         "capacity": 15,
-        "bikes_available": 2,
-        "docks_available": 11,
-        "fullness": 0.1333
+        "bikes_available": 1,
+        "docks_available": 12,
+        "fullness": 0.0667
       }
     },
     {
@@ -7124,9 +7125,9 @@
         "station_id": "7493",
         "name": "Sackville St / Eastern Ave - SMART",
         "capacity": 12,
-        "bikes_available": 6,
-        "docks_available": 6,
-        "fullness": 0.5
+        "bikes_available": 5,
+        "docks_available": 7,
+        "fullness": 0.4167
       }
     },
     {
@@ -7286,9 +7287,9 @@
         "station_id": "7506",
         "name": "Berkeley St / Adelaide St E - SMART",
         "capacity": 12,
-        "bikes_available": 7,
-        "docks_available": 5,
-        "fullness": 0.5833
+        "bikes_available": 8,
+        "docks_available": 4,
+        "fullness": 0.6667
       }
     },
     {
@@ -7592,9 +7593,9 @@
         "station_id": "7531",
         "name": "541 Huron St - SMART",
         "capacity": 20,
-        "bikes_available": 1,
-        "docks_available": 16,
-        "fullness": 0.05
+        "bikes_available": 2,
+        "docks_available": 15,
+        "fullness": 0.1
       }
     },
     {
@@ -7754,9 +7755,9 @@
         "station_id": "7542",
         "name": "Queen St W / John St",
         "capacity": 23,
-        "bikes_available": 17,
-        "docks_available": 6,
-        "fullness": 0.7391
+        "bikes_available": 16,
+        "docks_available": 7,
+        "fullness": 0.6957
       }
     },
     {
@@ -7826,9 +7827,9 @@
         "station_id": "7547",
         "name": "Orde St / McCaul St",
         "capacity": 15,
-        "bikes_available": 13,
-        "docks_available": 2,
-        "fullness": 0.8667
+        "bikes_available": 14,
+        "docks_available": 1,
+        "fullness": 0.9333
       }
     },
     {
@@ -7844,9 +7845,9 @@
         "station_id": "7548",
         "name": "St. Joseph St / Bay St - SMART",
         "capacity": 20,
-        "bikes_available": 5,
-        "docks_available": 15,
-        "fullness": 0.25
+        "bikes_available": 6,
+        "docks_available": 14,
+        "fullness": 0.3
       }
     },
     {
@@ -7862,9 +7863,9 @@
         "station_id": "7549",
         "name": "439 Sherbourne St",
         "capacity": 47,
-        "bikes_available": 24,
-        "docks_available": 23,
-        "fullness": 0.5106
+        "bikes_available": 23,
+        "docks_available": 24,
+        "fullness": 0.4894
       }
     },
     {
@@ -8114,9 +8115,9 @@
         "station_id": "7565",
         "name": "St. Clair Ave W / Gunns Rd",
         "capacity": 23,
-        "bikes_available": 0,
-        "docks_available": 22,
-        "fullness": 0
+        "bikes_available": 1,
+        "docks_available": 21,
+        "fullness": 0.0435
       }
     },
     {
@@ -8636,9 +8637,9 @@
         "station_id": "7599",
         "name": "Richmond St W / York St",
         "capacity": 17,
-        "bikes_available": 11,
-        "docks_available": 6,
-        "fullness": 0.6471
+        "bikes_available": 10,
+        "docks_available": 7,
+        "fullness": 0.5882
       }
     },
     {
@@ -8780,9 +8781,9 @@
         "station_id": "7607",
         "name": "Fairmount Park",
         "capacity": 19,
-        "bikes_available": 13,
-        "docks_available": 6,
-        "fullness": 0.6842
+        "bikes_available": 14,
+        "docks_available": 5,
+        "fullness": 0.7368
       }
     },
     {
@@ -8817,7 +8818,7 @@
         "name": "Sunnybrook Park",
         "capacity": 27,
         "bikes_available": 1,
-        "docks_available": 26,
+        "docks_available": 23,
         "fullness": 0.037
       }
     },
@@ -9842,9 +9843,9 @@
         "station_id": "7682",
         "name": "Bathurst St / Front St W",
         "capacity": 35,
-        "bikes_available": 26,
-        "docks_available": 8,
-        "fullness": 0.7429
+        "bikes_available": 25,
+        "docks_available": 9,
+        "fullness": 0.7143
       }
     },
     {
@@ -9950,9 +9951,9 @@
         "station_id": "7691",
         "name": "Christie St / Dupont St",
         "capacity": 19,
-        "bikes_available": 1,
-        "docks_available": 12,
-        "fullness": 0.0526
+        "bikes_available": 2,
+        "docks_available": 11,
+        "fullness": 0.1053
       }
     },
     {
@@ -9986,9 +9987,9 @@
         "station_id": "7693",
         "name": "Mutual St / Shuter St",
         "capacity": 23,
-        "bikes_available": 14,
-        "docks_available": 9,
-        "fullness": 0.6087
+        "bikes_available": 11,
+        "docks_available": 12,
+        "fullness": 0.4783
       }
     },
     {
@@ -10112,9 +10113,9 @@
         "station_id": "7701",
         "name": "Roncesvalles Ave / Fermanagh Ave",
         "capacity": 19,
-        "bikes_available": 9,
-        "docks_available": 7,
-        "fullness": 0.4737
+        "bikes_available": 10,
+        "docks_available": 6,
+        "fullness": 0.5263
       }
     },
     {
@@ -10202,9 +10203,9 @@
         "station_id": "7707",
         "name": "Coronation Park (Martin Goodman Trail)",
         "capacity": 19,
-        "bikes_available": 0,
-        "docks_available": 18,
-        "fullness": 0
+        "bikes_available": 4,
+        "docks_available": 14,
+        "fullness": 0.2105
       }
     },
     {
@@ -10382,9 +10383,9 @@
         "station_id": "7718",
         "name": "St. Andrew's Playground Park",
         "capacity": 11,
-        "bikes_available": 5,
-        "docks_available": 6,
-        "fullness": 0.4545
+        "bikes_available": 7,
+        "docks_available": 4,
+        "fullness": 0.6364
       }
     },
     {
@@ -10472,9 +10473,9 @@
         "station_id": "7730",
         "name": "800 Fleet St (South)",
         "capacity": 43,
-        "bikes_available": 33,
-        "docks_available": 1,
-        "fullness": 0.7674
+        "bikes_available": 34,
+        "docks_available": 0,
+        "fullness": 0.7907
       }
     },
     {
@@ -10670,9 +10671,9 @@
         "station_id": "7741",
         "name": "Howard Park Ave / Parkside Dr",
         "capacity": 15,
-        "bikes_available": 10,
-        "docks_available": 5,
-        "fullness": 0.6667
+        "bikes_available": 11,
+        "docks_available": 4,
+        "fullness": 0.7333
       }
     },
     {
@@ -10724,9 +10725,9 @@
         "station_id": "7744",
         "name": "Rogers Rd / Prospect Cemetery",
         "capacity": 23,
-        "bikes_available": 5,
-        "docks_available": 18,
-        "fullness": 0.2174
+        "bikes_available": 6,
+        "docks_available": 17,
+        "fullness": 0.2609
       }
     },
     {
@@ -11030,9 +11031,9 @@
         "station_id": "7761",
         "name": "Moss Park",
         "capacity": 15,
-        "bikes_available": 6,
-        "docks_available": 9,
-        "fullness": 0.4
+        "bikes_available": 8,
+        "docks_available": 7,
+        "fullness": 0.5333
       }
     },
     {
@@ -11048,9 +11049,9 @@
         "station_id": "7762",
         "name": "College St / Henry St ",
         "capacity": 14,
-        "bikes_available": 9,
-        "docks_available": 5,
-        "fullness": 0.6429
+        "bikes_available": 10,
+        "docks_available": 4,
+        "fullness": 0.7143
       }
     },
     {
@@ -11120,9 +11121,9 @@
         "station_id": "7768",
         "name": "Armoury St / Chestnut St",
         "capacity": 14,
-        "bikes_available": 13,
-        "docks_available": 1,
-        "fullness": 0.9286
+        "bikes_available": 14,
+        "docks_available": 0,
+        "fullness": 1
       }
     },
     {
@@ -11498,9 +11499,9 @@
         "station_id": "7790",
         "name": "Lynn Williams St / Pirandello St ",
         "capacity": 17,
-        "bikes_available": 9,
-        "docks_available": 8,
-        "fullness": 0.5294
+        "bikes_available": 8,
+        "docks_available": 9,
+        "fullness": 0.4706
       }
     },
     {
@@ -11516,9 +11517,9 @@
         "station_id": "7791",
         "name": "Ossington Ave / Bruce St",
         "capacity": 15,
-        "bikes_available": 13,
-        "docks_available": 1,
-        "fullness": 0.8667
+        "bikes_available": 11,
+        "docks_available": 3,
+        "fullness": 0.7333
       }
     },
     {
@@ -11534,9 +11535,9 @@
         "station_id": "7792",
         "name": "Gladstone Ave / Queen St W",
         "capacity": 15,
-        "bikes_available": 8,
-        "docks_available": 6,
-        "fullness": 0.5333
+        "bikes_available": 7,
+        "docks_available": 7,
+        "fullness": 0.4667
       }
     },
     {
@@ -11570,9 +11571,9 @@
         "station_id": "7796",
         "name": "Dundas St E / River St",
         "capacity": 19,
-        "bikes_available": 13,
-        "docks_available": 6,
-        "fullness": 0.6842
+        "bikes_available": 14,
+        "docks_available": 5,
+        "fullness": 0.7368
       }
     },
     {
@@ -11588,9 +11589,9 @@
         "station_id": "7798",
         "name": "Shuter St/River St",
         "capacity": 15,
-        "bikes_available": 7,
-        "docks_available": 7,
-        "fullness": 0.4667
+        "bikes_available": 6,
+        "docks_available": 8,
+        "fullness": 0.4
       }
     },
     {
@@ -11912,9 +11913,9 @@
         "station_id": "7816",
         "name": "Bay St / Dundas St W",
         "capacity": 55,
-        "bikes_available": 36,
-        "docks_available": 19,
-        "fullness": 0.6545
+        "bikes_available": 35,
+        "docks_available": 20,
+        "fullness": 0.6364
       }
     },
     {
@@ -12002,9 +12003,9 @@
         "station_id": "7822",
         "name": "Leslie St / Commissioners St  ",
         "capacity": 19,
-        "bikes_available": 18,
-        "docks_available": 1,
-        "fullness": 0.9474
+        "bikes_available": 17,
+        "docks_available": 2,
+        "fullness": 0.8947
       }
     },
     {
@@ -12164,9 +12165,9 @@
         "station_id": "7832",
         "name": "Finch Subway Station ",
         "capacity": 19,
-        "bikes_available": 2,
-        "docks_available": 13,
-        "fullness": 0.1053
+        "bikes_available": 1,
+        "docks_available": 14,
+        "fullness": 0.0526
       }
     },
     {
@@ -12470,9 +12471,9 @@
         "station_id": "7850",
         "name": "Maud St / Adelaide St W - SMART",
         "capacity": 16,
-        "bikes_available": 2,
-        "docks_available": 12,
-        "fullness": 0.125
+        "bikes_available": 3,
+        "docks_available": 11,
+        "fullness": 0.1875
       }
     },
     {
@@ -13046,9 +13047,9 @@
         "station_id": "7888",
         "name": "The Kingsway / Ashley Rd",
         "capacity": 15,
-        "bikes_available": 1,
-        "docks_available": 13,
-        "fullness": 0.0667
+        "bikes_available": 2,
+        "docks_available": 12,
+        "fullness": 0.1333
       }
     },
     {
@@ -13082,9 +13083,9 @@
         "station_id": "7890",
         "name": "60 Broadway Ave",
         "capacity": 23,
-        "bikes_available": 6,
-        "docks_available": 15,
-        "fullness": 0.2609
+        "bikes_available": 4,
+        "docks_available": 17,
+        "fullness": 0.1739
       }
     },
     {
@@ -13244,9 +13245,9 @@
         "station_id": "7900",
         "name": "Simcoe St / Elm St",
         "capacity": 11,
-        "bikes_available": 4,
-        "docks_available": 6,
-        "fullness": 0.3636
+        "bikes_available": 3,
+        "docks_available": 7,
+        "fullness": 0.2727
       }
     },
     {
@@ -13334,9 +13335,9 @@
         "station_id": "7906",
         "name": "Princess St / Front St E",
         "capacity": 14,
-        "bikes_available": 11,
-        "docks_available": 2,
-        "fullness": 0.7857
+        "bikes_available": 12,
+        "docks_available": 1,
+        "fullness": 0.8571
       }
     },
     {
@@ -13352,9 +13353,9 @@
         "station_id": "7907",
         "name": "365 Lippincott St",
         "capacity": 41,
-        "bikes_available": 32,
-        "docks_available": 6,
-        "fullness": 0.7805
+        "bikes_available": 31,
+        "docks_available": 7,
+        "fullness": 0.7561
       }
     },
     {
@@ -13640,9 +13641,9 @@
         "station_id": "7925",
         "name": "Niagara St / King St W - SMART",
         "capacity": 24,
-        "bikes_available": 8,
-        "docks_available": 16,
-        "fullness": 0.3333
+        "bikes_available": 7,
+        "docks_available": 17,
+        "fullness": 0.2917
       }
     },
     {
@@ -13784,9 +13785,9 @@
         "station_id": "7933",
         "name": "Elizabeth St / Elm St",
         "capacity": 23,
-        "bikes_available": 3,
-        "docks_available": 18,
-        "fullness": 0.1304
+        "bikes_available": 5,
+        "docks_available": 17,
+        "fullness": 0.2174
       }
     },
     {
@@ -13856,9 +13857,9 @@
         "station_id": "7937",
         "name": "Adelaide St W / Yonge St",
         "capacity": 19,
-        "bikes_available": 17,
-        "docks_available": 1,
-        "fullness": 0.8947
+        "bikes_available": 16,
+        "docks_available": 2,
+        "fullness": 0.8421
       }
     },
     {
@@ -13874,9 +13875,9 @@
         "station_id": "7938",
         "name": "Portland St / Wellington St W",
         "capacity": 15,
-        "bikes_available": 11,
-        "docks_available": 4,
-        "fullness": 0.7333
+        "bikes_available": 10,
+        "docks_available": 5,
+        "fullness": 0.6667
       }
     },
     {
@@ -13910,9 +13911,9 @@
         "station_id": "7940",
         "name": "Lillian St / Soudan Ave - SMART",
         "capacity": 32,
-        "bikes_available": 11,
-        "docks_available": 21,
-        "fullness": 0.3438
+        "bikes_available": 10,
+        "docks_available": 22,
+        "fullness": 0.3125
       }
     },
     {
@@ -13964,9 +13965,9 @@
         "station_id": "7943",
         "name": "OCAD University",
         "capacity": 23,
-        "bikes_available": 0,
-        "docks_available": 23,
-        "fullness": 0
+        "bikes_available": 1,
+        "docks_available": 22,
+        "fullness": 0.0435
       }
     },
     {
@@ -13982,9 +13983,9 @@
         "station_id": "7944",
         "name": "Harbord St / Grace St (Bickford Park)",
         "capacity": 23,
-        "bikes_available": 2,
-        "docks_available": 20,
-        "fullness": 0.087
+        "bikes_available": 1,
+        "docks_available": 21,
+        "fullness": 0.0435
       }
     },
     {
@@ -14018,9 +14019,9 @@
         "station_id": "7946",
         "name": "Richmond St W / Bathurst St",
         "capacity": 15,
-        "bikes_available": 7,
-        "docks_available": 7,
-        "fullness": 0.4667
+        "bikes_available": 6,
+        "docks_available": 8,
+        "fullness": 0.4
       }
     },
     {
@@ -14090,9 +14091,9 @@
         "station_id": "7950",
         "name": "Crawford St / Lobb Ave",
         "capacity": 23,
-        "bikes_available": 20,
-        "docks_available": 3,
-        "fullness": 0.8696
+        "bikes_available": 19,
+        "docks_available": 4,
+        "fullness": 0.8261
       }
     },
     {
@@ -14126,9 +14127,9 @@
         "station_id": "7952",
         "name": "Adelaide St W / York St ",
         "capacity": 19,
-        "bikes_available": 15,
-        "docks_available": 3,
-        "fullness": 0.7895
+        "bikes_available": 16,
+        "docks_available": 2,
+        "fullness": 0.8421
       }
     },
     {
@@ -14162,9 +14163,9 @@
         "station_id": "7954",
         "name": "Adelaide St E / Parliament St",
         "capacity": 23,
-        "bikes_available": 20,
-        "docks_available": 2,
-        "fullness": 0.8696
+        "bikes_available": 19,
+        "docks_available": 3,
+        "fullness": 0.8261
       }
     },
     {
@@ -14378,9 +14379,9 @@
         "station_id": "7966",
         "name": "Albany Ave / Dupont St",
         "capacity": 15,
-        "bikes_available": 1,
-        "docks_available": 14,
-        "fullness": 0.0667
+        "bikes_available": 0,
+        "docks_available": 15,
+        "fullness": 0
       }
     },
     {
@@ -15098,9 +15099,9 @@
         "station_id": "8007",
         "name": "385 Pacific Ave",
         "capacity": 31,
-        "bikes_available": 27,
-        "docks_available": 2,
-        "fullness": 0.871
+        "bikes_available": 28,
+        "docks_available": 1,
+        "fullness": 0.9032
       }
     },
     {
@@ -15170,9 +15171,9 @@
         "station_id": "8011",
         "name": "33 Queen St E",
         "capacity": 31,
-        "bikes_available": 27,
-        "docks_available": 3,
-        "fullness": 0.871
+        "bikes_available": 26,
+        "docks_available": 4,
+        "fullness": 0.8387
       }
     },
     {
@@ -15224,9 +15225,9 @@
         "station_id": "8014",
         "name": "Wellington St W / Blue Jays Way",
         "capacity": 23,
-        "bikes_available": 23,
-        "docks_available": 0,
-        "fullness": 1
+        "bikes_available": 22,
+        "docks_available": 1,
+        "fullness": 0.9565
       }
     },
     {
@@ -16124,9 +16125,9 @@
         "station_id": "8070",
         "name": "Centre Island",
         "capacity": 31,
-        "bikes_available": 9,
-        "docks_available": 21,
-        "fullness": 0.2903
+        "bikes_available": 6,
+        "docks_available": 24,
+        "fullness": 0.1935
       }
     },
     {
@@ -16340,9 +16341,9 @@
         "station_id": "8084",
         "name": "Grenville St / Yonge St ",
         "capacity": 15,
-        "bikes_available": 7,
-        "docks_available": 7,
-        "fullness": 0.4667
+        "bikes_available": 8,
+        "docks_available": 6,
+        "fullness": 0.5333
       }
     },
     {
@@ -17258,9 +17259,9 @@
         "station_id": "8152",
         "name": "Surrey Pl / Dr. Emily Stowe Way - SMART",
         "capacity": 16,
-        "bikes_available": 15,
-        "docks_available": 0,
-        "fullness": 0.9375
+        "bikes_available": 14,
+        "docks_available": 1,
+        "fullness": 0.875
       }
     },
     {
@@ -17438,9 +17439,9 @@
         "station_id": "8162",
         "name": "Dan Leckie Way / Fort York Blvd",
         "capacity": 27,
-        "bikes_available": 7,
-        "docks_available": 18,
-        "fullness": 0.2593
+        "bikes_available": 8,
+        "docks_available": 17,
+        "fullness": 0.2963
       }
     },
     {
@@ -17456,9 +17457,9 @@
         "station_id": "8163",
         "name": "Strachan Ave / Ordnance St",
         "capacity": 23,
-        "bikes_available": 13,
-        "docks_available": 10,
-        "fullness": 0.5652
+        "bikes_available": 12,
+        "docks_available": 11,
+        "fullness": 0.5217
       }
     },
     {
@@ -17690,9 +17691,9 @@
         "station_id": "8176",
         "name": "9 Willingdon Blvd",
         "capacity": 39,
-        "bikes_available": 34,
-        "docks_available": 2,
-        "fullness": 0.8718
+        "bikes_available": 33,
+        "docks_available": 3,
+        "fullness": 0.8462
       }
     },
     {
@@ -17924,9 +17925,9 @@
         "station_id": "8189",
         "name": "25 St. Mary St ",
         "capacity": 15,
-        "bikes_available": 0,
-        "docks_available": 15,
-        "fullness": 0
+        "bikes_available": 1,
+        "docks_available": 14,
+        "fullness": 0.0667
       }
     },
     {
@@ -18086,9 +18087,9 @@
         "station_id": "8200",
         "name": "14 Fuller Ave",
         "capacity": 23,
-        "bikes_available": 17,
+        "bikes_available": 18,
         "docks_available": 2,
-        "fullness": 0.7391
+        "fullness": 0.7826
       }
     },
     {
@@ -18123,7 +18124,7 @@
         "name": "Corporate Dr / Lee Centre Dr",
         "capacity": 19,
         "bikes_available": 8,
-        "docks_available": 7,
+        "docks_available": 8,
         "fullness": 0.4211
       }
     },
@@ -18194,9 +18195,9 @@
         "station_id": "8206",
         "name": "Richmond St E / Yonge St (2)",
         "capacity": 17,
-        "bikes_available": 10,
-        "docks_available": 7,
-        "fullness": 0.5882
+        "bikes_available": 9,
+        "docks_available": 8,
+        "fullness": 0.5294
       }
     },
     {
@@ -18320,9 +18321,9 @@
         "station_id": "8213",
         "name": "Yonge St / College St",
         "capacity": 17,
-        "bikes_available": 3,
-        "docks_available": 14,
-        "fullness": 0.1765
+        "bikes_available": 4,
+        "docks_available": 13,
+        "fullness": 0.2353
       }
     },
     {
@@ -18482,9 +18483,9 @@
         "station_id": "8224",
         "name": "439 Wellington St W",
         "capacity": 19,
-        "bikes_available": 6,
-        "docks_available": 11,
-        "fullness": 0.3158
+        "bikes_available": 7,
+        "docks_available": 10,
+        "fullness": 0.3684
       }
     },
     {
@@ -18590,9 +18591,9 @@
         "station_id": "8230",
         "name": "Aitken Place Park",
         "capacity": 39,
-        "bikes_available": 24,
-        "docks_available": 15,
-        "fullness": 0.6154
+        "bikes_available": 23,
+        "docks_available": 16,
+        "fullness": 0.5897
       }
     },
     {
@@ -18608,9 +18609,9 @@
         "station_id": "8231",
         "name": "Fort York Blvd / Angelique St (North Side)",
         "capacity": 19,
-        "bikes_available": 19,
-        "docks_available": 0,
-        "fullness": 1
+        "bikes_available": 18,
+        "docks_available": 1,
+        "fullness": 0.9474
       }
     },
     {
@@ -18662,9 +18663,9 @@
         "station_id": "8235",
         "name": "Dupont St / Ossington Ave",
         "capacity": 15,
-        "bikes_available": 0,
-        "docks_available": 13,
-        "fullness": 0
+        "bikes_available": 1,
+        "docks_available": 12,
+        "fullness": 0.0667
       }
     },
     {
@@ -18698,9 +18699,9 @@
         "station_id": "8237",
         "name": "King St E / Victoria St (2)",
         "capacity": 23,
-        "bikes_available": 11,
-        "docks_available": 12,
-        "fullness": 0.4783
+        "bikes_available": 12,
+        "docks_available": 11,
+        "fullness": 0.5217
       }
     },
     {

@@ -61,6 +61,16 @@ export interface StationFeature {
 export interface StationCollection {
   readonly type: 'FeatureCollection';
   readonly features: readonly StationFeature[];
+
+  /**
+   * When the snapshot was taken, ISO 8601. A GeoJSON foreign member, which the
+   * spec permits and MapLibre ignores.
+   *
+   * Availability is a *snapshot* unless the live feed is reachable, and a number
+   * on screen should say how old it is. Without this the panel would report a
+   * months-stale count as though it were current.
+   */
+  readonly generated_at?: string;
 }
 
 /**

@@ -29,7 +29,19 @@ export default defineConfig({
   },
 
   server: {
-    port: 5173,
+    /**
+     * Deliberately not Vite's default 5173 — that port is a magnet for whatever
+     * else is running, and a collision there is silent: Vite just moves to the
+     * next free port while muscle memory still sends you to 5173, where some
+     * other project answers.
+     */
+    port: 5180,
+
+    /** Fail loudly on a collision rather than drifting to another port. If this
+     *  errors, something else already has 5180 — find it with:
+     *    lsof -nP -iTCP:5180 -sTCP:LISTEN */
+    strictPort: true,
+
     open: true,
   },
 });

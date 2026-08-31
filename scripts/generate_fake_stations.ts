@@ -99,6 +99,7 @@ function makeStation(index: number): StationFeature {
 
 const collection: StationCollection = {
   type: 'FeatureCollection',
+  generated_at: new Date().toISOString(),
   features: Array.from({ length: DATA.fakeStationCount }, (_, i) => makeStation(i)),
 };
 
