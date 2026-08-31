@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bike Share Toronto — Dock Map</title>
+    <meta
+      name="description"
+      content="Every Bike Share Toronto dock, mapped from the City of Toronto GBFS feed."
+    />
+  </head>
+
+  <body>
+    <main>
+      <div id="map" role="application" aria-label="Map of Bike Share Toronto docks"></div>
+
+      <header class="masthead">
+        <p class="masthead__eyebrow">Bike Share Toronto</p>
+        <h1 class="masthead__title">Every dock in the city</h1>
+        <p class="masthead__source">
+          <span class="stamp">Measured</span>
+          City of Toronto GBFS feed
+        </p>
+      </header>
+
+      <p id="map-error" class="notice" role="status" hidden>
+        <strong>Basemap tiles didn’t load.</strong> Check the network, or swap in
+        <code>BASEMAP.fallbackStyle</code> from <code>src/constants.ts</code>.
+      </p>
+    </main>
+
+    <script type="module" src="/src/map.ts"></script>
+  </body>
+</html>

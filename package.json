@@ -1,0 +1,24 @@
+{
+  "name": "civic-bike-docks",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Every Bike Share Toronto dock on a map. Rung 1 of the Civic Ladder.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "build:stations": "tsx scripts/build_stations.ts"
+  },
+  "dependencies": {
+    "maplibre-gl": "6.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.7"
+  }
+}
