@@ -198,6 +198,44 @@ export const INTRO = {
 } as const;
 
 // ---------------------------------------------------------------------------
+// Coverage — the one piece of real computation on this map.
+//
+// Everything here is COMPUTED, not measured: distance geometry over the measured
+// coordinates plus the one sourced distance below. See DATA.md.
+// ---------------------------------------------------------------------------
+export const COVERAGE = {
+  /**
+   * How far someone will walk to a dock, in metres.
+   *
+   * 400 m is a five-minute walk at an ordinary 4.8 km/h pace — that is the whole
+   * derivation, stated so it can be argued with rather than taken on faith. It is
+   * the single assumed constant in the computation; change it here and every
+   * number on screen moves with it.
+   *
+   * It is used on BOTH sides of the gap figure: the denominator is the area
+   * within this radius of any dock at all, the numerator the area within it of a
+   * *usable* dock. Two different radii would make the ratio a function of the
+   * radii rather than of availability — measured at a 1 km denominator the gap
+   * read 60% no matter how many bikes were out, because an isolated dock can
+   * only ever cover (400/1000)² of its own surroundings.
+   */
+  walkRadiusMetres: 400,
+
+  /**
+   * Grid resolution in metres. At 250 m the wash read as a chunky mosaic — the
+   * sampling artefact was more visible than the coverage. 125 m is ~1/3 of the
+   * walk radius, fine enough that the edge reads as an edge, and the whole grid
+   * still rebuilds in a few milliseconds.
+   */
+  cellMetres: 125,
+
+  /** Metres per degree of latitude. Spherical-earth constant. */
+  metresPerDegreeLat: 111_132,
+  /** Metres per degree of longitude AT THE EQUATOR; scaled by cos(latitude). */
+  metresPerDegreeLonEquator: 111_320,
+} as const;
+
+// ---------------------------------------------------------------------------
 // Data
 // ---------------------------------------------------------------------------
 export const DATA = {
@@ -216,6 +254,8 @@ export const DATA = {
 // ---------------------------------------------------------------------------
 export const IDS = {
   source: 'stations',
+  coverageSource: 'coverage',
+  coverageFill: 'coverage-fill',
   clusterCircles: 'station-clusters',
   clusterCounts: 'station-cluster-counts',
   unclusteredPoints: 'station-points',

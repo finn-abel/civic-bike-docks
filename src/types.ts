@@ -47,6 +47,26 @@ export interface StationProperties {
   readonly fullness: number | null;
 }
 
+/**
+ * What the reader is trying to do. It flips the whole map: which stations count
+ * as usable, what the dot colour means, and what the coverage wash covers.
+ *
+ * `borrow` — I want a bike. A station is usable if it has one.
+ * `return` — I have a bike. A station is usable if it has a free dock.
+ */
+export type Intent = 'borrow' | 'return';
+
+/**
+ * What the coverage layer is showing, if anything.
+ *
+ * `'none'` is not a third intent — it is the absence of one. The wash comes off
+ * and the gap figure goes away, because a gap is only meaningful relative to
+ * something you were trying to do. The dots stay, coloured by the `borrow`
+ * reading, which is the plain question a bike-share map answers when nobody has
+ * said otherwise: where are the bikes?
+ */
+export type CoverageMode = Intent | 'none';
+
 /** A GeoJSON Point Feature carrying one station. */
 export interface StationFeature {
   readonly type: 'Feature';

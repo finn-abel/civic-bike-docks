@@ -42,6 +42,17 @@ lsof -nP -iTCP:5180 -sTCP:LISTEN    # find what has it
 `dist/` is a plain static directory: no server, no API key, no runtime dependency
 on npm. That is what keeps the wifi-off property.
 
+## Coverage
+
+Toggle between **Get a bike**, **Return one**, and **Neither** (dots only). The wash shows everywhere within
+a 400 m walk of a dock that can serve that intent, so the gaps are the holes in
+it, and the readout puts a number on them — currently ~23% of the network's
+service area has no available bike within 400 m, against ~2% with no free dock.
+
+Both the wash and the figure recompute when the live feed lands. The method, the
+one assumed constant, and two earlier denominators that produced misleading
+numbers are written up in [`DATA.md`](DATA.md) § Coverage.
+
 ## Theme
 
 Bike Share Toronto's tangerine, split into tokens by contrast requirement — the
@@ -64,6 +75,8 @@ src/
 ├─ layers.ts             # the source and its three layers, styling expressions
 ├─ interactions.ts       # cluster/station click, hover, Escape
 ├─ live.ts               # live status polling, layered over the snapshot
+├─ coverage.ts           # the walk-radius grid and the gap figure (COMPUTED)
+├─ controls.ts           # intent toggle, legend and gap readout
 ├─ landing.ts            # title card, globe descent, camera fence
 ├─ panel.ts              # station detail panel
 ├─ types.ts              # the data contract, as enforced types

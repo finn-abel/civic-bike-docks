@@ -72,6 +72,15 @@
   box-sizing: border-box;
 }
 
+/*
+ * `hidden` is only `display: none` from the user-agent stylesheet, so any author
+ * rule that sets `display` outranks it — every `.gap { display: flex }` in this
+ * file silently un-hides its own element. Make the attribute win, once, here.
+ */
+[hidden] {
+  display: none !important;
+}
+
 html,
 body {
   height: 100%;
@@ -222,7 +231,7 @@ main {
 
 .masthead,
 .panel,
-.legend {
+.controls {
   width: 100%;
   background: color-mix(in oklch, var(--color-paper) 93%, transparent);
   backdrop-filter: blur(10px);
@@ -230,9 +239,10 @@ main {
   box-shadow: var(--shadow-card);
 }
 
-/* The legend sits at the foot of the rail; the panel takes the space between. */
-.legend {
+/* The controls sit at the foot of the rail; the panel takes the space between. */
+.controls {
   margin-top: auto;
+  padding: var(--space-sm) var(--space-md) var(--space-md);
 }
 
 /* ---------------------------------------------------------------------------
@@ -402,9 +412,9 @@ main {
    Legend
    --------------------------------------------------------------------------- */
 .legend {
-  margin-block: 0;
-  margin-inline: 0;
-  padding: var(--space-sm) var(--space-md) var(--space-md);
+  margin: var(--space-sm) 0 0;
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-rule);
 }
 
 .legend__title {
@@ -486,6 +496,10 @@ main {
 
   .legend {
     display: none; /* the panel carries the numbers; the ramp needs the room */
+  }
+
+  .gap__detail {
+    display: none;
   }
 
   .panel {
@@ -715,4 +729,118 @@ main {
 .chrome-visible .maplibregl-ctrl-attrib {
   opacity: 1;
   transition-delay: 150ms;
+}
+
+/* ---------------------------------------------------------------------------
+   Intent toggle — a segmented control built from real radios, so arrow-key
+   navigation and the announced grouping come from the platform.
+   --------------------------------------------------------------------------- */
+.intent {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.intent__legend {
+  padding: 0;
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.intent__options {
+  display: grid;
+  /* Three equal segments. `minmax(0, 1fr)` rather than `1fr` so a long label
+     wraps inside its segment instead of forcing the track wider than the rail. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  margin-top: var(--space-xs);
+  padding: 2px;
+  border-radius: var(--radius);
+  background: color-mix(in oklch, var(--color-ink) 7%, transparent);
+}
+
+.intent__option {
+  position: relative;
+}
+
+.intent__option input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.intent__option span {
+  display: block;
+  padding: 0.4rem 0.35rem;
+  border-radius: 2px;
+  font-size: var(--text-meta);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--color-ink-soft);
+  transition:
+    background var(--duration) var(--ease-out-expo),
+    color var(--duration) var(--ease-out-expo);
+}
+
+.intent__option input:checked + span {
+  background: var(--color-brand);
+  color: var(--color-ink);
+}
+
+.intent__option input:hover:not(:checked) + span {
+  color: var(--color-ink);
+}
+
+.intent__option input:focus-visible + span {
+  outline: 2px solid var(--color-brand-ink);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Gap readout — the one COMPUTED figure on the map, so it gets the scale.
+   --------------------------------------------------------------------------- */
+.gap {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  margin: var(--space-md) 0 0;
+}
+
+.gap__figure {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.gap__label {
+  font-size: var(--text-meta);
+  line-height: 1.35;
+  color: var(--color-ink-soft);
+  text-wrap: pretty;
+}
+
+.gap__detail {
+  margin: var(--space-xs) 0 0;
+  font-size: var(--text-eyebrow);
+  line-height: 1.45;
+  color: var(--color-ink-soft);
+}
+
+/* Matches the coverage wash on the map. */
+.legend__wash {
+  flex: none;
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  /* The layer paints #eb6834 at 0.16 over the basemap; this is that, flattened. */
+  background: color-mix(in oklch, #eb6834 16%, var(--color-paper));
 }

@@ -113,6 +113,9 @@ export function startLiveUpdates(
   map: MapLibreMap,
   base: FeatureCollection,
   onFreshness: (freshness: Freshness) => void,
+  /** Called with the freshly joined census. Coverage is derived from
+   *  availability, so it has to be recomputed whenever availability moves. */
+  onData: (census: FeatureCollection) => void,
 ): void {
   let latest = base;
 
@@ -127,6 +130,7 @@ export function startLiveUpdates(
     void source.setData(latest);
 
     onFreshness({ kind: 'live', at: new Date().toISOString() });
+    onData(latest);
 
     // A panel left open would otherwise keep showing the numbers it opened with,
     // beside dots that have already moved on.

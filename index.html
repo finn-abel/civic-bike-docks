@@ -58,23 +58,53 @@
           hidden
         ></section>
 
-        <figure class="legend">
-          <figcaption class="legend__title">Bikes available</figcaption>
-          <div class="legend__ramp" aria-hidden="true">
-            <span style="--swatch: #d2551f"></span>
-            <span style="--swatch: #96380f"></span>
-            <span style="--swatch: #5c200a"></span>
-          </div>
-          <p class="legend__ends"><span>Empty</span><span>Full</span></p>
-          <p class="legend__note">
-            <span class="legend__hollow" aria-hidden="true"></span>
-            No availability data
-          </p>
-          <p class="legend__note legend__note--muted">
-            Dot size is dock capacity. Numbered circles group nearby stations —
-            click one to zoom in.
-          </p>
-        </figure>
+        <section class="controls" aria-label="Coverage">
+          <fieldset class="intent">
+            <legend class="intent__legend">I want to</legend>
+            <div class="intent__options">
+              <label class="intent__option">
+                <input type="radio" name="intent" value="borrow" checked />
+                <span>Get a bike</span>
+              </label>
+              <label class="intent__option">
+                <input type="radio" name="intent" value="return" />
+                <span>Return one</span>
+              </label>
+              <label class="intent__option">
+                <input type="radio" name="intent" value="none" />
+                <span>Neither</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Written by setCoverageReadout() in src/controls.ts. -->
+          <p class="gap" id="gap-readout"></p>
+          <p class="gap__detail" id="gap-detail"></p>
+
+          <figure class="legend">
+            <figcaption class="legend__title" id="legend-title">Bikes available</figcaption>
+            <div class="legend__ramp" aria-hidden="true">
+              <span style="--swatch: #d2551f"></span>
+              <span style="--swatch: #96380f"></span>
+              <span style="--swatch: #5c200a"></span>
+            </div>
+            <p class="legend__ends">
+              <span id="legend-low">None</span><span id="legend-high">Full</span>
+            </p>
+            <p class="legend__note">
+              <span class="legend__hollow" aria-hidden="true"></span>
+              No availability data
+            </p>
+            <p class="legend__note" id="legend-wash">
+              <span class="legend__wash" aria-hidden="true"></span>
+              Within a 400 m walk
+            </p>
+            <p class="legend__note legend__note--muted">
+              Dot size is dock capacity. Numbered circles group nearby stations —
+              click one to zoom in.
+            </p>
+          </figure>
+        </section>
       </div>
 
       <!-- Message is written by showFailure() in src/map.ts. -->

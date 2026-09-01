@@ -6,9 +6,11 @@
  * and nothing in this file should have to change for it.
  */
 
+import type { FeatureCollection } from 'geojson';
 import {
   AJAXError,
   AttributionControl,
+  type GeoJSONSource,
   Map as MapLibreMap,
   NavigationControl,
   setWorkerUrl,
@@ -29,13 +31,27 @@ import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&ur
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './styles.css';
 
-import { BASEMAP, CITY } from './constants';
+import { BASEMAP, CITY, IDS } from './constants';
+import {
+  readingIntent,
+  setCoverageReadout,
+  setLegendIntent,
+  showReadout,
+  wireIntentToggle,
+} from './controls';
+import { buildCoverage } from './coverage';
 import { wireInteractions } from './interactions';
 import { skipLanding, startLanding } from './landing';
-import { addStationLayers } from './layers';
+import {
+  addCoverageLayer,
+  addStationLayers,
+  setCoverageVisible,
+  setStationIntent,
+} from './layers';
 import type { Freshness } from './live';
 import { startLiveUpdates } from './live';
 import { loadStations } from './stations';
+import type { CoverageMode } from './types';
 
 setWorkerUrl(maplibreWorkerUrl);
 
@@ -163,6 +179,35 @@ function revealChrome(): void {
   document.querySelector('.rail')?.classList.add('rail--visible');
 }
 
+/**
+ * The current census, kept so coverage can be recomputed without refetching —
+ * both when the reader switches intent and when the live feed lands.
+ */
+let census: FeatureCollection | null = null;
+let mode: CoverageMode = 'borrow';
+
+/** Recompute coverage and repaint everything that depends on the chosen mode. */
+function applyMode(next: CoverageMode): void {
+  mode = next;
+  setLegendIntent(mode);
+  if (!census) return;
+
+  setStationIntent(map, readingIntent(mode));
+
+  if (mode === 'none') {
+    // Skip the computation entirely rather than building a wash nobody will see.
+    setCoverageVisible(map, false);
+    showReadout(false);
+    return;
+  }
+
+  setCoverageVisible(map, true);
+  const result = buildCoverage(census, mode);
+  const source = map.getSource(IDS.coverageSource) as GeoJSONSource | undefined;
+  if (source) void source.setData(result.geometry);
+  setCoverageReadout(result, mode);
+}
+
 map.on('load', () => {
   if (wantsLanding) {
     startLanding(map, { reducedMotion: prefersReducedMotion, onArrive: revealChrome });
@@ -172,12 +217,28 @@ map.on('load', () => {
 
   void stationsReady
     .then(({ data, generatedAt }) => {
-      addStationLayers(map, data);
+      census = data;
+
+      // Stations first: addCoverageLayer anchors itself beneath the cluster
+      // layer, which has to exist before it can be named.
+      addStationLayers(map, data, readingIntent(mode));
+      const initial = buildCoverage(census, readingIntent(mode));
+      addCoverageLayer(map, initial.geometry);
       wireInteractions(map);
+
+      setLegendIntent(mode);
+      setCoverageReadout(initial, readingIntent(mode));
+      wireIntentToggle(applyMode);
       showFreshness({ kind: 'snapshot', at: generatedAt });
 
       // Live availability layered over the snapshot, never in place of it.
-      if (online) startLiveUpdates(map, data, showFreshness);
+      // Coverage is derived from availability, so it has to move with it.
+      if (online) {
+        startLiveUpdates(map, data, showFreshness, (updated) => {
+          census = updated;
+          applyMode(mode);
+        });
+      }
     })
     .catch((error: unknown) => {
       showNotice(

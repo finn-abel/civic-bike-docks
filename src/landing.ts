@@ -152,6 +152,17 @@ export function startLanding(map: MapLibreMap, options: LandingOptions): void {
     spinning = false;
     stopFraming();
     document.querySelector('main')?.classList.add('chrome-visible');
+
+    // Hand the projection back to Mercator now the descent is over.
+    //
+    // This is not cosmetic — at city zoom the globe already renders as Mercator,
+    // so nothing visibly changes. But MapLibre keeps computing the maxBounds
+    // constraint in globe space while the projection is set, and that constraint
+    // is looser: wheel-zooming out far enough engages the globe transition and
+    // the camera settles below the floor (measured 10.06 against a floor of
+    // 10.93) and then stays there. Leaving it on globe makes the fence leak.
+    map.setProjection({ type: 'mercator' });
+
     map.scrollZoom.enable();
     map.doubleClickZoom.enable();
     fenceCamera(map);

@@ -10,8 +10,10 @@ came to exist, in a checked-in file, not promised in a README.
 | **MODELED** | Output of a model fit on measured data. *(Not used at rung 1.)* |
 | **GENERATED** | Produced by a generative model. Illustrative; feeds no calculation. |
 
-Rung 1 has **no computation on purpose**. The only non-MEASURED figure is
-`fullness`, and it is one division.
+Rung 1 started with **no computation on purpose**. The coverage layer added one
+deliberately, so the COMPUTED class now carries real weight: the gap figure, the
+wash, and `fullness`. Everything else on screen is MEASURED. Nothing is modelled
+and nothing is generated.
 
 ---
 
@@ -256,6 +258,84 @@ steps are *meant* to be close, and the relief is in place: clusters carry a
 number, no-data is a hollow ring rather than a fourth colour, and the panel
 prints exact values. No distinction on this map rests on colour alone.
 
+## Coverage (COMPUTED)
+
+The one piece of real computation on the map. `src/coverage.ts`.
+
+### What it answers
+
+Given what the reader is trying to do — get a bike, or get rid of one — where can
+they actually do it, and where can they not?
+
+| Mode | A dock counts if | Dot colour reads |
+|---|---|---|
+| `borrow` | `bikes_available > 0` | `fullness` (bikes ÷ capacity) |
+| `return` | `docks_available > 0` | `docks_available ÷ capacity` |
+| `none` | — no wash, no gap figure | `fullness` |
+
+`none` is not a third intent, it is the absence of one. The wash comes off and the
+gap figure goes away entirely rather than sitting there stale, because a gap is
+only meaningful relative to something you were trying to do. The dots stay,
+coloured by the `borrow` reading — the plain question a bike-share map answers
+when nobody has said otherwise: where are the bikes? The computation is skipped
+in this mode rather than run and hidden.
+
+Returning reads free docks directly rather than `1 − fullness`: bikes and free
+docks need not add up to capacity, because a dock can be out of service holding
+neither. Deriving one from the other would invent capacity that is not there.
+
+### The method
+
+A raster, not a union of circles. Overlapping translucent circles composite where
+they overlap, so a dense downtown would render darker than a sparse edge and read
+as "more covered" — a gradient that does not exist. Coverage is binary: you are
+within a walk of a usable dock or you are not. A grid paints each patch of ground
+exactly once.
+
+- 125 m cells over the dock bbox, padded by one walk radius so edge coverage is
+  drawn rather than clipped.
+- For each usable dock, mark cells whose centre is within `walkRadiusMetres`.
+  Worked outward from ~1000 docks rather than inward from ~76,000 cells, which is
+  the difference between rebuilding in a frame and blocking the page. Measured
+  **36–55 ms** from click to repaint.
+- Each row's covered cells are run-length encoded into rectangles before being
+  handed to MapLibre — 76,000 cells become ~620 polygons with identical output.
+- Distance is equirectangular. At city scale the error against a great circle is
+  centimetres, far below the cell size.
+
+### The one assumed constant
+
+`COVERAGE.walkRadiusMetres = 400`. That is a five-minute walk at an ordinary
+4.8 km/h pace — the whole derivation, stated so it can be argued with rather than
+taken on faith. It is straight-line distance, **not** walking distance along
+streets: a river or a rail corridor between you and a dock is not accounted for,
+so real coverage is somewhat worse than the wash shows.
+
+### The denominator, and how it was got wrong twice
+
+The gap figure is a ratio, and its denominator is the easiest place to lie.
+
+1. **Bounding box** — measured **80%**. Most of that box is northwest Toronto
+   where the system has never operated. Counting land the network never reached
+   as a "gap" makes the number large and meaningless.
+2. **Within 1 km of any dock** — measured **60%**, and stayed near 60% however
+   many bikes were out. With a 400 m numerator against a 1 km denominator, an
+   isolated dock can only ever cover (400/1000)² of its surroundings, so the
+   ratio measured the radii, not the network.
+3. **Within 400 m of any dock** — the same radius on both sides. The denominator
+   is the network's own service area, and the ratio now moves only with
+   availability, which is the thing the toggle is about.
+
+Measured on the live feed: **23% gap for borrowing, 2% for returning**. Finding a
+free dock is nearly always possible; finding a bike is not. The denominator does
+not move when bikes do, so that difference is real and not an artefact.
+
+### What it is not
+
+Not a model, not a forecast, not walking-network isochrones. Distance geometry
+over measured coordinates against one stated distance. Change the radius in
+`constants.ts` and every number on screen moves with it.
+
 ## Camera bounds
 
 After the landing, the camera is fenced to the dock bbox plus
@@ -267,6 +347,12 @@ box so they cannot disagree:
 - **A zoom floor** from `cameraForBounds`, recomputed on resize. `maxBounds` alone
   does not stop you zooming out until Lake Erie fills the frame, and the zoom that
   fits the service area on a desktop leaves half of it off-screen on a phone.
+- **Mercator, restored on arrival.** The globe is for the descent only. While the
+  projection stays `globe`, MapLibre computes the `maxBounds` constraint in globe
+  space, and that constraint is looser: wheel-zoom out far enough to engage the
+  globe transition and the camera settles *below* the floor — measured 10.06
+  against a floor of 10.93 — and stays there. Nothing about it is visible at city
+  zoom, which is what made it easy to miss.
 
 The margin is deliberately tight. The bbox's south edge is a single island dock
 with open lake below it, so every extra degree of slack buys another screenful of
