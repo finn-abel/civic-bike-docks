@@ -1,10 +1,9 @@
 /**
- * panel.ts — Phase 3. The station detail panel.
+ * panel.ts — the station detail panel.
  *
  * Reads a clicked feature's properties and renders them. Every figure carries a
- * provenance stamp (discipline #1): the four read straight off the City of Toronto
- * feed are MEASURED, and `fullness` — the one division in the whole project — is
- * COMPUTED.
+ * provenance stamp: the four read straight off the City of Toronto feed are
+ * MEASURED, and `fullness` — the one division in the whole project — is COMPUTED.
  */
 
 import type { RawFeatureProperties } from './types';

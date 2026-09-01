@@ -2,8 +2,8 @@
  * types.ts — the data contract, as types.
  *
  * This file IS the spine of the project. Everything downstream reads this exact
- * shape and nothing else, which is what lets Phase 2's fake data be swapped for
- * Phase 4's real data without touching a line of UI code.
+ * shape and nothing else, which is what lets placeholder data be swapped for real
+ * data without touching a line of UI code.
  *
  * The prose version, with per-field provenance stamps, lives in DATA.md. Keep
  * the two in step: if a property changes here, stamp it there.

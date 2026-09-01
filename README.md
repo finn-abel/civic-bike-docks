@@ -1,105 +1,132 @@
-# civic-bike-docks
+<h1 align="center">civic-bike-docks</h1>
 
-Every Bike Share Toronto dock on a map. Rung 1 of the Civic Ladder.
+![A dark cartoon illustration of a bicycle wheel rendered as a globe over a civic map](docs/assets/readme-hero-v2.png)
 
-**Status:** Phases 0–5 complete, stretch goals included. Every real Bike Share
-Toronto dock (1063 of them) on the map: clustered, clickable, coloured by live
-availability, opening on a globe that flies down to the city — and still loading
-with the network off.
+An interactive map of every Bike Share Toronto dock: 1063 real stations, live
+availability, clustered city navigation, a globe-to-Toronto opening, and an
+offline-safe data path.
 
-The app opens on a title card over a slowly turning globe. **Get started** flies
-the camera down to Toronto, after which the map is fenced to the service area —
-you cannot pan or zoom out to anywhere there are no docks.
+The project treats a bike-share system as civic infrastructure. It shows where the
+network is dense, where bikes or docks are currently available, and which parts of
+the service area fall outside a practical walk to a usable station.
 
-Append `?nointro` to skip the landing and drop straight into the fenced map.
+## Highlights
 
-## Run it
+| Feature | What it does |
+|---|---|
+| Station map | Plots every Bike Share Toronto dock from the GBFS feed. |
+| Live availability | Updates bikes and free docks from `station_status` when the network is reachable. |
+| Snapshot fallback | Ships with a committed status snapshot so the map still works offline. |
+| Intent toggle | Switch between **Get a bike**, **Return one**, and **Neither**. |
+| Coverage wash | Computes the area within 400 m of a station that can serve the selected intent. |
+| Detail panel | Opens capacity, bikes available, docks available, and fullness for each station. |
+| Globe intro | Starts from a quiet globe view, then flies into the fenced Toronto service area. |
+
+## Why It Exists
+
+Most bike-share maps answer the immediate question: where is the nearest station?
+This one also shows the shape of the network. Dots cluster to reveal density,
+colour encodes availability, and the coverage layer makes access gaps visible
+without pretending to be a route planner.
+
+Every number on screen is stamped as either **MEASURED** or **COMPUTED** in
+[DATA.md](DATA.md). The app uses measured GBFS coordinates and availability, then
+computes only `fullness` and the 400 m coverage gap. There is no model and no
+generated data in the shipped map.
+
+## Run Locally
 
 ```bash
 npm install
-npm run dev        # http://localhost:5180 — opens automatically
+npm run dev
 ```
 
-The dev server is pinned to **5180**, not Vite's default 5173. 5173 collects
-whatever else you have running, and a collision there is silent — Vite moves to the
-next free port while you go to 5173 out of habit and get someone else's app. On
-5180 a collision is a hard error instead:
+The dev server is pinned to `http://localhost:5180`. If that port is already in
+use, Vite exits instead of silently moving to another port.
 
-```
-Error: Port 5180 is already in use
-lsof -nP -iTCP:5180 -sTCP:LISTEN    # find what has it
+```bash
+npm run build
+npm run preview
 ```
 
-| Script | Does |
+`dist/` is a static build: no server API, no runtime npm dependency, and no API
+key. The CARTO basemap is fetched when available; if it is not, the local fallback
+style still renders all stations, clusters, labels, and panels.
+
+## Data Pipeline
+
+The app reads a single GeoJSON contract from `public/data/stations.geojson`.
+
+```bash
+npm run build:stations          # fetch GBFS and write the real station snapshot
+npm run generate:fake           # write 50 contract-shaped placeholder stations
+```
+
+`scripts/build_stations.ts` resolves sub-feed URLs through the GBFS discovery file,
+joins `station_information` with `station_status`, writes GeoJSON, and runs the
+same runtime validator the browser uses before it overwrites the committed file.
+
+Current checked-in snapshot:
+
+| Item | Value |
 |---|---|
-| `npm run dev` | Vite dev server with HMR |
-| `npm run build` | `tsc --noEmit` then `vite build` → `dist/` |
-| `npm run preview` | Serve the built `dist/` locally |
-| `npm run typecheck` | Types only, no build |
-| `npm run generate:fake` | Phase 2 — write 50 placeholder stations to `public/data/stations.geojson` |
-| `npm run build:stations` | Phase 4 — fetch GBFS, overwrite the same file with the real 1063 |
+| Source | Bike Share Toronto GBFS v3.0 |
+| Verified | 2026-08-31 |
+| Stations | 1063 |
+| Availability | 1062 stations with status, 1 station without |
+| Coordinate order | GeoJSON `[lon, lat]` |
 
-`dist/` is a plain static directory: no server, no API key, no runtime dependency
-on npm. That is what keeps the wifi-off property.
+## Interaction Model
 
-## Coverage
+| Mode | Station counts as usable when | Dot colour means |
+|---|---|---|
+| `borrow` | `bikes_available > 0` | Bikes available ÷ capacity |
+| `return` | `docks_available > 0` | Free docks ÷ capacity |
+| `none` | Coverage hidden | Bikes available ÷ capacity |
 
-Toggle between **Get a bike**, **Return one**, and **Neither** (dots only). The wash shows everywhere within
-a 400 m walk of a dock that can serve that intent, so the gaps are the holes in
-it, and the readout puts a number on them — currently ~23% of the network's
-service area has no available bike within 400 m, against ~2% with no free dock.
-
-Both the wash and the figure recompute when the live feed lands. The method, the
-one assumed constant, and two earlier denominators that produced misleading
-numbers are written up in [`DATA.md`](DATA.md) § Coverage.
-
-## Theme
-
-Bike Share Toronto's tangerine, split into tokens by contrast requirement — the
-bikes' own `#eb6834` is a fill colour, not a text or map-mark colour. The full
-table, with measurements, is in [`DATA.md`](DATA.md) § The theme, by job.
+The coverage wash is a grid calculation, not overlapping translucent circles. Each
+cell is painted once, so dense downtown clusters do not falsely look “more
+covered” than sparse edges. Details and tradeoffs are documented in
+[DATA.md](DATA.md#coverage-computed).
 
 ## Stack
 
-TypeScript (strict) + Vite + MapLibre GL JS 6. No UI framework — rung 1's one hard
-thing is the map, and React would be a second hard thing. GeoJSON is the only data
-format.
+- TypeScript, strict mode
+- Vite
+- MapLibre GL JS 6
+- GeoJSON
+- Plain DOM wiring, no UI framework
 
-## Layout
+## Project Layout
 
-```
-index.html               # Vite entry
+```text
+index.html
 src/
 ├─ map.ts                # camera, error surface, wiring
-├─ stations.ts           # load + validate the census
-├─ layers.ts             # the source and its three layers, styling expressions
+├─ stations.ts           # load + validate the station census
+├─ layers.ts             # MapLibre source, layers, and styling expressions
 ├─ interactions.ts       # cluster/station click, hover, Escape
-├─ live.ts               # live status polling, layered over the snapshot
-├─ coverage.ts           # the walk-radius grid and the gap figure (COMPUTED)
-├─ controls.ts           # intent toggle, legend and gap readout
-├─ landing.ts            # title card, globe descent, camera fence
+├─ live.ts               # live status polling over the snapshot
+├─ coverage.ts           # walk-radius grid and gap figure
+├─ controls.ts           # intent toggle, legend, readout
+├─ landing.ts            # globe opening and camera fence
 ├─ panel.ts              # station detail panel
-├─ types.ts              # the data contract, as enforced types
-├─ constants.ts          # city center, zooms, feed URLs, cluster settings — with sources
-└─ styles.css            # design tokens + map chrome
+├─ types.ts              # GeoJSON contract as TypeScript
+├─ constants.ts          # sourced values and project constants
+└─ styles.css            # design tokens and map chrome
 public/
-├─ data/stations.geojson       # the committed census — 1063 real docks
-└─ basemap/                    # offline fallback style + vendored glyphs
+├─ data/stations.geojson
+└─ basemap/
 scripts/
-├─ generate_fake_stations.ts   # Phase 2 placeholder generator
-└─ build_stations.ts           # Phase 4 GBFS -> GeoJSON transform
-DATA.md                  # provenance stamps + the contract in prose
+├─ build_stations.ts
+└─ generate_fake_stations.ts
+docs/
+└─ assets/readme-hero.png
 ```
 
-`public/` is served at the site root, so `public/data/stations.geojson` is fetched
-as `data/stations.geojson` — the path in `constants.ts → DATA.stations`.
+<!--
+## Known Gap
 
-## What's next
-
-Rung 1 is done. The remaining known gap is that individual dots are not
-keyboard-reachable — the panel is fully keyboard-operable once open, but opening it
-needs a pointer.
-
-See [`DATA.md`](DATA.md) for the contract, the provenance stamps, and the GBFS v3
-schema gotchas. The contract is also enforced in [`src/types.ts`](src/types.ts) —
-keep the two in step.
+Individual map dots are not keyboard-reachable yet. The detail panel is
+keyboard-operable once open, but opening a station currently requires a pointer.
+-->

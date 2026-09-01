@@ -1,9 +1,9 @@
 /**
  * map.ts — the map: camera, error surface, and wiring.
  *
- * Acceptance criterion (Phase 3): clicking any dot shows its details, zooming out
- * clusters the dots, zooming in expands them. Swapping the data file is Phase 4,
- * and nothing in this file should have to change for it.
+ * Clicking any dot shows its details; zooming out clusters the dots; zooming in
+ * expands them. The map reads a stable GeoJSON contract, so swapping data files
+ * does not require UI changes.
  */
 
 import type { FeatureCollection } from 'geojson';
@@ -61,7 +61,7 @@ if (!container) {
 }
 
 /** Surface a message on the map. A silent grey rectangle is the worst possible
- *  failure mode in a demo — better to say what happened. */
+ *  failure mode — better to say what happened. */
 function showNotice(message: string, tone: 'error' | 'info', cause?: unknown): void {
   if (cause !== undefined) console.error(`[map] ${message}`, cause);
   const banner = document.getElementById('map-error');
@@ -142,7 +142,7 @@ map.on('error', (event) => {
 });
 
 /** Caption the availability figures with how old they are. A number on screen
- *  should say whether it is current — that is discipline #1 doing its job. */
+ *  should say whether it is current. */
 function showFreshness(freshness: Freshness): void {
   const element = document.getElementById('freshness');
   if (!element) return;

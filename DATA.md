@@ -1,19 +1,19 @@
 # DATA.md — provenance
 
-Discipline #1 of the Civic Ladder: every figure on screen is stamped with how it
-came to exist, in a checked-in file, not promised in a README.
+Every figure on screen is stamped with how it came to exist. This file is the
+auditable record: measured inputs stay distinct from computed outputs, and
+generated placeholders never feed live claims.
 
 | Class | Meaning |
 |---|---|
 | **MEASURED** | Read off an instrument or authoritative census. Not modelled. |
 | **COMPUTED** | Deterministic arithmetic over measured inputs and sourced constants. |
-| **MODELED** | Output of a model fit on measured data. *(Not used at rung 1.)* |
+| **MODELED** | Output of a model fit on measured data. *(Not used in this app.)* |
 | **GENERATED** | Produced by a generative model. Illustrative; feeds no calculation. |
 
-Rung 1 started with **no computation on purpose**. The coverage layer added one
-deliberately, so the COMPUTED class now carries real weight: the gap figure, the
-wash, and `fullness`. Everything else on screen is MEASURED. Nothing is modelled
-and nothing is generated.
+The app keeps computation intentionally narrow: the gap figure, the coverage wash,
+and `fullness` are COMPUTED. Everything else on screen is MEASURED. Nothing is
+modelled and nothing generated appears in the shipped data.
 
 ---
 
@@ -31,8 +31,7 @@ and nothing is generated.
 ## The data contract
 
 Everything downstream reads **this exact shape and nothing else**. That is what
-lets fake data (Phase 2) be swapped for real data (Phase 4) without touching a
-line of UI code.
+lets placeholder data be swapped for real data without touching a line of UI code.
 
 This shape is enforced as TypeScript in [`src/types.ts`](src/types.ts) — that file
 is the machine-checked copy, this section is the human one. Keep them in step.
@@ -75,7 +74,7 @@ separate fields; swapping them puts every dock in the Gulf of Guinea.
 `fullness` is precomputed in the transform, not in the map, so the styling
 expression colors by one clean number.
 
-### The committed census (Phase 4 onward)
+### The committed census
 
 `public/data/stations.geojson` now holds the **real Toronto network**: 1063 stations,
 written by `scripts/build_stations.ts` (`npm run build:stations`) from a snapshot
@@ -89,17 +88,15 @@ It runs the *same* `assertStationCollection` the browser runs, before writing �
 definition of "valid", enforced at both ends of the pipe, so a bad transform can
 never overwrite a good file.
 
-**`station_status` is included in the snapshot.** The build plan sequences the
-status join as a Phase 5 stretch, but the contract already declares
-`bikes_available` / `docks_available` / `fullness` as MEASURED, and shipping the
-census alone would leave every dot in the no-data state with the whole colour
-channel dead. Snapshotting status once and committing it is what the plan
-prescribes for offline anyway. What remains genuinely Phase 5 is the *live*
-re-fetch in the browser, with this snapshot as the fallback.
+**`station_status` is included in the snapshot.** The contract declares
+`bikes_available` / `docks_available` / `fullness`, and shipping the census alone
+would leave every dot in the no-data state with the whole colour channel dead.
+Snapshotting status once and committing it gives the browser complete local data;
+live re-fetches are layered over that snapshot.
 
 Run `npm run build:stations -- --no-status` for the strict census-only file.
 
-### Live availability (Phase 5)
+### Live availability
 
 `src/live.ts` polls `station_status` in the browser every 60s and folds the result
 over the loaded census, rebuilding features rather than mutating them so the
@@ -108,7 +105,7 @@ snapshot survives intact as a fallback.
 **The snapshot is the load-bearing path; live is an enhancement laid over it.** A
 failed, slow, or blocked fetch is a silent no-op — the map keeps showing the
 snapshot and never throws. That ordering is the point: a live fetch must never be
-the reason a demo has no data.
+the reason the map has no data.
 
 The masthead caption says which you are looking at, because a number on screen
 should say whether it is current:
@@ -125,35 +122,34 @@ were current.
 Live updates start only if the basemap probe found the network at load. Coming back
 online mid-session does not start them; reload for that.
 
-### During development (Phases 2–3)
+### Placeholder data
 
 `public/data/stations.geojson` holds **50 generated stations**, contract-shaped,
 written by `scripts/generate_fake_stations.ts` (`npm run generate:fake`).
 
 > Every property in the dev file is **GENERATED** — placeholder, feeds nothing,
-> and is overwritten wholesale in Phase 4. The header comment in the generator
-> says so, and this note is the checked-in record of it.
+> and is overwritten wholesale by `npm run build:stations`. The header comment in
+> the generator says so, and this note is the checked-in record of it.
 
 Two deliberate choices in the generator:
 
 - **Coordinates are gaussian around downtown, not uniform over the bbox.** Real
-  dock networks are dense in the core, and clustering (Phase 3) needs something
-  interesting to cluster. A side effect is that a handful of placeholders land in
-  Lake Ontario — cosmetic, and gone in Phase 4.
+  dock networks are dense in the core, and clustering needs something interesting
+  to cluster. A side effect is that a handful of placeholders land in Lake
+  Ontario — cosmetic, and gone once real GBFS data is built.
 - **Station `fake-000` is given `capacity: 0`,** mirroring the real feed, so the
-  `fullness` divide-by-zero guard is exercised from Phase 2 rather than
-  discovered in Phase 4.
+  `fullness` divide-by-zero guard is exercised by local generated data before the
+  real feed is fetched.
 
 The seed is fixed (`SEED = 20260831`), so regenerating produces a byte-identical
 file and an empty git diff.
 
 ---
 
-## Feed schema notes (read before writing the Phase 4 transform)
+## Feed schema notes
 
-The build plan's pseudocode uses GBFS **v1** field names. The live v3.0 feed
-differs in two places that will silently produce `undefined` if you trust the
-older names:
+The app reads GBFS **v3.0**. Two fields differ from older v1 examples commonly
+found online:
 
 1. **`name` is a localized array, not a string.** v3 returns
    `[{ "text": "Fort York Blvd / Capreol Ct", "language": "en" }, …]` with one
@@ -162,7 +158,7 @@ older names:
 2. **Bikes available is `num_vehicles_available`, not `num_bikes_available`.**
    v3 generalized "bike" to "vehicle". `num_docks_available` is unchanged.
 
-Other v3 fields present but unused at rung 1: `external_id`, `short_name`,
+Other v3 fields present but unused here: `external_id`, `short_name`,
 `address`, `is_charging_station`, `is_virtual_station`, `rental_methods`,
 `rental_uris`, `vehicle_types_capacity`, `vehicle_docks_capacity`.
 
@@ -201,11 +197,9 @@ exists.
 | Cluster **size** | `point_count` | Brand tangerine, never a step on the fullness ramp. |
 | Cluster **numeral** | `point_count` | The only mark on the map that contains a number. |
 
-**The ramp is one hue, not green→red.** The build plan suggests green = bikes
-available → red = empty. That is the single worst pairing for red-green colour
-blindness (~8% of men), and it is a *diverging* structure used where the data is
-*sequential* — fullness is a magnitude, not a polarity. A one-hue ramp reads just
-as fast and works for everyone.
+**The ramp is one hue, not green→red.** Fullness is a sequential magnitude, not a
+polarity, and red/green is the single worst pairing for red-green colour
+blindness (~8% of men). A one-hue ramp reads just as fast and works for everyone.
 
 The hue is Bike Share Toronto's tangerine, so a dot reads as the thing it stands
 for. Steps `#d2551f → #96380f → #5c200a`, monotonic in OKLCH lightness
@@ -362,20 +356,20 @@ Measured at 0.02°: every extreme of the fence keeps 47–95 docks in view.
 This fences the Bike Share **service area**, which is smaller than the GTA proper.
 The bounds are the docks themselves, so the map goes exactly where there is data.
 
-## Renders with the wifi off (discipline #3)
+## Renders With The Wifi Off
 
 | Asset | Committed? | Notes |
 |---|---|---|
 | Offline basemap style + glyphs | **Yes** | `public/basemap/` — a flat ground plus one vendored glyph atlas. Used automatically when CARTO is unreachable. |
 | `public/data/stations.geojson` | Yes | Fetched once, offline, by `scripts/build_stations.ts`. The browser never calls the GBFS feed. |
-| Status snapshot (Phase 5) | Yes, when added | Live re-fetch is an *enhancement* with the snapshot as fallback — never the load-bearing path. |
+| Status snapshot | Yes | Live re-fetch is an *enhancement* with the snapshot as fallback — never the load-bearing path. |
 | MapLibre GL JS + CSS | **Yes** | Pinned to `6.6.0` in `package.json` and bundled into `dist/` by Vite. No CDN at runtime. |
 | Basemap tiles | **No** — CARTO CDN | Keyless and network-fetched, but no longer load-bearing: if they fail, the local style takes over. |
 
-**Closed in Phase 4.** Verified by loading the built site with every off-origin
-request aborted: all 1063 docks, clustering, cluster counts, colour, and the click
-panel work with the network down. The only thing lost is the street basemap, and
-the page says so rather than showing an empty rectangle.
+Verified by loading the built site with every off-origin request aborted: all
+1063 docks, clustering, cluster counts, colour, and the click panel work with the
+network down. The only thing lost is the street basemap, and the page says so
+rather than showing an empty rectangle.
 
 The fix has two parts. `resolveStyle()` in `src/map.ts` probes the CARTO style with
 a short timeout and falls back to `public/basemap/style.json`; without that probe

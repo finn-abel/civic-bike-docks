@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------------------
-   Design tokens. Phase 3's detail panel gets built out of these, so the map
+   Design tokens. The detail panel gets built out of these, so the map
    chrome reads as one system rather than a stack of one-off values.
    --------------------------------------------------------------------------- */
 :root {

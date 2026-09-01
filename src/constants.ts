@@ -1,8 +1,8 @@
 /**
  * constants.ts — the one place numbers and URLs live.
  *
- * Discipline #2 (Civic Ladder, Shared Foundation): no numeric literals in the map
- * code. Every value below carries the source it came from in a comment above it.
+ * No numeric literals in the map code. Every value below carries the source or
+ * rationale it came from in a comment above it.
  */
 
 import type { LonLat } from './types';
@@ -21,13 +21,12 @@ export const FEEDS = {
   stationInformation:
     'https://toronto.publicbikesystem.net/customer/gbfs/v3.0/station_information',
 
-  /** Live layer (Phase 5 stretch only). Bikes/docks free per station, ttl ~10s. */
+  /** Live layer. Bikes/docks free per station, ttl ~10s. */
   stationStatus:
     'https://toronto.publicbikesystem.net/customer/gbfs/v3.0/station_status',
 } as const;
 
-/** Legacy v1 endpoints — flatter schema, kept as a documented fallback only.
- *  Source: project1-bikeshare-build-plan.md § The feeds. */
+/** Legacy v1 endpoints — flatter schema, kept as a documented fallback only. */
 export const FEEDS_V1 = {
   stationInformation:
     'https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_information',
@@ -40,15 +39,15 @@ export const FEEDS_V1 = {
 export const CITY = {
   name: 'Toronto',
 
-  /** Downtown Toronto. Source: project1-bikeshare-build-plan.md § Phase 0. */
+  /** Downtown Toronto, the initial city-level map center. */
   center: [-79.3832, 43.6532] satisfies LonLat,
 
   /** Whole-system view: fits the dock network without burying downtown in clusters. */
   zoom: 12,
 
   /** Bounding box of the real dock network, computed from the 1063 stations in
-   *  station_information on 2026-08-31. Used to place fake stations in Phase 2 so
-   *  the fake map is geographically honest about where docks actually are. */
+   *  station_information on 2026-08-31. Used to place placeholder stations in the
+   *  same part of the city as the real network. */
   bbox: {
     minLon: -79.6035,
     minLat: 43.5881,
@@ -93,10 +92,9 @@ export const BASEMAP = {
    * dock dots carry the color, not the streets.
    * Source: https://github.com/CartoDB/basemap-styles (gl/positron-gl-style)
    *
-   * NOTE (discipline #3, wifi off): MapLibre itself is bundled by Vite, but these
-   *   tiles are still network-fetched and browser-cached. Load the map once online
-   *   before demoing. To be fully offline-proof, self-host a minimal style.
-   *   Tracked as a Phase 4 verification step.
+   * MapLibre itself is bundled by Vite, but these tiles are still network-fetched
+   * and browser-cached. If they are unreachable, the local fallback style below
+   * keeps the dock network visible.
    */
   style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
 
@@ -110,8 +108,8 @@ export const BASEMAP = {
    */
   offlineStyle: 'basemap/style.json',
 
-  /** How long to wait for the CARTO style before falling back. Short: a demo on
-   *  bad wifi should degrade in a beat, not hang on a blank screen. */
+  /** How long to wait for the CARTO style before falling back. Short enough that
+   *  a bad connection degrades in a beat instead of hanging on a blank screen. */
   styleTimeoutMs: 2500,
 
   // Attribution is NOT set here: the CARTO style.json already declares its own
@@ -120,8 +118,7 @@ export const BASEMAP = {
 } as const;
 
 // ---------------------------------------------------------------------------
-// Clustering — Phase 3
-// Values from project1-bikeshare-build-plan.md § Map implementation notes.
+// Clustering
 // ---------------------------------------------------------------------------
 export const CLUSTER = {
   /** px within which points merge into one cluster */
@@ -131,7 +128,7 @@ export const CLUSTER = {
 } as const;
 
 // ---------------------------------------------------------------------------
-// Live status — Phase 5 stretch. An enhancement over the committed snapshot,
+// Live status. An enhancement over the committed snapshot,
 // never the load-bearing path.
 // ---------------------------------------------------------------------------
 export const LIVE = {
@@ -145,7 +142,7 @@ export const LIVE = {
 } as const;
 
 // ---------------------------------------------------------------------------
-// Globe intro — Phase 5 stretch.
+// Globe intro.
 // ---------------------------------------------------------------------------
 export const INTRO = {
   /**
@@ -239,18 +236,18 @@ export const COVERAGE = {
 // Data
 // ---------------------------------------------------------------------------
 export const DATA = {
-  /** The committed census, contract-shaped. Fake through Phase 3, real from Phase 4.
-   *  Same path either way — that is the point of the contract.
+  /** The committed census, contract-shaped. Placeholder or real data use the same
+   *  path — that is the point of the contract.
    *  Lives in public/, so Vite copies it to the build output verbatim. */
   stations: 'data/stations.geojson',
 
-  /** Number of fake stations generated in Phase 2. Enough to exercise clustering,
-   *  small enough to eyeball. Real count is 1063. */
+  /** Number of placeholder stations. Enough to exercise clustering, small enough
+   *  to eyeball. Real count is 1063. */
   fakeStationCount: 50,
 } as const;
 
 // ---------------------------------------------------------------------------
-// Source / layer ids — one place, so layer wiring in Phase 3 can't typo-drift.
+// Source / layer ids — one place, so layer wiring can't typo-drift.
 // ---------------------------------------------------------------------------
 export const IDS = {
   source: 'stations',

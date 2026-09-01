@@ -1,10 +1,10 @@
 /**
- * live.ts — Phase 5 stretch. Real-time availability.
+ * live.ts — real-time availability.
  *
  * The committed snapshot is the load-bearing path; this is an *enhancement* laid
  * over it. If the feed is slow, blocked, or offline, nothing here throws and the
  * map keeps showing the snapshot. That ordering is the whole point: a live fetch
- * must never be the reason a demo has no data.
+ * must never be the reason the map has no data.
  */
 
 import type { FeatureCollection } from 'geojson';
@@ -105,7 +105,7 @@ function withLiveStatus(
 /**
  * Poll the live feed and push updates into the map source.
  *
- * Refreshes on an interval so the map stays current while a demo is on screen.
+ * Refreshes on an interval so the map stays current while the page is open.
  * A failed refresh is a no-op: the previous data stays, and the caption stops
  * claiming to be live only if it never succeeded in the first place.
  */

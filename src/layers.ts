@@ -1,5 +1,5 @@
 /**
- * layers.ts — Phase 3. The station source and the three layers drawn off it.
+ * layers.ts — the station source and the three layers drawn off it.
  *
  * Layer order matters: clusters, then their counts, then individual stations.
  *
@@ -24,10 +24,10 @@ import type { Intent } from './types';
  * at 2.98:1 on the basemap it fades into the map. It lives in styles.css as
  * --color-brand, for fills and the CTA, where contrast is not the constraint.
  *
- * Also deliberately NOT the green→red the build plan suggests. Red/green is the
- * single worst pairing for red-green colour blindness (~8% of men), and a
- * two-hue ramp with no neutral midpoint is a diverging scale used where a
- * sequential one belongs. More ink = more bikes reads just as fast, for everyone.
+ * Also deliberately not green→red. Red/green is the single worst pairing for
+ * red-green colour blindness (~8% of men), and a two-hue ramp with no neutral
+ * midpoint is a diverging scale used where a sequential one belongs. More ink =
+ * more bikes reads just as fast, for everyone.
  *
  * Every step clears 3:1 against the basemap. Colour is never the only channel:
  * the panel prints exact numbers and the legend labels both ends.

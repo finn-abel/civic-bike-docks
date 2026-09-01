@@ -1,10 +1,9 @@
 /**
- * build_stations.ts — Phase 4. The GBFS → GeoJSON transform.
+ * build_stations.ts — the GBFS → GeoJSON transform.
  *
  * Runs ONCE, offline, from the terminal. Writes public/data/stations.geojson,
- * which is committed. The browser never calls a GBFS feed — that is discipline #3
- * (renders with the wifi off), and it is why a venue's flaky wifi cannot break the
- * demo.
+ * which is committed. The browser never calls a GBFS feed for its baseline data,
+ * so the map still works when the network is unavailable.
  *
  *   npm run build:stations              # census + a status snapshot
  *   npm run build:stations -- --no-status   # census only; availability all null

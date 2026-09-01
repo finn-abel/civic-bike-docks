@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Every Bike Share Toronto dock on a map. Rung 1 of the Civic Ladder.",
+  "description": "Every Bike Share Toronto dock on a standalone interactive map.",
   "license": "MIT",
   "scripts": {
     "dev": "vite",

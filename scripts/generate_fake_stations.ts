@@ -1,13 +1,13 @@
 /**
- * generate_fake_stations.ts — Phase 2. Writes public/data/stations.geojson.
+ * generate_fake_stations.ts — writes public/data/stations.geojson.
  *
  * GENERATED data. Every value this script emits is a placeholder: it feeds no
- * calculation, appears in no claim, and is overwritten wholesale in Phase 4 by
+ * calculation, appears in no claim, and is overwritten wholesale by
  * scripts/build_stations.ts. DATA.md is the checked-in record of that.
  *
  * The point of this file is that the map is built entirely against its output.
  * The map cannot tell fake from real, because both satisfy the same contract —
- * which is what makes the Phase 4 swap a one-file change.
+ * which is what makes the real-data build a one-file change.
  *
  *   npm run generate:fake
  */
@@ -28,7 +28,7 @@ const SEED = 20260831;
 const CAPACITY = { min: 11, max: 47 } as const;
 
 /** Docks cluster downtown rather than spreading evenly over the bbox. Scattering
- *  uniformly would give clustering (Phase 3) nothing interesting to do. */
+ *  uniformly would give clustering nothing interesting to do. */
 const SPREAD_DEGREES = 0.028;
 
 /** mulberry32 — small, fast, seedable. Not cryptographic; does not need to be. */
@@ -79,7 +79,7 @@ function makeStation(index: number): StationFeature {
 
   // One station is given capacity 0 on purpose. At least one real Toronto station
   // has it, and it is the input that makes `fullness` divide by zero. The fake
-  // data should exercise that guard, not hide it until Phase 4.
+  // data should exercise that guard before the real feed is fetched.
   const capacity = index === 0 ? 0 : randomInt(CAPACITY.min, CAPACITY.max);
   const bikesAvailable = capacity === 0 ? 0 : randomInt(0, capacity);
 

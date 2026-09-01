@@ -2,8 +2,8 @@
  * stations.ts — load and validate the station census.
  *
  * The map reads the contract in types.ts and nothing else. Whether the file behind
- * DATA.stations holds 50 generated placeholders (Phase 2) or 1063 real Toronto
- * docks (Phase 4) is not this module's concern — that is the whole point.
+ * DATA.stations holds 50 generated placeholders or 1063 real Toronto docks is not
+ * this module's concern — that is the whole point.
  *
  * Drawing lives in layers.ts. This file is only about getting trustworthy data.
  */
@@ -120,4 +120,3 @@ export async function loadStations(): Promise<LoadedStations> {
     generatedAt: typeof parsed.generated_at === 'string' ? parsed.generated_at : null,
   };
 }
-

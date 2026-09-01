@@ -1,5 +1,5 @@
 /**
- * interactions.ts — Phase 3. Click and hover behaviour.
+ * interactions.ts — click and hover behaviour.
  *
  * Click a cluster → zoom to the point it breaks apart.
  * Click a station → open the detail panel.
