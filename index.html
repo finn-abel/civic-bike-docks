@@ -14,6 +14,12 @@
     <main>
       <div id="map" role="application" aria-label="Map of Bike Share Toronto docks"></div>
 
+      <!-- Deliberately outside the rail: the rail is hidden until the camera
+           lands, and the theme should be changeable from the first screen. -->
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch theme">
+        ☾
+      </button>
+
       <!-- The opening screen. Removed from the DOM once the camera lands, so it
            cannot sit invisibly over the map catching clicks. -->
       <section id="landing" class="landing" aria-label="Introduction">

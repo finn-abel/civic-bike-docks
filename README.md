@@ -21,6 +21,7 @@ the service area fall outside a practical walk to a usable station.
 | Coverage wash | Computes the area within 400 m of a station that can serve the selected intent. |
 | Detail panel | Opens capacity, bikes available, docks available, and fullness for each station. |
 | Globe intro | Starts from a quiet globe view, then flies into the fenced Toronto service area. |
+| Light and dark | Follows the system theme, with an override that persists. The basemap swaps too. |
 
 ## Why It Exists
 
@@ -89,6 +90,25 @@ cell is painted once, so dense downtown clusters do not falsely look “more
 covered” than sparse edges. Details and tradeoffs are documented in
 [DATA.md](DATA.md#coverage-computed).
 
+The gap readout puts a number on what the wash shows: currently about 23% of the
+service area has no available bike within 400 m, against 2% with no free dock.
+Both the wash and the figure recompute when the live feed lands.
+
+## Theme
+
+The palette is Bike Share Toronto's tangerine, split into tokens by contrast
+requirement. The bikes' own `#eb6834` is a fill colour only; it measures 3.07:1 on
+paper, so text and map marks take deeper or lighter steps.
+
+Light and dark follow the system preference by default. The ☾/☀ control in the
+top-right corner overrides that, and the choice persists. The basemap swaps with
+the page — CARTO Positron and Dark Matter, both keyless — and the dark palette is
+measured against the dark ground rather than inverted from the light one. The
+ramp reverses direction there: more ink means more bikes on paper, more light on
+black.
+
+Measured tables for both themes are in [DATA.md](DATA.md#dark-mode).
+
 ## Stack
 
 - TypeScript, strict mode
@@ -109,6 +129,7 @@ src/
 ├─ live.ts               # live status polling over the snapshot
 ├─ coverage.ts           # walk-radius grid and gap figure
 ├─ controls.ts           # intent toggle, legend, readout
+├─ theme.ts              # light/dark resolution, override, persistence
 ├─ landing.ts            # globe opening and camera fence
 ├─ panel.ts              # station detail panel
 ├─ types.ts              # GeoJSON contract as TypeScript
@@ -121,7 +142,7 @@ scripts/
 ├─ build_stations.ts
 └─ generate_fake_stations.ts
 docs/
-└─ assets/readme-hero.png
+└─ assets/readme-hero-v2.png
 ```
 
 <!--

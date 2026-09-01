@@ -98,6 +98,12 @@ export const BASEMAP = {
    */
   style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
 
+  /** CARTO Dark Matter — the dark counterpart, equally keyless, same glyph
+   *  endpoint and the same font stacks, so the vendored atlas serves both.
+   *  Its ground is #0e0e0e, which is the surface every dark colour is measured
+   *  against. */
+  styleDark: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+
   /**
    * Local fallback, used when CARTO cannot be reached. A flat ground with no
    * streets — but every dock still renders in its true position, so the shape of
@@ -107,6 +113,7 @@ export const BASEMAP = {
    * survive offline too. Nothing in it touches the network.
    */
   offlineStyle: 'basemap/style.json',
+  offlineStyleDark: 'basemap/style-dark.json',
 
   /** How long to wait for the CARTO style before falling back. Short enough that
    *  a bad connection degrades in a beat instead of hanging on a blank screen. */

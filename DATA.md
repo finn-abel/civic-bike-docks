@@ -212,6 +212,39 @@ on the basemap — it would fade into the map. It lives in `styles.css` as
 Kept in two places — `FULLNESS_RAMP` in `src/layers.ts` and the `--fullness-*`
 tokens in `src/styles.css` — so the legend swatches cannot drift from the dots.
 
+### Dark mode
+
+Dark is **selected, not flipped**. Its own values, measured against CARTO Dark
+Matter's `#0e0e0e` ground:
+
+| Token | Light | Dark | Why it moves |
+|---|---|---|---|
+| Fullness ramp | `#d2551f → #96380f → #5c200a` | `#a83f14 → #d2551f → #f4793f` | The direction reverses: more ink means more bikes on paper, more *light* on black. The light ramp's darkest step measures **1.4:1** on `#0e0e0e` and would vanish. |
+| Orange text | `#c14a17` (4.72:1) | `#f4793f` (6.7:1) | Orange text has to go lighter on dark, not darker — `#c14a17` measures 2.4:1 there. |
+| Mark ring | `#ffffff` | `#0e0e0e` | The ring is the ground, so a mark reads as a disc. A white ring on a near-black map is a halo, not an edge. |
+| No-data dot | white fill, grey ring | dark fill, `#8a8a84` ring | Hollow still means hollow: the fill is the ground. |
+| Coverage wash | `#eb6834` @ 0.16 | `#f9a077` @ 0.10 | A low-opacity wash over near-black barely registers; push the opacity and it swamps the dots, so the colour does the lifting. |
+| Clusters | `#eb6834` | `#eb6834` | Held steady on purpose — the cluster is the brand mark, and keeping it fixed across the swap is what makes the two themes feel like one map. |
+
+Dark ramp steps are L 0.508 / 0.605 / 0.709, evenly spaced, each ≥3:1 on the dark
+basemap. Against that ramp the cluster measures ΔE 9.0 from the brightest step —
+close, and separated the same structural way as on light: size, the numeral, the
+ring.
+
+**The basemap swaps too.** A light map under a dark page is not a theme, it is a
+bug. `setStyle` replaces the whole style document and takes every source and
+layer with it, so `installLayers()` puts them back on `style.load`, and the
+projection is re-asserted there — it is part of the style, so it resets with it,
+and without that the camera fence goes slack again.
+
+Event handlers are bound to the map rather than the style, so interactions are
+wired once at startup and simply resume when their layers reappear.
+
+Three states, not two: system preference is the default and tracks the OS as it
+changes; an explicit choice overrides it and persists in `localStorage` (wrapped
+in try/catch — reading storage throws outright in some privacy modes, and that
+must never be why the page fails to start).
+
 ### The theme, by job
 
 One hue cannot do every job, so the tangerine is split by contrast requirement:

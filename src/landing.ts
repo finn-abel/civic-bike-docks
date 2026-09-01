@@ -202,6 +202,19 @@ export function startLanding(map: MapLibreMap, options: LandingOptions): void {
   startButton?.focus();
 }
 
+/**
+ * Put the globe back after a style swap.
+ *
+ * `setStyle` replaces the style document, and the projection is part of it — so
+ * a theme change during the landing drops the camera back to Mercator and the
+ * globe flattens mid-descent. The landing owns this framing, so it owns
+ * restoring it.
+ */
+export function reapplyLandingCamera(map: MapLibreMap): void {
+  map.setProjection({ type: 'globe' });
+  map.jumpTo({ zoom: globeZoom(), padding: copyPadding() });
+}
+
 /** Skip the landing entirely: straight to the city, fence already up. */
 export function skipLanding(map: MapLibreMap, onArrive: () => void): void {
   document.getElementById('landing')?.remove();

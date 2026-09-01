@@ -36,12 +36,13 @@ import {
   readingIntent,
   setCoverageReadout,
   setLegendIntent,
+  setLegendTheme,
   showReadout,
   wireIntentToggle,
 } from './controls';
 import { buildCoverage } from './coverage';
 import { wireInteractions } from './interactions';
-import { skipLanding, startLanding } from './landing';
+import { reapplyLandingCamera, skipLanding, startLanding } from './landing';
 import {
   addCoverageLayer,
   addStationLayers,
@@ -51,6 +52,7 @@ import {
 import type { Freshness } from './live';
 import { startLiveUpdates } from './live';
 import { loadStations } from './stations';
+import { startTheme, type Theme } from './theme';
 import type { CoverageMode } from './types';
 
 setWorkerUrl(maplibreWorkerUrl);
@@ -81,22 +83,32 @@ function showNotice(message: string, tone: 'error' | 'info', cause?: unknown): v
  * So probe the style first and fall back to the vendored one. Offline you lose the
  * streets; you keep all 1063 docks, the clustering, and the panel.
  */
-async function resolveStyle(): Promise<{ style: string; online: boolean }> {
+async function resolveStyle(theme: Theme): Promise<{ style: string; online: boolean }> {
+  const remote = theme === 'dark' ? BASEMAP.styleDark : BASEMAP.style;
+  const local = theme === 'dark' ? BASEMAP.offlineStyleDark : BASEMAP.offlineStyle;
   try {
-    const response = await fetch(BASEMAP.style, {
+    const response = await fetch(remote, {
       signal: AbortSignal.timeout(BASEMAP.styleTimeoutMs),
     });
-    if (response.ok) return { style: BASEMAP.style, online: true };
+    if (response.ok) return { style: remote, online: true };
   } catch {
     // Unreachable or too slow — fall through to the local style.
   }
-  return { style: BASEMAP.offlineStyle, online: false };
+  return { style: local, online: false };
 }
 
 // Start the census fetch immediately; it does not depend on the style. Both are
 // local files in the built site, so this costs nothing and saves a round trip.
 const stationsReady = loadStations();
-const { style, online } = await resolveStyle();
+
+/**
+ * The theme is resolved before the map is built, because the basemap style is
+ * part of it — a light map under a dark page is not a theme, it is a bug.
+ */
+let theme: Theme = startTheme((next) => {
+  void swapTheme(next);
+});
+const { style, online } = await resolveStyle(theme);
 
 /**
  * `?nointro` drops straight into the city — a landing screen is right once and
@@ -176,6 +188,7 @@ function formatDay(iso: string): string {
 /** The rail is the map's chrome, so it stays out of the way until there is a map
  *  to put chrome on. */
 function revealChrome(): void {
+  arrived = true;
   document.querySelector('.rail')?.classList.add('rail--visible');
 }
 
@@ -186,13 +199,54 @@ function revealChrome(): void {
 let census: FeatureCollection | null = null;
 let mode: CoverageMode = 'borrow';
 
+/**
+ * Put the sources and layers back.
+ *
+ * `setStyle` replaces the whole style document, which takes every source and
+ * layer with it. Event handlers survive — they are bound to the map, not the
+ * style — so interactions are wired once at startup and simply start working
+ * again when their layers reappear.
+ */
+function installLayers(): void {
+  if (!census) return;
+  addStationLayers(map, census, readingIntent(mode), theme);
+  addCoverageLayer(map, buildCoverage(census, readingIntent(mode)).geometry, theme);
+}
+
+/** True once the camera has settled over the city and the fence is up. */
+let arrived = false;
+
+/** Swap the basemap and rebuild everything drawn on top of it. */
+async function swapTheme(next: Theme): Promise<void> {
+  theme = next;
+  setLegendTheme(theme);
+
+  const resolved = await resolveStyle(theme);
+  map.setStyle(resolved.style);
+
+  map.once('style.load', () => {
+    // The projection is part of the style, so it resets with it — and which
+    // projection is right depends on where in the flow we are. Forcing Mercator
+    // unconditionally flattened the globe mid-landing; leaving it alone lets the
+    // camera fence go slack after arrival. Both need saying explicitly.
+    if (arrived) {
+      map.setProjection({ type: 'mercator' });
+    } else {
+      reapplyLandingCamera(map);
+    }
+
+    installLayers();
+    applyMode(mode);
+  });
+}
+
 /** Recompute coverage and repaint everything that depends on the chosen mode. */
 function applyMode(next: CoverageMode): void {
   mode = next;
   setLegendIntent(mode);
   if (!census) return;
 
-  setStationIntent(map, readingIntent(mode));
+  setStationIntent(map, readingIntent(mode), theme);
 
   if (mode === 'none') {
     // Skip the computation entirely rather than building a wash nobody will see.
@@ -221,11 +275,15 @@ map.on('load', () => {
 
       // Stations first: addCoverageLayer anchors itself beneath the cluster
       // layer, which has to exist before it can be named.
-      addStationLayers(map, data, readingIntent(mode));
+      addStationLayers(map, data, readingIntent(mode), theme);
       const initial = buildCoverage(census, readingIntent(mode));
-      addCoverageLayer(map, initial.geometry);
+      addCoverageLayer(map, initial.geometry, theme);
+
+      // Wired once. The handlers outlive every style swap; only the layers they
+      // reference are rebuilt.
       wireInteractions(map);
 
+      setLegendTheme(theme);
       setLegendIntent(mode);
       setCoverageReadout(initial, readingIntent(mode));
       wireIntentToggle(applyMode);

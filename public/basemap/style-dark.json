@@ -1,0 +1,19 @@
+{
+  "version": 8,
+  "name": "Offline fallback (dark)",
+  "metadata": {
+    "note": "Used only when the CARTO style cannot be reached. No streets \u2014 a flat dark ground so every dock still renders and the network's shape stays readable with the wifi off (discipline #3).",
+    "glyphs": "Montserrat (SIL OFL 1.1) and Open Sans (Apache 2.0), rendered atlas vendored from the CARTO glyph server."
+  },
+  "glyphs": "basemap/fonts/{fontstack}/{range}.pbf",
+  "sources": {},
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "#151515"
+      }
+    }
+  ]
+}

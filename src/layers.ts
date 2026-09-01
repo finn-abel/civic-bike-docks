@@ -13,6 +13,7 @@ import type { DataDrivenPropertyValueSpecification, ExpressionSpecification, Map
 
 import { CLUSTER, IDS } from './constants';
 import type { Intent } from './types';
+import type { Theme } from './theme';
 
 /**
  * Fullness ramp — SEQUENTIAL (magnitude: how many bikes are here), so it is one
@@ -32,19 +33,31 @@ import type { Intent } from './types';
  * Every step clears 3:1 against the basemap. Colour is never the only channel:
  * the panel prints exact numbers and the legend labels both ends.
  */
-const FULLNESS_RAMP = {
-  empty: '#d2551f',
-  half: '#96380f',
-  full: '#5c200a',
-} as const;
+const FULLNESS_RAMP: Record<Theme, { empty: string; half: string; full: string }> = {
+  /** On paper the ramp runs light → dark: more ink means more bikes.
+   *  L 0.605 / 0.468 / 0.332, each ≥3:1 on the light basemap. */
+  light: { empty: '#d2551f', half: '#96380f', full: '#5c200a' },
+
+  /**
+   * On a near-black ground the ramp runs the other way — dim → bright — because
+   * "more" has to mean *more light* when the page is dark. These are their own
+   * steps chosen against #0e0e0e, not the light ramp inverted: the light ramp's
+   * dark end measures 1.4:1 there and would vanish into the basemap.
+   *
+   * L 0.508 / 0.605 / 0.709, evenly stepped, each ≥3:1 on the dark basemap.
+   */
+  dark: { empty: '#a83f14', half: '#d2551f', full: '#f4793f' },
+};
 
 /** A station with no availability data — capacity 0, or no status feed joined.
  *  Drawn hollow rather than in a fourth colour: "no data" is a different KIND of
  *  thing from a low value, so it gets a different shape, not a nearby hue. */
-const NO_DATA = {
-  fill: '#ffffff',
-  stroke: '#6b6b66',
-} as const;
+const NO_DATA: Record<Theme, { fill: string; stroke: string }> = {
+  light: { fill: '#ffffff', stroke: '#6b6b66' },
+  /** Hollow still means hollow: the fill is the ground, so the ring is all
+   *  there is. On dark that means a dark centre and a light ring. */
+  dark: { fill: '#0e0e0e', stroke: '#8a8a84' },
+};
 
 const STATION = {
   /** Radius interpolates over capacity. Floor is generous enough that the
@@ -53,10 +66,16 @@ const STATION = {
   radiusAtMaxCapacity: 11,
   minCapacity: 0,
   maxCapacity: 50,
-  strokeColor: '#ffffff',
   strokeWidth: 1.5,
   strokeWidthHover: 3,
 } as const;
+
+/** The ring that lifts a mark off the basemap. It is the ground colour, not
+ *  white — a white ring on a near-black map reads as a halo, not an edge. */
+const RING: Record<Theme, string> = {
+  light: '#ffffff',
+  dark: '#0e0e0e',
+};
 
 const CLUSTER_STYLE = {
   /**
@@ -75,6 +94,11 @@ const CLUSTER_STYLE = {
   color: '#eb6834',
   colorHover: '#f4793f',
   textColor: '#231f1b',
+  /** Deliberately the same tangerine in both themes: a cluster is the brand
+   *  mark, and holding it steady across the swap is what keeps the map feeling
+   *  like one thing. Against the dark ramp it measures ΔE 9.0 from the brightest
+   *  step — close, and separated the same structural way as on light: size, the
+   *  numeral, and the ring. */
   /** Radius steps by how many stations a cluster holds. */
   radiusSmall: 15,
   radiusMedium: 20,
@@ -115,32 +139,29 @@ function usefulness(intent: Intent): ExpressionSpecification {
   ];
 }
 
-function stationColor(intent: Intent): DataDrivenPropertyValueSpecification<string> {
+function stationColor(
+  intent: Intent,
+  theme: Theme,
+): DataDrivenPropertyValueSpecification<string> {
   const value = usefulness(intent);
+  const ramp = FULLNESS_RAMP[theme];
   return [
     'case',
     ['==', value, NO_DATA_SENTINEL],
-    NO_DATA.fill,
-    [
-      'interpolate',
-      ['linear'],
-      value,
-      0,
-      FULLNESS_RAMP.empty,
-      0.5,
-      FULLNESS_RAMP.half,
-      1,
-      FULLNESS_RAMP.full,
-    ],
+    NO_DATA[theme].fill,
+    ['interpolate', ['linear'], value, 0, ramp.empty, 0.5, ramp.half, 1, ramp.full],
   ];
 }
 
-function stationStrokeColor(intent: Intent): DataDrivenPropertyValueSpecification<string> {
+function stationStrokeColor(
+  intent: Intent,
+  theme: Theme,
+): DataDrivenPropertyValueSpecification<string> {
   return [
     'case',
     ['==', usefulness(intent), NO_DATA_SENTINEL],
-    NO_DATA.stroke,
-    STATION.strokeColor,
+    NO_DATA[theme].stroke,
+    RING[theme],
   ];
 }
 
@@ -164,13 +185,17 @@ const stationRadius: DataDrivenPropertyValueSpecification<number> = [
 ];
 
 /** Repaint the station dots when the reader switches intent. */
-export function setStationIntent(map: MapLibreMap, intent: Intent): void {
+export function setStationIntent(
+  map: MapLibreMap,
+  intent: Intent,
+  theme: Theme,
+): void {
   if (!map.getLayer(IDS.unclusteredPoints)) return;
-  map.setPaintProperty(IDS.unclusteredPoints, 'circle-color', stationColor(intent));
+  map.setPaintProperty(IDS.unclusteredPoints, 'circle-color', stationColor(intent, theme));
   map.setPaintProperty(
     IDS.unclusteredPoints,
     'circle-stroke-color',
-    stationStrokeColor(intent),
+    stationStrokeColor(intent, theme),
   );
 }
 
@@ -179,6 +204,7 @@ export function addStationLayers(
   map: MapLibreMap,
   data: GeoJSON.FeatureCollection,
   intent: Intent,
+  theme: Theme,
 ): void {
   map.addSource(IDS.source, {
     type: 'geojson',
@@ -212,7 +238,7 @@ export function addStationLayers(
         CLUSTER_STYLE.radiusLarge,
       ],
       'circle-stroke-width': STATION.strokeWidth,
-      'circle-stroke-color': STATION.strokeColor,
+      'circle-stroke-color': RING[theme],
     },
   });
 
@@ -236,22 +262,24 @@ export function addStationLayers(
     source: IDS.source,
     filter: ['!', ['has', 'point_count']],
     paint: {
-      'circle-color': stationColor(intent),
+      'circle-color': stationColor(intent, theme),
       'circle-radius': stationRadius,
       'circle-stroke-width': stationStrokeWidth,
-      'circle-stroke-color': stationStrokeColor(intent),
+      'circle-stroke-color': stationStrokeColor(intent, theme),
     },
   });
 }
 
 /** The ramp, for the legend — so the swatches cannot drift from the map. */
-export const LEGEND_SWATCHES = [
-  { label: 'Empty', color: FULLNESS_RAMP.empty },
-  { label: '', color: FULLNESS_RAMP.half },
-  { label: 'Full', color: FULLNESS_RAMP.full },
-] as const;
-
-export const LEGEND_NO_DATA = NO_DATA;
+/** The ramp and the hollow mark, for the legend — read from the same constants
+ *  the map paints with, so the swatches cannot drift from the dots. */
+export function legendPalette(theme: Theme): {
+  ramp: readonly string[];
+  noData: { fill: string; stroke: string };
+} {
+  const ramp = FULLNESS_RAMP[theme];
+  return { ramp: [ramp.empty, ramp.half, ramp.full], noData: NO_DATA[theme] };
+}
 
 /**
  * The coverage wash.
@@ -259,7 +287,11 @@ export const LEGEND_NO_DATA = NO_DATA;
  * Added beneath the cluster circles so the dots always read on top of it — the
  * wash is context, not the subject.
  */
-export function addCoverageLayer(map: MapLibreMap, data: GeoJSON.FeatureCollection): void {
+export function addCoverageLayer(
+  map: MapLibreMap,
+  data: GeoJSON.FeatureCollection,
+  theme: Theme,
+): void {
   map.addSource(IDS.coverageSource, { type: 'geojson', data });
 
   map.addLayer(
@@ -268,8 +300,8 @@ export function addCoverageLayer(map: MapLibreMap, data: GeoJSON.FeatureCollecti
       type: 'fill',
       source: IDS.coverageSource,
       paint: {
-        'fill-color': COVERAGE_STYLE.color,
-        'fill-opacity': COVERAGE_STYLE.opacity,
+        'fill-color': COVERAGE_STYLE[theme].color,
+        'fill-opacity': COVERAGE_STYLE[theme].opacity,
         // The grid is emitted as edge-to-edge rectangles. Antialiasing would draw
         // a seam along every shared border and quilt the wash.
         'fill-antialias': false,
@@ -279,12 +311,20 @@ export function addCoverageLayer(map: MapLibreMap, data: GeoJSON.FeatureCollecti
   );
 }
 
-const COVERAGE_STYLE = {
+const COVERAGE_STYLE: Record<Theme, { color: string; opacity: number }> = {
   /** The brand tangerine at low opacity: the wash belongs to the same system as
    *  the dots without competing with them for attention. */
-  color: '#eb6834',
-  opacity: 0.16,
-} as const;
+  light: { color: '#eb6834', opacity: 0.16 },
+  /** Brighter and weaker on dark. A low-opacity wash over near-black barely
+   *  registers, but push the opacity and it swamps the dots — so the colour does
+   *  the lifting instead. */
+  dark: { color: '#f9a077', opacity: 0.10 },
+};
+
+/** The legend swatch has to match whatever the wash actually paints. */
+export function coverageSwatch(theme: Theme): { color: string; opacity: number } {
+  return COVERAGE_STYLE[theme];
+}
 
 export function setCoverageVisible(map: MapLibreMap, visible: boolean): void {
   if (!map.getLayer(IDS.coverageFill)) return;

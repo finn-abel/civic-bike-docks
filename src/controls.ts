@@ -7,6 +7,8 @@
 
 import type { CoverageResult } from './coverage';
 import { COVERAGE } from './constants';
+import { coverageSwatch, legendPalette } from './layers';
+import type { Theme } from './theme';
 import type { CoverageMode, Intent } from './types';
 
 /** With no intent chosen the ramp keeps the `borrow` reading — see CoverageMode. */
@@ -47,6 +49,35 @@ export function setLegendIntent(mode: CoverageMode): void {
 
   // The wash swatch only means something while a wash is drawn.
   document.getElementById('legend-wash')?.toggleAttribute('hidden', mode === 'none');
+}
+
+/**
+ * Repaint the legend swatches from the same constants the map paints with.
+ *
+ * The swatches used to be literal hex values in index.html, which meant the dark
+ * theme would have shown the light ramp beside dark dots. Reading them from
+ * layers.ts is what makes that impossible rather than merely unlikely.
+ */
+export function setLegendTheme(theme: Theme): void {
+  const { ramp, noData } = legendPalette(theme);
+  const swatches = document.querySelectorAll<HTMLElement>('.legend__ramp span');
+  swatches.forEach((element, index) => {
+    const colour = ramp[index];
+    if (colour) element.style.setProperty('--swatch', colour);
+  });
+
+  const hollow = document.querySelector<HTMLElement>('.legend__hollow');
+  if (hollow) {
+    hollow.style.background = noData.fill;
+    hollow.style.borderColor = noData.stroke;
+  }
+
+  const wash = document.querySelector<HTMLElement>('.legend__wash');
+  if (wash) {
+    const { color, opacity } = coverageSwatch(theme);
+    wash.style.background = color;
+    wash.style.opacity = String(Math.min(1, opacity * 3.2));
+  }
 }
 
 /** With no intent there is no gap to report, so the figure comes off rather than
